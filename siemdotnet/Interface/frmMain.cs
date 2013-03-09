@@ -16,6 +16,12 @@ namespace siemdotnet
     {
         #region Private Variables 
         Network.NetworkBrowser scnr = new Network.NetworkBrowser();
+
+        enum SystemType
+        { 
+            Local = 1,
+            Domain
+        }
         #endregion
 
         #region Load
@@ -28,74 +34,95 @@ namespace siemdotnet
 
         #region Private Methods
 
-        //Network Methods
         #region Network
         private void GetNetworks()
         {
-            //Get Domain Name
-            Forest hostForest = Forest.GetCurrentForest();
-            DomainCollection domains = hostForest.Domains;
+            try
+            {
+                //Get Domain Name
+                Forest hostForest = Forest.GetCurrentForest();
+                DomainCollection domains = hostForest.Domains;
 
-            foreach (Domain domain in domains)
-            { 
-                TreeNode node = new TreeNode();
-                node.Text = domain.Name;
-                node.SelectedImageIndex = 3;
-                node.ImageIndex = 3;
-
-                TreeNode rootnode = tvwNetworks.Nodes[0];
-                rootnode.Nodes.Add(node);
+                foreach (Domain domain in domains)
+                {
+                    TreeNode node = new TreeNode();
+                    node.Text = domain.Name;
+                    node.SelectedImageIndex = 3;
+                    node.ImageIndex = 3;
+                    node.Tag = SystemType.Domain;
+                    TreeNode rootnode = tvwNetworks.Nodes[0];
+                    rootnode.Nodes.Add(node);
+                }
             }
+            catch
+            { 
+                //fail silently because there isn't a domain to scan
+            }
+            
             tvwNetworks.Nodes[0].Expand();
         }
 
         private void Scan()
         {
             lvwSystems.Items.Clear();
-            if (tvwNetworks.SelectedNode != null && tvwNetworks.SelectedNode.Index != 0)
+            if (tvwNetworks.SelectedNode != null && tvwNetworks.SelectedNode.Tag != null)
             {
-                String domain = tvwNetworks.SelectedNode.Text;
-                ArrayList rslts = scnr.ScanActiveDirectory(domain);
-                if (rslts.Count > 0)
+                SystemType typ = (SystemType)Enum.Parse(typeof(SystemType), tvwNetworks.SelectedNode.Tag.ToString());
+                switch (typ)
                 {
-                    foreach (DirectoryEntry system in rslts)
-                    {
-                        ListViewItem lvwItm = new ListViewItem();
-                        lvwItm.Text = system.Name.ToString();
-
-                        String ipadr = scnr.GetIP(system.Name);
-                        lvwItm.SubItems.Add(ipadr);
-                        lvwItm.SubItems.Add("00-00-00-00-00-00");
-                        bool isup = false;
-                        if (ipadr != "0.0.0.0 (unknown host)")
-                        {
-                            isup = scnr.Ping(system.Name, 1, 500);
-                        }
-                        if (isup)
-                        {
-                            lvwItm.SubItems.Add("Up");
-                        }
-                        else
-                        {
-                            lvwItm.SubItems.Add("Down");
-                        }
-                        lvwItm.SubItems.Add("Not Installed");
-                        lvwItm.SubItems.Add("0");
-                        lvwItm.SubItems.Add(DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"));
-
-                        lvwItm.ImageIndex = 2;
-                        lvwSystems.Items.Add(lvwItm);
-                        lvwSystems.Refresh();
-                        Application.DoEvents();
-                    }
+                    case SystemType.Local:
+                        ScanbyIP();
+                        break;
+                    case SystemType.Domain:
+                        ScanAD();
+                        break;
                 }
-
-                rslts = null;
             }
             else
             {
                 MessageBox.Show("Please select a network first.");
             }
+        }
+
+        private void ScanAD()
+        {
+            String domain = tvwNetworks.SelectedNode.Text;
+            ArrayList rslts = scnr.ScanActiveDirectory(domain);
+            if (rslts.Count > 0)
+            {
+                foreach (DirectoryEntry system in rslts)
+                {
+                    ListViewItem lvwItm = new ListViewItem();
+                    lvwItm.Text = system.Name.ToString();
+
+                    String ipadr = scnr.GetIP(system.Name);
+                    lvwItm.SubItems.Add(ipadr);
+                    lvwItm.SubItems.Add("00-00-00-00-00-00");
+                    bool isup = false;
+                    if (ipadr != "0.0.0.0 (unknown host)")
+                    {
+                        isup = scnr.Ping(system.Name, 1, 500);
+                    }
+                    if (isup)
+                    {
+                        lvwItm.SubItems.Add("Up");
+                    }
+                    else
+                    {
+                        lvwItm.SubItems.Add("Down");
+                    }
+                    lvwItm.SubItems.Add("Not Installed");
+                    lvwItm.SubItems.Add("0");
+                    lvwItm.SubItems.Add(DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"));
+
+                    lvwItm.ImageIndex = 2;
+                    lvwSystems.Items.Add(lvwItm);
+                    lvwSystems.Refresh();
+                    Application.DoEvents();
+                }
+            }
+
+            rslts = null;
         }
 
         private void ScanbyIP()
@@ -135,7 +162,6 @@ namespace siemdotnet
 
         #endregion                
 
-        //Private Events
         #region Private Events
 
         #region Menu Clicks
@@ -143,15 +169,10 @@ namespace siemdotnet
         {
             Close();
         }
-
-        private void scanActiveDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        
+        private void mnuScan_Click(object sender, EventArgs e)
         {
             Scan();
-        }
-
-        private void scanByIPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ScanbyIP();
         }
         #endregion 
 

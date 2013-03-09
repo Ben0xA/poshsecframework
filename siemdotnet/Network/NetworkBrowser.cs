@@ -51,7 +51,7 @@ namespace siemdotnet.Network
 
             for (int ip = 1; ip < 256; ip++)
             {
-                String host = "192.168.135." + ip.ToString();
+                String host = "192.168.10." + ip.ToString();
                 frm.SetStatus("Scanning " + host + ", please wait...");
                 if (Ping(host, 1, 100))
                 {
