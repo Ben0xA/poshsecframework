@@ -6,12 +6,15 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 using siemdotnet.Structures;
-using siemdotnet.Interface;
 
 namespace siemdotnet.Network
 {
     class NetworkBrowser
     {
+        #region Private Variables
+        frmMain frm = null;
+        #endregion
+
         #region Initialize
         /// <summary>
         /// Creates an instance of the NetworkBrowser Class
@@ -45,23 +48,30 @@ namespace siemdotnet.Network
         public ArrayList ScanbyIP()
         {
             ArrayList systems = new ArrayList();
-            frmScanProgress frm = new frmScanProgress();
-            frm.TopMost = true;
-            frm.Show();
+            String localIP = GetIP(Dns.GetHostName());
 
-            for (int ip = 1; ip < 256; ip++)
+            if (localIP != "" && localIP != null)
             {
-                String host = "192.168.10." + ip.ToString();
-                frm.SetStatus("Scanning " + host + ", please wait...");
-                if (Ping(host, 1, 100))
+                String[] ipparts = localIP.Split('.');
+                if (ipparts != null && ipparts.Length == 4)
                 {
-                    systems.Add(host);
-                    Application.DoEvents();
+                    frm.SetProgress(0, 256);
+                    for (int ip = 1; ip < 256; ip++)
+                    {
+                        String host = ipparts[0] + "." + ipparts[1] + "." + ipparts[2] + "." + ip.ToString();
+                        frm.SetStatus("Scanning " + host + ", please wait...");
+                        frm.SetProgress(ip, 256);
+                        if (Ping(host, 1, 100))
+                        {
+                            systems.Add(host);
+                            Application.DoEvents();
+                        }
+                    }
                 }
             }
 
-            frm.Close();
-            frm = null;
+            frm.HideProgress();
+            frm.SetStatus("Ready");
 
             return systems;
         }
@@ -108,8 +118,13 @@ namespace siemdotnet.Network
                 System.Net.IPAddress[] addrs = ipentry.AddressList;
                 foreach (System.Net.IPAddress addr in addrs)
                 {
-                    ipadr += addr.ToString();
-                    Application.DoEvents();
+                    //Limit to IPv4 for now
+                    if (addr.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    {
+                        ipadr += addr.ToString();
+                        Application.DoEvents();
+                    }
+                    
                 }
             }
             catch
@@ -138,6 +153,13 @@ namespace siemdotnet.Network
         }
         #endregion
 
+        #endregion
+
+        #region Public Properties
+        public frmMain ParentForm
+        {
+            set { frm = value; }
+        }
         #endregion
     }
 }

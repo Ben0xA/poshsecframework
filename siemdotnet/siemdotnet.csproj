@@ -50,22 +50,12 @@
     <Compile Include="Interface\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interface\frmScanProgress.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Interface\frmScanProgress.Designer.cs">
-      <DependentUpon>frmScanProgress.cs</DependentUpon>
-    </Compile>
     <Compile Include="Network\NetworkBrowser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Interface\frmMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Interface\frmScanProgress.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmScanProgress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

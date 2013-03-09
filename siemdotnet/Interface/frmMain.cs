@@ -8,7 +8,6 @@ using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using siemdotnet.Interface;
 
 namespace siemdotnet
 {
@@ -28,6 +27,7 @@ namespace siemdotnet
         public frmMain()
         {
             InitializeComponent();
+            scnr.ParentForm = this;
             GetNetworks();
         }
         #endregion
@@ -131,14 +131,13 @@ namespace siemdotnet
             ArrayList rslts = scnr.ScanbyIP();
             if (rslts.Count > 0)
             {
-                frmScanProgress frm = new frmScanProgress();
-                frm.TopMost = true;
-                frm.Show();
+                SetProgress(0, rslts.Count);
                 foreach (String system in rslts)
                 {
                     ListViewItem lvwItm = new ListViewItem();
                     
-                    frm.SetStatus("Adding " + system + ", please wait...");
+                    SetStatus("Adding " + system + ", please wait...");
+                    
                     lvwItm.Text = scnr.GetHostname(system);
                     lvwItm.SubItems.Add(system);
                     lvwItm.SubItems.Add("00-00-00-00-00-00");
@@ -150,17 +149,46 @@ namespace siemdotnet
                     lvwItm.ImageIndex = 2;
                     lvwSystems.Items.Add(lvwItm);
                     lvwSystems.Refresh();
+
+                    pbStatus.Value += 1;
                     Application.DoEvents();
                 }
-                frm.Close();
-                frm = null;
             }
 
             rslts = null;
+            HideProgress();
+            lblStatus.Text = "Ready";
         }
         #endregion
 
-        #endregion                
+        #region Status
+        public void SetStatus(String message)
+        {
+            lblStatus.Text = message;
+        }
+        #endregion
+
+        #region ProgressBar
+        public void SetProgress(int Value, int Maximum)
+        {
+            pbStatus.Visible = true;
+            if (pbStatus.Maximum != Maximum)
+            {
+                pbStatus.Maximum = Maximum;
+            }
+            if (Value <= Maximum)
+            {
+                pbStatus.Value = Value;            
+            }
+        }
+
+        public void HideProgress()
+        {
+            pbStatus.Visible = false;
+        }
+        #endregion
+
+        #endregion
 
         #region Private Events
 

@@ -29,9 +29,9 @@ namespace siemdotnet
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Local Network");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Local Network");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
+            treeNode3});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +59,8 @@ namespace siemdotnet
             this.tbpGeneral = new System.Windows.Forms.TabPage();
             this.pbServer = new System.Windows.Forms.PictureBox();
             this.tbpAlerts = new System.Windows.Forms.TabPage();
+            this.lblsbSpacer = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pbStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -110,7 +112,9 @@ namespace siemdotnet
             // stsMain
             // 
             this.stsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatus});
+            this.lblStatus,
+            this.lblsbSpacer,
+            this.pbStatus});
             this.stsMain.Location = new System.Drawing.Point(0, 623);
             this.stsMain.Name = "stsMain";
             this.stsMain.Size = new System.Drawing.Size(1205, 22);
@@ -179,15 +183,15 @@ namespace siemdotnet
             this.tvwNetworks.ImageList = this.imgList16;
             this.tvwNetworks.Location = new System.Drawing.Point(0, 25);
             this.tvwNetworks.Name = "tvwNetworks";
-            treeNode1.ImageKey = "Diagram.png";
-            treeNode1.Name = "ndNone";
-            treeNode1.SelectedImageKey = "Server.png";
-            treeNode1.Tag = "1";
-            treeNode1.Text = "Local Network";
-            treeNode2.Name = "ndNetwork";
-            treeNode2.Text = "Networks";
+            treeNode3.ImageKey = "Diagram.png";
+            treeNode3.Name = "ndNone";
+            treeNode3.SelectedImageKey = "Diagram.png";
+            treeNode3.Tag = "1";
+            treeNode3.Text = "Local Network";
+            treeNode4.Name = "ndNetwork";
+            treeNode4.Text = "Networks";
             this.tvwNetworks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode4});
             this.tvwNetworks.SelectedImageIndex = 1;
             this.tvwNetworks.ShowPlusMinus = false;
             this.tvwNetworks.ShowRootLines = false;
@@ -328,6 +332,18 @@ namespace siemdotnet
             this.tbpAlerts.Text = "Alerts (0)";
             this.tbpAlerts.UseVisualStyleBackColor = true;
             // 
+            // lblsbSpacer
+            // 
+            this.lblsbSpacer.Name = "lblsbSpacer";
+            this.lblsbSpacer.Size = new System.Drawing.Size(949, 17);
+            this.lblsbSpacer.Spring = true;
+            // 
+            // pbStatus
+            // 
+            this.pbStatus.Name = "pbStatus";
+            this.pbStatus.Size = new System.Drawing.Size(200, 16);
+            this.pbStatus.Visible = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -394,6 +410,8 @@ namespace siemdotnet
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.PictureBox pbServer;
+        private System.Windows.Forms.ToolStripStatusLabel lblsbSpacer;
+        private System.Windows.Forms.ToolStripProgressBar pbStatus;
     }
 }
 
