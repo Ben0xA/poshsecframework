@@ -6,6 +6,7 @@ using System.Data;
 using System.DirectoryServices;
 using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
@@ -55,11 +56,36 @@ namespace siemdotnet
                 }
             }
             catch
-            { 
-                //fail silently because there isn't a domain to scan
+            {
+                //fail silently because it's not on A/D   
             }
-            
-            tvwNetworks.Nodes[0].Expand();
+
+            try
+            {
+                //Add Local IP/Host to Local Network
+                String localHost = Dns.GetHostName();
+                String localIP = scnr.GetIP(localHost);
+
+                ListViewItem lvwItm = new ListViewItem();
+
+                lvwItm.Text = localHost;
+                lvwItm.SubItems.Add(localIP);
+                lvwItm.SubItems.Add("00-00-00-00-00-00");
+                lvwItm.SubItems.Add("Up");
+                lvwItm.SubItems.Add("Not Installed");
+                lvwItm.SubItems.Add("0");
+                lvwItm.SubItems.Add(DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"));
+
+                lvwItm.ImageIndex = 2;
+                lvwSystems.Items.Add(lvwItm);
+                lvwSystems.Refresh();
+
+                tvwNetworks.Nodes[0].Expand();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message + "\n" + e.StackTrace);
+            }
         }
 
         private void Scan()
@@ -165,6 +191,7 @@ namespace siemdotnet
         public void SetStatus(String message)
         {
             lblStatus.Text = message;
+            Application.DoEvents();
         }
         #endregion
 

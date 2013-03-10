@@ -61,6 +61,8 @@ namespace siemdotnet.Network
                         String host = ipparts[0] + "." + ipparts[1] + "." + ipparts[2] + "." + ip.ToString();
                         frm.SetStatus("Scanning " + host + ", please wait...");
                         frm.SetProgress(ip, 256);
+                        String hostname = GetHostname(host);
+                        
                         if (Ping(host, 1, 100))
                         {
                             systems.Add(host);
