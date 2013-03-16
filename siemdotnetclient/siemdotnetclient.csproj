@@ -52,6 +52,7 @@
     <Compile Include="Network\netstat.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Structures\netstatline.cs" />
     <Compile Include="Systems\Events.cs" />
     <EmbeddedResource Include="Interface\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

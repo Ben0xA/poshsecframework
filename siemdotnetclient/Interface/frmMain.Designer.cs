@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.btnList = new System.Windows.Forms.Button();
+            this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,17 +43,6 @@
             this.panel1.Size = new System.Drawing.Size(575, 40);
             this.panel1.TabIndex = 0;
             // 
-            // txtOutput
-            // 
-            this.txtOutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtOutput.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.txtOutput.Location = new System.Drawing.Point(0, 0);
-            this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(575, 340);
-            this.txtOutput.TabIndex = 1;
-            this.txtOutput.Text = "";
-            // 
             // btnList
             // 
             this.btnList.Location = new System.Drawing.Point(488, 6);
@@ -63,6 +52,17 @@
             this.btnList.Text = "List Logs";
             this.btnList.UseVisualStyleBackColor = true;
             this.btnList.Click += new System.EventHandler(this.btnList_Click);
+            // 
+            // txtOutput
+            // 
+            this.txtOutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtOutput.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtOutput.Location = new System.Drawing.Point(0, 0);
+            this.txtOutput.Name = "txtOutput";
+            this.txtOutput.Size = new System.Drawing.Size(575, 340);
+            this.txtOutput.TabIndex = 1;
+            this.txtOutput.Text = "";
             // 
             // frmMain
             // 

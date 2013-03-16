@@ -15,4 +15,5 @@ namespace siemdotnet.Structures
             Console.ReadLine();
         }
     }
+
 }
