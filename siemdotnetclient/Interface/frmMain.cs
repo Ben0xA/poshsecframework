@@ -24,6 +24,10 @@ namespace siemdotnetclient.Interface
         }
         #endregion
 
+        #region Private Variables
+        List<netstatline> curns;
+        #endregion
+
         #region Private Methods
         private void ListLogs(String LogName)
         {
@@ -45,19 +49,20 @@ namespace siemdotnetclient.Interface
         {
             //ListLogs("Application");
             netstat ns = new netstat();
-            String nsout = ns.GetConnections();
-            String[] nslines = nsout.Split('\n');
-            if (nslines != null)
+            List<netstatline> nsout = ns.GetConnections();
+            if (nsout != null)
             {
-                foreach (String nsline in nslines)
+                foreach (netstatline nsline in nsout)
                 {
-                    netstatline line = new netstatline();
-                    line.fromstring(nsline);
-                    if (line.protocol == "TCP" || line.protocol == "UDP")
+                    if (nsline.lclport == "22" || nsline.rmtport == "22")
                     {
-                        txtOutput.Text += line.ToString() + "\n";                    
+                        txtOutput.Text += nsline.ToString() + "\n";
                     }
                 }
+            }
+            else 
+            {
+                MessageBox.Show("Error: " + ns.LastError);
             }
             ns = null;
         }
