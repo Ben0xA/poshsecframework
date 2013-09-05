@@ -29,9 +29,9 @@ namespace siemdotnet
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Local Network");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Local Network");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
+            treeNode3});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,6 +61,8 @@ namespace siemdotnet
             this.tbpGeneral = new System.Windows.Forms.TabPage();
             this.pbServer = new System.Windows.Forms.PictureBox();
             this.tbpAlerts = new System.Windows.Forms.TabPage();
+            this.tbPowerShell = new System.Windows.Forms.TabPage();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -143,7 +145,8 @@ namespace siemdotnet
             // 
             this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton2,
+            this.toolStripButton3});
             this.tbMain.Location = new System.Drawing.Point(0, 24);
             this.tbMain.Name = "tbMain";
             this.tbMain.Size = new System.Drawing.Size(1205, 25);
@@ -195,15 +198,15 @@ namespace siemdotnet
             this.tvwNetworks.ImageList = this.imgList16;
             this.tvwNetworks.Location = new System.Drawing.Point(0, 25);
             this.tvwNetworks.Name = "tvwNetworks";
-            treeNode1.ImageKey = "Diagram.png";
-            treeNode1.Name = "ndNone";
-            treeNode1.SelectedImageKey = "Diagram.png";
-            treeNode1.Tag = "1";
-            treeNode1.Text = "Local Network";
-            treeNode2.Name = "ndNetwork";
-            treeNode2.Text = "Networks";
+            treeNode3.ImageKey = "Diagram.png";
+            treeNode3.Name = "ndNone";
+            treeNode3.SelectedImageKey = "Diagram.png";
+            treeNode3.Tag = "1";
+            treeNode3.Text = "Local Network";
+            treeNode4.Name = "ndNetwork";
+            treeNode4.Text = "Networks";
             this.tvwNetworks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode4});
             this.tvwNetworks.SelectedImageIndex = 1;
             this.tvwNetworks.ShowPlusMinus = false;
             this.tvwNetworks.ShowRootLines = false;
@@ -307,6 +310,7 @@ namespace siemdotnet
             this.tcSystem.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.tcSystem.Controls.Add(this.tbpGeneral);
             this.tcSystem.Controls.Add(this.tbpAlerts);
+            this.tcSystem.Controls.Add(this.tbPowerShell);
             this.tcSystem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcSystem.Location = new System.Drawing.Point(0, 0);
             this.tcSystem.Name = "tcSystem";
@@ -344,6 +348,26 @@ namespace siemdotnet
             this.tbpAlerts.TabIndex = 1;
             this.tbpAlerts.Text = "Alerts (0)";
             this.tbpAlerts.UseVisualStyleBackColor = true;
+            // 
+            // tbPowerShell
+            // 
+            this.tbPowerShell.Location = new System.Drawing.Point(4, 4);
+            this.tbPowerShell.Name = "tbPowerShell";
+            this.tbPowerShell.Padding = new System.Windows.Forms.Padding(3);
+            this.tbPowerShell.Size = new System.Drawing.Size(967, 187);
+            this.tbPowerShell.TabIndex = 2;
+            this.tbPowerShell.Text = "PowerShell";
+            this.tbPowerShell.UseVisualStyleBackColor = true;
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // frmMain
             // 
@@ -413,6 +437,8 @@ namespace siemdotnet
         private System.Windows.Forms.PictureBox pbServer;
         private System.Windows.Forms.ToolStripStatusLabel lblsbSpacer;
         private System.Windows.Forms.ToolStripProgressBar pbStatus;
+        private System.Windows.Forms.TabPage tbPowerShell;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
     }
 }
 
