@@ -234,6 +234,7 @@ namespace siemdotnet
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             PShell.pshell p = new PShell.pshell();
+            p.RunScript("waucheck");
         }
 
         #endregion        

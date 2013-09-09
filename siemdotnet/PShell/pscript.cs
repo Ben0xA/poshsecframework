@@ -22,16 +22,32 @@ namespace siemdotnet.PShell
         #endregion
 
         #region " Public Methods "
+        public void Test()
+        {
+            OnScriptComplete(new pseventargs("It worked!"));
+        }
+
         public void RunScript()
         {            
             try
             {
-                rspace = RunspaceFactory.CreateRunspace();
+                rspaceconfig = RunspaceConfiguration.Create();
+                rspace = RunspaceFactory.CreateRunspace(rspaceconfig);
                 rspace.Open();
 
+                RunspaceInvoke rsinvoke = new RunspaceInvoke(rspace);                
                 Pipeline pline = rspace.CreatePipeline();
-                pline.Commands.AddScript(scriptcontents);
 
+                Command pscmd = new Command("C:\\pstest\\waucheck.ps1");
+
+                // Handle Params Here
+                CommandParameter kbs = new CommandParameter("kbs", "2862772");
+                CommandParameter comp = new CommandParameter("computer", "BENM");
+                pscmd.Parameters.Add(kbs);
+                pscmd.Parameters.Add(comp);
+
+                pline.Commands.Add(pscmd);
+                
                 Collection<PSObject> rslt = pline.Invoke();
                 rspace.Close();
 

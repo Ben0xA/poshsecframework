@@ -19,6 +19,14 @@ namespace siemdotnet.PShell
            //Initialize rspaceconfig here if needed. 
             pspath = "C:\\pstest\\";
         }
+
+        public void Test()
+        {
+            pscript ps = new pscript();
+            ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
+            Thread thd = new Thread(ps.Test);
+            thd.Start();
+        }
         
         public void RunScript(string ScriptName)
         {
@@ -26,7 +34,7 @@ namespace siemdotnet.PShell
             StringBuilder rslts = new StringBuilder();
             if(File.Exists(spath))
             {
-                StreamReader script = File.OpenText(Path.Combine(pspath, ScriptName));
+                StreamReader script = File.OpenText(spath);
                 String stext = script.ReadToEnd();
                 script.Close();
                 stext = stext.Trim();
