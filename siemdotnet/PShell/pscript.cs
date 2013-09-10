@@ -17,6 +17,7 @@ namespace siemdotnet.PShell
         private List<psparameter> scriptparams;
         private StringBuilder rslts = new StringBuilder();
         private psexception psexec = new psexception();
+        private bool cancel = false;
         #endregion
 
         #region " Public Events "
@@ -38,30 +39,37 @@ namespace siemdotnet.PShell
                 rspace.Open();
                 
                 scriptparams = CheckForParams(rspace, scriptpath);
-                Command pscmd = new Command(scriptpath);
-
-                if (scriptparams != null)
+                if (!cancel)
                 {
-                    foreach (psparameter param in scriptparams)
+                    Command pscmd = new Command(scriptpath);
+
+                    if (scriptparams != null)
                     {
-                        CommandParameter prm = new CommandParameter(param.Name, param.Value ?? param.DefaultValue);
-                        pscmd.Parameters.Add(prm);
+                        foreach (psparameter param in scriptparams)
+                        {
+                            CommandParameter prm = new CommandParameter(param.Name, param.Value ?? param.DefaultValue);
+                            pscmd.Parameters.Add(prm);
+                        }
+                    }
+
+                    Pipeline pline = rspace.CreatePipeline();
+
+                    pline.Commands.Add(pscmd);
+
+                    Collection<PSObject> rslt = pline.Invoke();
+                    rspace.Close();
+
+                    if (rslt != null)
+                    {
+                        foreach (PSObject po in rslt)
+                        {
+                            rslts.AppendLine(po.ToString());
+                        }
                     }
                 }
-
-                Pipeline pline = rspace.CreatePipeline();
-
-                pline.Commands.Add(pscmd);
-
-                Collection<PSObject> rslt = pline.Invoke();
-                rspace.Close();
-
-                if (rslt != null)
+                else
                 {
-                    foreach (PSObject po in rslt)
-                    {
-                        rslts.AppendLine(po.ToString());
-                    }
+                    rslts.AppendLine("Script cancelled by user.");
                 }
             }
             catch (Exception e)
@@ -156,12 +164,19 @@ namespace siemdotnet.PShell
             pline.Commands.Clear();
             pline.Dispose();
 
-            Interface.frmParams frm = new Interface.frmParams();
-            frm.SetParameters(parm);
-            if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (parm.Properties.Count > 0)
             {
-                parms = parm.Properties;
-            }
+                Interface.frmParams frm = new Interface.frmParams();
+                frm.SetParameters(parm);
+                if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    parms = parm.Properties;
+                }
+                else
+                {
+                    cancel = true;
+                }
+            }            
             return parms;
         }
 

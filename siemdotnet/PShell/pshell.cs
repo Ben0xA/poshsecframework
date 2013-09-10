@@ -38,6 +38,7 @@ namespace siemdotnet.PShell
                 ps.ScriptPath = spath;
                 ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
                 Thread thd = new Thread(ps.RunScript);
+                thd.SetApartmentState(ApartmentState.STA);
                 thd.Start();               
             }
         }

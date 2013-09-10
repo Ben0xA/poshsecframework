@@ -228,8 +228,9 @@ namespace siemdotnet
             }
             else
             {
-                txtPShellOutput.Text = output;
+                txtPShellOutput.Text += output;
                 txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
+                txtPShellOutput.ScrollToCaret();
                 tcSystem.SelectedTab = tbPowerShell;
             }
             

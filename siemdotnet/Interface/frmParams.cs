@@ -23,8 +23,25 @@ namespace siemdotnet.Interface
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.Close();
+            bool hasrequired = true;
+            PShell.psparamtype p = (PShell.psparamtype)pgParams.SelectedObject;
+            foreach (PShell.psparameter parm in p.Properties)
+            {
+                if (parm.Category == "Required" && parm.Value == null && parm.DefaultValue == null)
+                {
+                    hasrequired = false;
+                }
+            }
+
+            if (hasrequired)
+            {
+                this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("There are required paramaters that are missing values. Please fill in all of the required values before proceeding.");
+            }
         }
     }
 }
