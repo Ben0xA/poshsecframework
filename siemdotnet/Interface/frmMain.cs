@@ -215,6 +215,27 @@ namespace siemdotnet
         }
         #endregion
 
+        #region "PowerShell"
+        public void DisplayOutput(String output)
+        {
+            if (this.InvokeRequired)
+            {
+                MethodInvoker del = delegate
+                {
+                    DisplayOutput(output);
+                };
+                this.Invoke(del);
+            }
+            else
+            {
+                txtPShellOutput.Text = output;
+                txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
+                tcSystem.SelectedTab = tbPowerShell;
+            }
+            
+        }
+        #endregion
+
         #endregion
 
         #region Private Events
@@ -234,6 +255,7 @@ namespace siemdotnet
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             PShell.pshell p = new PShell.pshell();
+            p.UIForm = this;
             p.RunScript("waucheck");
         }
 

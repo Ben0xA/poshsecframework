@@ -42,11 +42,12 @@ namespace siemdotnet.PShell
 
                 // Handle Params Here
                 CommandParameter kbs = new CommandParameter("kbs", "2862772");
-                CommandParameter comp = new CommandParameter("computer", "BENM");
+                CommandParameter comp = new CommandParameter("computer", "APT0xA");
                 pscmd.Parameters.Add(kbs);
                 pscmd.Parameters.Add(comp);
 
                 pline.Commands.Add(pscmd);
+                //pline.Commands.Add("Out-String");
                 
                 Collection<PSObject> rslt = pline.Invoke();
                 rspace.Close();

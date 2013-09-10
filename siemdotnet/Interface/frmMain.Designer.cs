@@ -29,10 +29,10 @@ namespace siemdotnet
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Local Network");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
-            treeNode3});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Local Network");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuScan = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +44,7 @@ namespace siemdotnet
             this.tbMain = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.pnlMain = new System.Windows.Forms.SplitContainer();
             this.tvwNetworks = new System.Windows.Forms.TreeView();
             this.imgList16 = new System.Windows.Forms.ImageList(this.components);
@@ -57,12 +58,16 @@ namespace siemdotnet
             this.chClientInstalled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chAlerts = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chLastScan = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cmnuHosts = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.powerShellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.windowsUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waucheckps1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tcSystem = new System.Windows.Forms.TabControl();
             this.tbpGeneral = new System.Windows.Forms.TabPage();
             this.pbServer = new System.Windows.Forms.PictureBox();
             this.tbpAlerts = new System.Windows.Forms.TabPage();
             this.tbPowerShell = new System.Windows.Forms.TabPage();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.txtPShellOutput = new System.Windows.Forms.TextBox();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -74,9 +79,11 @@ namespace siemdotnet
             this.pnlSystems.Panel1.SuspendLayout();
             this.pnlSystems.Panel2.SuspendLayout();
             this.pnlSystems.SuspendLayout();
+            this.cmnuHosts.SuspendLayout();
             this.tcSystem.SuspendLayout();
             this.tbpGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbServer)).BeginInit();
+            this.tbPowerShell.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -170,6 +177,16 @@ namespace siemdotnet
             this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton2.Text = "toolStripButton2";
             // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
             // pnlMain
             // 
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -198,15 +215,15 @@ namespace siemdotnet
             this.tvwNetworks.ImageList = this.imgList16;
             this.tvwNetworks.Location = new System.Drawing.Point(0, 25);
             this.tvwNetworks.Name = "tvwNetworks";
-            treeNode3.ImageKey = "Diagram.png";
-            treeNode3.Name = "ndNone";
-            treeNode3.SelectedImageKey = "Diagram.png";
-            treeNode3.Tag = "1";
-            treeNode3.Text = "Local Network";
-            treeNode4.Name = "ndNetwork";
-            treeNode4.Text = "Networks";
+            treeNode1.ImageKey = "Diagram.png";
+            treeNode1.Name = "ndNone";
+            treeNode1.SelectedImageKey = "Diagram.png";
+            treeNode1.Tag = "1";
+            treeNode1.Text = "Local Network";
+            treeNode2.Name = "ndNetwork";
+            treeNode2.Text = "Networks";
             this.tvwNetworks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4});
+            treeNode2});
             this.tvwNetworks.SelectedImageIndex = 1;
             this.tvwNetworks.ShowPlusMinus = false;
             this.tvwNetworks.ShowRootLines = false;
@@ -261,6 +278,7 @@ namespace siemdotnet
             this.chClientInstalled,
             this.chAlerts,
             this.chLastScan});
+            this.lvwSystems.ContextMenuStrip = this.cmnuHosts;
             this.lvwSystems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvwSystems.FullRowSelect = true;
             this.lvwSystems.Location = new System.Drawing.Point(0, 0);
@@ -304,6 +322,35 @@ namespace siemdotnet
             // 
             this.chLastScan.Text = "Last Scan";
             this.chLastScan.Width = 173;
+            // 
+            // cmnuHosts
+            // 
+            this.cmnuHosts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.powerShellToolStripMenuItem});
+            this.cmnuHosts.Name = "cmnuHosts";
+            this.cmnuHosts.Size = new System.Drawing.Size(136, 26);
+            // 
+            // powerShellToolStripMenuItem
+            // 
+            this.powerShellToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.windowsUpdatesToolStripMenuItem});
+            this.powerShellToolStripMenuItem.Name = "powerShellToolStripMenuItem";
+            this.powerShellToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.powerShellToolStripMenuItem.Text = "Power Shell";
+            // 
+            // windowsUpdatesToolStripMenuItem
+            // 
+            this.windowsUpdatesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.waucheckps1ToolStripMenuItem});
+            this.windowsUpdatesToolStripMenuItem.Name = "windowsUpdatesToolStripMenuItem";
+            this.windowsUpdatesToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.windowsUpdatesToolStripMenuItem.Text = "Windows Updates";
+            // 
+            // waucheckps1ToolStripMenuItem
+            // 
+            this.waucheckps1ToolStripMenuItem.Name = "waucheckps1ToolStripMenuItem";
+            this.waucheckps1ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.waucheckps1ToolStripMenuItem.Text = "waucheck.ps1";
             // 
             // tcSystem
             // 
@@ -351,23 +398,28 @@ namespace siemdotnet
             // 
             // tbPowerShell
             // 
+            this.tbPowerShell.BackColor = System.Drawing.Color.Gray;
+            this.tbPowerShell.Controls.Add(this.txtPShellOutput);
             this.tbPowerShell.Location = new System.Drawing.Point(4, 4);
             this.tbPowerShell.Name = "tbPowerShell";
             this.tbPowerShell.Padding = new System.Windows.Forms.Padding(3);
             this.tbPowerShell.Size = new System.Drawing.Size(967, 187);
             this.tbPowerShell.TabIndex = 2;
             this.tbPowerShell.Text = "PowerShell";
-            this.tbPowerShell.UseVisualStyleBackColor = true;
             // 
-            // toolStripButton3
+            // txtPShellOutput
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButton3";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.txtPShellOutput.BackColor = System.Drawing.Color.SteelBlue;
+            this.txtPShellOutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPShellOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPShellOutput.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPShellOutput.ForeColor = System.Drawing.Color.White;
+            this.txtPShellOutput.Location = new System.Drawing.Point(3, 3);
+            this.txtPShellOutput.Multiline = true;
+            this.txtPShellOutput.Name = "txtPShellOutput";
+            this.txtPShellOutput.ReadOnly = true;
+            this.txtPShellOutput.Size = new System.Drawing.Size(961, 181);
+            this.txtPShellOutput.TabIndex = 0;
             // 
             // frmMain
             // 
@@ -399,9 +451,12 @@ namespace siemdotnet
             this.pnlSystems.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pnlSystems)).EndInit();
             this.pnlSystems.ResumeLayout(false);
+            this.cmnuHosts.ResumeLayout(false);
             this.tcSystem.ResumeLayout(false);
             this.tbpGeneral.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbServer)).EndInit();
+            this.tbPowerShell.ResumeLayout(false);
+            this.tbPowerShell.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -439,6 +494,11 @@ namespace siemdotnet
         private System.Windows.Forms.ToolStripProgressBar pbStatus;
         private System.Windows.Forms.TabPage tbPowerShell;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.TextBox txtPShellOutput;
+        private System.Windows.Forms.ContextMenuStrip cmnuHosts;
+        private System.Windows.Forms.ToolStripMenuItem powerShellToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem windowsUpdatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem waucheckps1ToolStripMenuItem;
     }
 }
 

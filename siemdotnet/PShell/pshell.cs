@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace siemdotnet.PShell
 {
@@ -11,6 +12,7 @@ namespace siemdotnet.PShell
     {
         #region " Private Variables "
         private String pspath;
+        private frmMain frm;
         #endregion
 
         #region " Public Methods "
@@ -48,11 +50,24 @@ namespace siemdotnet.PShell
                 }
             }
         }
+        #endregion
 
+        #region " Private Methods "
         private void ScriptCompleted(object sender, EventArgs e)
         {
             pseventargs rslts = (pseventargs)e;
             Console.WriteLine(rslts.Results);
+            frm.DisplayOutput(rslts.Results);
+        }
+        #endregion
+
+        #region " Public Properties "
+        public frmMain UIForm
+        {
+            set
+            {
+                frm = value; 
+            }
         }
         #endregion
     }
