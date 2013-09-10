@@ -17,8 +17,7 @@ namespace siemdotnet.PShell
 
         #region " Public Methods "
         public pshell()
-        { 
-           //Initialize rspaceconfig here if needed. 
+        {
             pspath = "C:\\pstest\\";
         }
 
@@ -33,21 +32,13 @@ namespace siemdotnet.PShell
         public void RunScript(string ScriptName)
         {
             String spath = Path.Combine(pspath, ScriptName + ".ps1");
-            StringBuilder rslts = new StringBuilder();
             if(File.Exists(spath))
             {
-                StreamReader script = File.OpenText(spath);
-                String stext = script.ReadToEnd();
-                script.Close();
-                stext = stext.Trim();
-                if(stext != "")
-                {
-                    pscript ps = new pscript();
-                    ps.ScriptContents = stext;
-                    ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
-                    Thread thd = new Thread(ps.RunScript);
-                    thd.Start();
-                }
+                pscript ps = new pscript();
+                ps.ScriptPath = spath;
+                ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
+                Thread thd = new Thread(ps.RunScript);
+                thd.Start();               
             }
         }
         #endregion

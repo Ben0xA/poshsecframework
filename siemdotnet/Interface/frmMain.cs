@@ -252,14 +252,14 @@ namespace siemdotnet
         }
         #endregion 
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
+        #endregion        
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
         {
             PShell.pshell p = new PShell.pshell();
             p.UIForm = this;
             p.RunScript("waucheck");
         }
-
-        #endregion        
 
     }
 }

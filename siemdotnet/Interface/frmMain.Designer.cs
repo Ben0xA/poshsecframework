@@ -29,10 +29,10 @@ namespace siemdotnet
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Local Network");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
             treeNode1});
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuScan = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,9 +42,6 @@ namespace siemdotnet
             this.lblsbSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.tbMain = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.pnlMain = new System.Windows.Forms.SplitContainer();
             this.tvwNetworks = new System.Windows.Forms.TreeView();
             this.imgList16 = new System.Windows.Forms.ImageList(this.components);
@@ -64,10 +61,14 @@ namespace siemdotnet
             this.waucheckps1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tcSystem = new System.Windows.Forms.TabControl();
             this.tbpGeneral = new System.Windows.Forms.TabPage();
-            this.pbServer = new System.Windows.Forms.PictureBox();
             this.tbpAlerts = new System.Windows.Forms.TabPage();
             this.tbPowerShell = new System.Windows.Forms.TabPage();
             this.txtPShellOutput = new System.Windows.Forms.TextBox();
+            this.pbServer = new System.Windows.Forms.PictureBox();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -82,8 +83,8 @@ namespace siemdotnet
             this.cmnuHosts.SuspendLayout();
             this.tcSystem.SuspendLayout();
             this.tbpGeneral.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbServer)).BeginInit();
             this.tbPowerShell.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbServer)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -153,39 +154,12 @@ namespace siemdotnet
             this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripButton2,
-            this.toolStripButton3});
+            this.toolStripButton3,
+            this.toolStripButton4});
             this.tbMain.Location = new System.Drawing.Point(0, 24);
             this.tbMain.Name = "tbMain";
             this.tbMain.Size = new System.Drawing.Size(1205, 25);
             this.tbMain.TabIndex = 2;
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::siemdotnet.Properties.Resources.Diagram;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::siemdotnet.Properties.Resources.ServerExecute;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButton3";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // pnlMain
             // 
@@ -376,16 +350,6 @@ namespace siemdotnet
             this.tbpGeneral.Text = "General";
             this.tbpGeneral.UseVisualStyleBackColor = true;
             // 
-            // pbServer
-            // 
-            this.pbServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbServer.Image = global::siemdotnet.Properties.Resources.Server1;
-            this.pbServer.Location = new System.Drawing.Point(849, 63);
-            this.pbServer.Name = "pbServer";
-            this.pbServer.Size = new System.Drawing.Size(118, 124);
-            this.pbServer.TabIndex = 0;
-            this.pbServer.TabStop = false;
-            // 
             // tbpAlerts
             // 
             this.tbpAlerts.Location = new System.Drawing.Point(4, 4);
@@ -418,8 +382,47 @@ namespace siemdotnet
             this.txtPShellOutput.Multiline = true;
             this.txtPShellOutput.Name = "txtPShellOutput";
             this.txtPShellOutput.ReadOnly = true;
+            this.txtPShellOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtPShellOutput.Size = new System.Drawing.Size(961, 181);
             this.txtPShellOutput.TabIndex = 0;
+            // 
+            // pbServer
+            // 
+            this.pbServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbServer.Image = global::siemdotnet.Properties.Resources.Server1;
+            this.pbServer.Location = new System.Drawing.Point(849, 63);
+            this.pbServer.Name = "pbServer";
+            this.pbServer.Size = new System.Drawing.Size(118, 124);
+            this.pbServer.TabIndex = 0;
+            this.pbServer.TabStop = false;
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::siemdotnet.Properties.Resources.Diagram;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::siemdotnet.Properties.Resources.ServerExecute;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "toolStripButton2";
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
             // frmMain
             // 
@@ -454,9 +457,9 @@ namespace siemdotnet
             this.cmnuHosts.ResumeLayout(false);
             this.tcSystem.ResumeLayout(false);
             this.tbpGeneral.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbServer)).EndInit();
             this.tbPowerShell.ResumeLayout(false);
             this.tbPowerShell.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbServer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -499,6 +502,7 @@ namespace siemdotnet
         private System.Windows.Forms.ToolStripMenuItem powerShellToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem windowsUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem waucheckps1ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
     }
 }
 

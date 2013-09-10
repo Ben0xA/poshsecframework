@@ -54,12 +54,21 @@
     <Compile Include="Interface\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interface\frmParams.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\frmParams.Designer.cs">
+      <DependentUpon>frmParams.cs</DependentUpon>
+    </Compile>
     <Compile Include="Network\NetworkBrowser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Interface\frmMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\frmParams.resx">
+      <DependentUpon>frmParams.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -82,7 +91,10 @@
     </Compile>
     <Compile Include="PShell\pscript.cs" />
     <Compile Include="PShell\pseventargs.cs" />
+    <Compile Include="PShell\psexception.cs" />
     <Compile Include="PShell\pshell.cs" />
+    <Compile Include="PShell\psparameter.cs" />
+    <Compile Include="PShell\psparamtype.cs" />
     <Compile Include="Structures\computer.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -13,8 +13,10 @@ namespace siemdotnet.PShell
         #region " Private Variables "
         private RunspaceConfiguration rspaceconfig;
         private Runspace rspace;
-        private String scriptcontents;
+        private String scriptpath;
+        private List<psparameter> scriptparams;
         private StringBuilder rslts = new StringBuilder();
+        private psexception psexec = new psexception();
         #endregion
 
         #region " Public Events "
@@ -28,27 +30,29 @@ namespace siemdotnet.PShell
         }
 
         public void RunScript()
-        {            
+        {
             try
             {
                 rspaceconfig = RunspaceConfiguration.Create();
                 rspace = RunspaceFactory.CreateRunspace(rspaceconfig);
                 rspace.Open();
+                
+                scriptparams = CheckForParams(rspace, scriptpath);
+                Command pscmd = new Command(scriptpath);
 
-                RunspaceInvoke rsinvoke = new RunspaceInvoke(rspace);                
+                if (scriptparams != null)
+                {
+                    foreach (psparameter param in scriptparams)
+                    {
+                        CommandParameter prm = new CommandParameter(param.Name, param.Value ?? param.DefaultValue);
+                        pscmd.Parameters.Add(prm);
+                    }
+                }
+
                 Pipeline pline = rspace.CreatePipeline();
 
-                Command pscmd = new Command("C:\\pstest\\waucheck.ps1");
-
-                // Handle Params Here
-                CommandParameter kbs = new CommandParameter("kbs", "2862772");
-                CommandParameter comp = new CommandParameter("computer", "APT0xA");
-                pscmd.Parameters.Add(kbs);
-                pscmd.Parameters.Add(comp);
-
                 pline.Commands.Add(pscmd);
-                //pline.Commands.Add("Out-String");
-                
+
                 Collection<PSObject> rslt = pline.Invoke();
                 rspace.Close();
 
@@ -62,13 +66,123 @@ namespace siemdotnet.PShell
             }
             catch (Exception e)
             {
-                rslts.AppendLine("Script Failed to Run!\nError: " + e.Message);
+                rslts.AppendLine(psexec.psexceptionhandler(e));
             }
             OnScriptComplete(new pseventargs(rslts.ToString()));
         }
         #endregion
 
         #region " Private Methods "
+        private List<psparameter>CheckForParams(Runspace rspace, String scriptpath)
+        {
+            List<psparameter> parms = null;
+            psparamtype parm = new psparamtype();
+
+            Pipeline pline = rspace.CreatePipeline();
+
+            pline.Commands.AddScript("Get-Help " + scriptpath + " -full");
+            pline.Commands.Add("Out-String");
+
+            Collection<PSObject> rslt = pline.Invoke();
+            if (rslt != null)
+            {
+                if (rslt[0].ToString().Contains("PARAMETERS"))
+                {
+                    String[] lines = rslt[0].ToString().Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                    if (lines != null)
+                    {
+                        int idx = 0;
+                        bool found = false;
+                        do
+                        {
+                            String line = lines[idx];
+                            if(line == "PARAMETERS")
+                            {
+                                found = true;
+                            }
+                            idx++;
+                        }while( found == false && idx < lines.Length);
+
+                        if (found)
+                        {
+                            String line = "";
+                            do
+                            {
+                                line = lines[idx];
+                                if (line.Trim() != "" && line.Trim().Substring(0, 1) == "-")
+                                {
+                                    psparameter prm = new psparameter();
+                                    String param = line.Trim().Substring(1, line.Trim().Length - 1);
+                                    String[] paramparts = param.Split(' ');
+                                    prm.Name = paramparts[0].Trim();
+                                    prm.Type = GetTypeFromString(paramparts[1]);
+                                    idx++;
+                                    line = lines[idx];
+                                    prm.Description = line.Trim();
+                                    idx++;
+                                    idx++;
+                                    line = lines[idx];
+                                    if (line.Contains("true"))
+                                    { 
+                                        prm.Category = "Required";
+                                    }
+                                    else
+                                    {
+                                        prm.Category = "Optional";
+                                    }
+                                    idx++;
+                                    idx++;
+                                    line = lines[idx];
+                                    String defval = line.Replace("Default value", "").Trim();
+                                    if (defval != "")
+                                    {
+                                        if (defval.ToLower() == "true" || defval.ToLower() == "false")
+                                        {
+                                            prm.DefaultValue = bool.Parse(defval);
+                                        }
+                                        else 
+                                        {
+                                            prm.DefaultValue = defval;
+                                        }                                        
+                                    }
+                                    parm.Properties.Add(prm);
+                                }
+                                idx++;
+                            }while(line.Substring(0,1) == " " && idx < lines.Length);
+                        }
+                    }
+                }
+            }
+            pline.Commands.Clear();
+            pline.Dispose();
+
+            Interface.frmParams frm = new Interface.frmParams();
+            frm.SetParameters(parm);
+            if (frm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                parms = parm.Properties;
+            }
+            return parms;
+        }
+
+        private Type GetTypeFromString(String typename)
+        {
+            Type rtn = null;
+            switch (typename)
+            { 
+                case "<String>":
+                    rtn = typeof(string);
+                    break;
+                case "<Boolean>":
+                    rtn = typeof(Boolean);
+                    break;
+                default:
+                    rtn = typeof(Object);
+                    break;
+            }
+            return rtn;
+        }
+
         private void OnScriptComplete(pseventargs e)
         {
             EventHandler<pseventargs> handler = ScriptCompleted;
@@ -80,12 +194,14 @@ namespace siemdotnet.PShell
         #endregion
 
         #region " Public Properties "
-        public String ScriptContents
+        public String ScriptPath
         {
-            set
-            {
-                this.scriptcontents = value;
-            }
+            set { this.scriptpath = value;  }
+        }
+
+        public List<psparameter> Parameters
+        {
+            set { this.scriptparams = value; }
         }
 
         public String Results
