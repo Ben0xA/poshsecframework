@@ -10,7 +10,7 @@ namespace siemdotnet.PShell
     {
         #region " Public Properties "
 
-        #region " String "
+        #region " Parameter "
         [Category("Parameters"),
         Browsable(true),
         ReadOnly(false),
