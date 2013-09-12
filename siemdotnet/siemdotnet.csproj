@@ -93,8 +93,10 @@
     <Compile Include="PShell\pseventargs.cs" />
     <Compile Include="PShell\psexception.cs" />
     <Compile Include="PShell\pshell.cs" />
+    <Compile Include="PShell\psmethods.cs" />
     <Compile Include="PShell\psparameter.cs" />
     <Compile Include="PShell\psparamtype.cs" />
+    <Compile Include="PShell\psvariables.cs" />
     <Compile Include="Structures\computer.cs" />
   </ItemGroup>
   <ItemGroup>

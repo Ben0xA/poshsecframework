@@ -231,7 +231,6 @@ namespace siemdotnet
                 txtPShellOutput.Text += output;
                 txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
                 txtPShellOutput.ScrollToCaret();
-                tcSystem.SelectedTab = tbPowerShell;
             }
             
         }
@@ -258,8 +257,9 @@ namespace siemdotnet
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             PShell.pshell p = new PShell.pshell();
-            p.UIForm = this;
-            p.RunScript("waucheck");
+            p.ParentForm = this;
+            p.AlertListView = lvwAlerts;
+            p.RunScript("psftest");
         }
 
     }

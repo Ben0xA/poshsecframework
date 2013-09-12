@@ -53,7 +53,7 @@
             this.btnRun.TabIndex = 1;
             this.btnRun.Text = "&Run";
             this.btnRun.UseVisualStyleBackColor = true;
-            this.btnRun.Click += new System.EventHandler(this.button2_Click);
+            this.btnRun.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 

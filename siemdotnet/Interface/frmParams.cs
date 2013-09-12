@@ -21,7 +21,7 @@ namespace siemdotnet.Interface
             pgParams.SelectedObject = p;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnOK_Click(object sender, EventArgs e)
         {
             bool hasrequired = true;
             PShell.psparamtype p = (PShell.psparamtype)pgParams.SelectedObject;
@@ -40,7 +40,7 @@ namespace siemdotnet.Interface
             }
             else
             {
-                MessageBox.Show("There are required paramaters that are missing values. Please fill in all of the required values before proceeding.");
+                MessageBox.Show("There are required paramaters that are missing values. Please fill in all of the required parameters before proceeding.");
             }
         }
     }

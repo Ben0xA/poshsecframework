@@ -18,6 +18,7 @@ namespace siemdotnet.PShell
         private StringBuilder rslts = new StringBuilder();
         private psexception psexec = new psexception();
         private bool cancel = false;
+        private System.Windows.Forms.ListView lvw;
         #endregion
 
         #region " Public Events "
@@ -34,15 +35,20 @@ namespace siemdotnet.PShell
         {
             try
             {
+                rslts.AppendLine("Running script: " + scriptpath);
                 rspaceconfig = RunspaceConfiguration.Create();
                 rspace = RunspaceFactory.CreateRunspace(rspaceconfig);
                 rspace.Open();
-                
+                rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSRoot("PSRoot"));
+                rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSModRoot("PSModRoot"));
+                rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSFramework("PSFramework"));
+                rspace.SessionStateProxy.SetVariable("PSMessageBox", new psmethods.PSMessageBox());
+                rspace.SessionStateProxy.SetVariable("PSAlert", new psmethods.PSAlert(scriptpath, ref lvw));
+
                 scriptparams = CheckForParams(rspace, scriptpath);
                 if (!cancel)
                 {
                     Command pscmd = new Command(scriptpath);
-
                     if (scriptparams != null)
                     {
                         foreach (psparameter param in scriptparams)
@@ -53,12 +59,9 @@ namespace siemdotnet.PShell
                     }
 
                     Pipeline pline = rspace.CreatePipeline();
-
                     pline.Commands.Add(pscmd);
-
                     Collection<PSObject> rslt = pline.Invoke();
                     rspace.Close();
-
                     if (rslt != null)
                     {
                         foreach (PSObject po in rslt)
@@ -127,8 +130,7 @@ namespace siemdotnet.PShell
                                     idx++;
                                     line = lines[idx];
                                     prm.Description = line.Trim();
-                                    idx++;
-                                    idx++;
+                                    idx += 2;
                                     line = lines[idx];
                                     if (line.Contains("true"))
                                     { 
@@ -138,8 +140,7 @@ namespace siemdotnet.PShell
                                     {
                                         prm.Category = "Optional";
                                     }
-                                    idx++;
-                                    idx++;
+                                    idx += 2;
                                     line = lines[idx];
                                     String defval = line.Replace("Default value", "").Trim();
                                     if (defval != "")
@@ -221,10 +222,12 @@ namespace siemdotnet.PShell
 
         public String Results
         {
-            get 
-            {
-                return this.rslts.ToString();
-            }
+            get { return this.rslts.ToString(); }
+        }
+
+        public System.Windows.Forms.ListView AlertListView
+        {
+            set { lvw = value; }
         }
         #endregion
     }

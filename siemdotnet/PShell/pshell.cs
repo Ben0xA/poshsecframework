@@ -13,17 +13,19 @@ namespace siemdotnet.PShell
         #region " Private Variables "
         private String pspath;
         private frmMain frm;
+        private ListView lvw;
+        private pscript ps;
         #endregion
 
         #region " Public Methods "
         public pshell()
         {
             pspath = "C:\\pstest\\";
+            ps = new pscript();
         }
 
         public void Test()
         {
-            pscript ps = new pscript();
             ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
             Thread thd = new Thread(ps.Test);
             thd.Start();
@@ -34,7 +36,7 @@ namespace siemdotnet.PShell
             String spath = Path.Combine(pspath, ScriptName + ".ps1");
             if(File.Exists(spath))
             {
-                pscript ps = new pscript();
+                ps.AlertListView = lvw;
                 ps.ScriptPath = spath;
                 ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
                 Thread thd = new Thread(ps.RunScript);
@@ -48,18 +50,19 @@ namespace siemdotnet.PShell
         private void ScriptCompleted(object sender, EventArgs e)
         {
             pseventargs rslts = (pseventargs)e;
-            Console.WriteLine(rslts.Results);
             frm.DisplayOutput(rslts.Results);
         }
         #endregion
 
         #region " Public Properties "
-        public frmMain UIForm
+        public frmMain ParentForm
         {
-            set
-            {
-                frm = value; 
-            }
+            set { frm = value; }
+        }
+
+        public ListView AlertListView
+        {
+            set { lvw = value; }
         }
         #endregion
     }
