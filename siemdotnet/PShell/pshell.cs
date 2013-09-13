@@ -13,7 +13,6 @@ namespace siemdotnet.PShell
         #region " Private Variables "
         private String pspath;
         private frmMain frm;
-        private ListView lvw;
         private pscript ps;
         #endregion
 
@@ -36,12 +35,20 @@ namespace siemdotnet.PShell
             String spath = Path.Combine(pspath, ScriptName + ".ps1");
             if(File.Exists(spath))
             {
-                ps.AlertListView = lvw;
-                ps.ScriptPath = spath;
-                ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
-                Thread thd = new Thread(ps.RunScript);
-                thd.SetApartmentState(ApartmentState.STA);
-                thd.Start();               
+                try
+                {
+                    ps.ParentForm = frm;
+                    ps.ScriptPath = spath;
+                    ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
+                    Thread thd = new Thread(ps.RunScript);
+                    thd.SetApartmentState(ApartmentState.STA);
+                    thd.Start();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Unhandled exception in script function." + Environment.NewLine + e.Message + Environment.NewLine + "Stack Trace:" + Environment.NewLine + e.StackTrace);
+                }
+                              
             }
         }
         #endregion
@@ -58,11 +65,6 @@ namespace siemdotnet.PShell
         public frmMain ParentForm
         {
             set { frm = value; }
-        }
-
-        public ListView AlertListView
-        {
-            set { lvw = value; }
         }
         #endregion
     }

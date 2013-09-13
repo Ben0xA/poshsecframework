@@ -19,21 +19,17 @@ namespace siemdotnet.PShell
         public class PSAlert
         {
             private String scriptname = "";
-            private System.Windows.Forms.ListView lvw = null;
+            private frmMain frm = null;
 
-            public PSAlert(String ScriptName, ref System.Windows.Forms.ListView Parent)
+            public PSAlert(String ScriptName, frmMain ParentForm)
             {
                 scriptname = ScriptName;
-                lvw = Parent;
+                frm = ParentForm;
             }
 
             public void Add(String message, String severity)
             {
-                ListViewItem lvwitm = new ListViewItem();
-                lvwitm.Text = severity;
-                lvwitm.SubItems.Add(message);
-                lvwitm.SubItems.Add(scriptname);
-                lvw.Items.Add(lvwitm);
+                frm.AddAlert(message, severity, scriptname);
             }
         }
     }

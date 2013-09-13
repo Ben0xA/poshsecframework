@@ -234,6 +234,27 @@ namespace siemdotnet
             }
             
         }
+
+        public void AddAlert(String message, String severity, String scriptname)
+        {
+            if (this.InvokeRequired)
+            {
+                MethodInvoker del = delegate
+                {
+                    AddAlert(message, severity, scriptname);
+                };
+                this.Invoke(del);
+            }
+            else 
+            {
+                ListViewItem lvwitm = new ListViewItem();
+                lvwitm.Text = severity;
+                lvwitm.SubItems.Add(message);
+                lvwitm.SubItems.Add(scriptname);
+                lvwAlerts.Items.Add(lvwitm);
+                lvwAlerts_Update();
+            }
+        }
         #endregion
 
         #endregion
@@ -252,13 +273,19 @@ namespace siemdotnet
         }
         #endregion 
 
-        #endregion        
+        #region " List View "
+        private void lvwAlerts_Update()
+        {
+            tbpAlerts.Text = "Alerts (" + lvwAlerts.Items.Count.ToString() + ")";
+        }
+        #endregion
+
+        #endregion
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             PShell.pshell p = new PShell.pshell();
             p.ParentForm = this;
-            p.AlertListView = lvwAlerts;
             p.RunScript("psftest");
         }
 

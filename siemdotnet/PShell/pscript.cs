@@ -18,7 +18,7 @@ namespace siemdotnet.PShell
         private StringBuilder rslts = new StringBuilder();
         private psexception psexec = new psexception();
         private bool cancel = false;
-        private System.Windows.Forms.ListView lvw;
+        private frmMain frm = null;
         #endregion
 
         #region " Public Events "
@@ -43,7 +43,7 @@ namespace siemdotnet.PShell
                 rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSModRoot("PSModRoot"));
                 rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSFramework("PSFramework"));
                 rspace.SessionStateProxy.SetVariable("PSMessageBox", new psmethods.PSMessageBox());
-                rspace.SessionStateProxy.SetVariable("PSAlert", new psmethods.PSAlert(scriptpath, ref lvw));
+                rspace.SessionStateProxy.SetVariable("PSAlert", new psmethods.PSAlert(scriptpath, frm));
 
                 scriptparams = CheckForParams(rspace, scriptpath);
                 if (!cancel)
@@ -225,9 +225,9 @@ namespace siemdotnet.PShell
             get { return this.rslts.ToString(); }
         }
 
-        public System.Windows.Forms.ListView AlertListView
+        public frmMain ParentForm
         {
-            set { lvw = value; }
+            set { frm = value; }
         }
         #endregion
     }
