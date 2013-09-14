@@ -117,6 +117,18 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Images\psficon.ico" />
+    <None Include="Resources\dialog-error-4.png" />
+    <None Include="Resources\dialog-error-3.png" />
+    <None Include="Resources\dialog-information-4.png" />
+    <None Include="Resources\dialog-warning-3.png" />
+    <None Include="Resources\dialog-warning-2.png" />
+    <None Include="Resources\exclamation.png" />
+    <None Include="Resources\dialog-accept.png" />
+    <None Include="Resources\tag-green.png" />
+    <None Include="Resources\tag-blue.png" />
+    <None Include="Resources\tag-red.png" />
+    <None Include="Resources\edit-clear-list.png" />
+    <None Include="Resources\view-refresh-7.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

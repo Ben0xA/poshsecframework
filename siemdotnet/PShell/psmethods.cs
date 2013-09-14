@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace siemdotnet.PShell
 {
-    class psmethods
+    public class psmethods
     {
         public class PSMessageBox
         {
@@ -21,15 +21,24 @@ namespace siemdotnet.PShell
             private String scriptname = "";
             private frmMain frm = null;
 
+            public enum AlertType
+            { 
+                Information,
+                Error,
+                Warning,
+                Severe,
+                Critical
+            }
+
             public PSAlert(String ScriptName, frmMain ParentForm)
             {
                 scriptname = ScriptName;
                 frm = ParentForm;
             }
 
-            public void Add(String message, String severity)
+            public void Add(String message, AlertType alerttype)
             {
-                frm.AddAlert(message, severity, scriptname);
+                frm.AddAlert(message, alerttype, scriptname);
             }
         }
     }

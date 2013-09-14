@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.DirectoryServices;
 using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
@@ -22,6 +25,14 @@ namespace siemdotnet
             Local = 1,
             Domain
         }
+
+        enum LibraryImages
+        { 
+            Function,
+            Cmdlet,
+            Command,
+            Alias
+        }
         #endregion
 
         #region Load
@@ -29,7 +40,9 @@ namespace siemdotnet
         {
             InitializeComponent();
             scnr.ParentForm = this;
+            cmbLibraryTypes.SelectedIndex = 1;
             GetNetworks();
+            GetLibrary();
         }
         #endregion
 
@@ -229,30 +242,100 @@ namespace siemdotnet
             else
             {
                 txtPShellOutput.Text += output;
+                txtPShellOutput.Text += Environment.NewLine + "psf > ";
                 txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
                 txtPShellOutput.ScrollToCaret();
             }
             
         }
 
-        public void AddAlert(String message, String severity, String scriptname)
+        public void AddAlert(String message, PShell.psmethods.PSAlert.AlertType alerttype, String scriptname)
         {
             if (this.InvokeRequired)
             {
                 MethodInvoker del = delegate
                 {
-                    AddAlert(message, severity, scriptname);
+                    AddAlert(message, alerttype, scriptname);
                 };
                 this.Invoke(del);
             }
             else 
             {
                 ListViewItem lvwitm = new ListViewItem();
-                lvwitm.Text = severity;
+                lvwitm.Text = alerttype.ToString();
+                lvwitm.ImageIndex = (int)alerttype;
                 lvwitm.SubItems.Add(message);
                 lvwitm.SubItems.Add(scriptname);
                 lvwAlerts.Items.Add(lvwitm);
                 lvwAlerts_Update();
+            }
+        }
+
+        private void GetLibrary()
+        {
+            Runspace rspace = RunspaceFactory.CreateRunspace();
+            Pipeline pline = rspace.CreatePipeline();
+            rspace.Open();
+
+            pline.Commands.AddScript("Import-Module C:\\pstest\\Modules\\PoshSecFramework\\PoshSecFramework.psm1" + Environment.NewLine + "Get-Command");
+            Collection<PSObject> rslt = pline.Invoke();
+            rspace.Close();
+            if (rslt != null)
+            {
+                lvwLibrary.Items.Clear();
+                lvwLibrary.BeginUpdate();
+                foreach (PSObject po in rslt)
+                {
+                    ListViewItem lvw = null;
+                    switch(po.BaseObject.GetType().Name)
+                    {
+                        case "AliasInfo":
+                            AliasInfo ai = (AliasInfo)po.BaseObject;
+                            if (btnShowAliases.Checked)
+                            {
+                                lvw = new ListViewItem();
+                                lvw.Text = ai.Name;
+                                lvw.ToolTipText = ai.Name;
+                                lvw.SubItems.Add(ai.ModuleName);
+                                lvw.ImageIndex = (int)LibraryImages.Alias;                            
+                            }                            
+                            break;
+                        case "FunctionInfo":
+                            FunctionInfo fi = (FunctionInfo)po.BaseObject;
+                            if (btnShowFunctions.Checked)
+                            {
+                                lvw = new ListViewItem();
+                                lvw.Text = fi.Name;
+                                lvw.ToolTipText = fi.Name;
+                                lvw.SubItems.Add(fi.ModuleName);
+                                lvw.ImageIndex = (int)LibraryImages.Function;
+                            }                            
+                            break;
+                        case "CmdletInfo":
+                            CmdletInfo cmi = (CmdletInfo)po.BaseObject;
+                            if (btnShowCmdlets.Checked)
+                            {
+                                lvw = new ListViewItem();
+                                lvw.Text = cmi.Name;
+                                lvw.ToolTipText = cmi.Name;
+                                lvw.SubItems.Add(cmi.ModuleName);
+                                lvw.ImageIndex = (int)LibraryImages.Cmdlet;
+                            }
+                            break;
+                        default:
+                            Console.WriteLine(po.BaseObject.GetType().Name);
+                            break;
+                    }
+                    if (lvw != null && (cmbLibraryTypes.Text == "All" || cmbLibraryTypes.Text == lvw.SubItems[1].Text))
+                    {
+                        lvwLibrary.Items.Add(lvw);
+                    }
+                    else
+                    {
+                        lvw = null;
+                    }
+                }
+                lvwLibrary.EndUpdate();
             }
         }
         #endregion
@@ -288,6 +371,44 @@ namespace siemdotnet
             p.ParentForm = this;
             p.RunScript("psftest");
         }
+
+        private void btnLibraryRefresh_Click(object sender, EventArgs e)
+        {
+            GetLibrary();
+        }
+
+        private void btnShowAliases_Click(object sender, EventArgs e)
+        {
+            btnShowAliases.Checked = !btnShowAliases.Checked;
+            GetLibrary();
+        }
+
+        private void btnShowFunctions_Click(object sender, EventArgs e)
+        {
+            btnShowFunctions.Checked = !btnShowFunctions.Checked;
+            GetLibrary();
+        }
+
+        private void btnShowCmdlets_Click(object sender, EventArgs e)
+        {
+            btnShowCmdlets.Checked = !btnShowCmdlets.Checked;
+            GetLibrary();
+        }
+
+        private void cmbLibraryTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetLibrary();
+        }
+
+        private void btnClearAlerts_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to clear all of the alerts?", "Confirm", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            {
+                lvwAlerts.Items.Clear();
+                lvwAlerts_Update();
+            }
+        }
+
 
     }
 }
