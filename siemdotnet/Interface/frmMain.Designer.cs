@@ -29,10 +29,10 @@ namespace siemdotnet
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Local Network");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
-            treeNode3});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Local Network");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuScan = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,9 +42,28 @@ namespace siemdotnet
             this.lblsbSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbStatus = new System.Windows.Forms.ToolStripProgressBar();
             this.tbMain = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.pnlMain = new System.Windows.Forms.SplitContainer();
-            this.tvwNetworks = new System.Windows.Forms.TreeView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lvwScripts = new System.Windows.Forms.ListView();
+            this.chScriptName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imgList16 = new System.Windows.Forms.ImageList(this.components);
+            this.toolStrip4 = new System.Windows.Forms.ToolStrip();
+            this.splitter2 = new System.Windows.Forms.Splitter();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lvwCommands = new System.Windows.Forms.ListView();
+            this.chLibName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chLibModule = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imgListLibrary = new System.Windows.Forms.ImageList(this.components);
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.cmbLibraryTypes = new System.Windows.Forms.ToolStripComboBox();
+            this.btnLibraryRefresh = new System.Windows.Forms.ToolStripButton();
+            this.btnShowAliases = new System.Windows.Forms.ToolStripButton();
+            this.btnShowFunctions = new System.Windows.Forms.ToolStripButton();
+            this.btnShowCmdlets = new System.Windows.Forms.ToolStripButton();
+            this.tvwNetworks = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.pnlSystems = new System.Windows.Forms.SplitContainer();
             this.tcMain = new System.Windows.Forms.TabControl();
@@ -63,41 +82,25 @@ namespace siemdotnet
             this.waucheckps1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbpPowerShell = new System.Windows.Forms.TabPage();
             this.txtPShellOutput = new System.Windows.Forms.TextBox();
+            this.tbpSchedScripts = new System.Windows.Forms.TabPage();
             this.tcSystem = new System.Windows.Forms.TabControl();
             this.tbpAlerts = new System.Windows.Forms.TabPage();
             this.lvwAlerts = new System.Windows.Forms.ListView();
             this.chSeverity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chMessage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
-            this.tbpScripts = new System.Windows.Forms.TabPage();
             this.imgListAlerts = new System.Windows.Forms.ImageList(this.components);
-            this.imgListLibrary = new System.Windows.Forms.ImageList(this.components);
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.lvwLibrary = new System.Windows.Forms.ListView();
-            this.chLibName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chLibModule = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.cmbLibraryTypes = new System.Windows.Forms.ToolStripComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lvwScripts = new System.Windows.Forms.ListView();
-            this.chScriptName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStrip4 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnLibraryRefresh = new System.Windows.Forms.ToolStripButton();
-            this.btnShowAliases = new System.Windows.Forms.ToolStripButton();
-            this.btnShowFunctions = new System.Windows.Forms.ToolStripButton();
-            this.btnShowCmdlets = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.btnClearAlerts = new System.Windows.Forms.ToolStripButton();
             this.btnAlert_MarkResolved = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tslblDisplay = new System.Windows.Forms.ToolStripLabel();
             this.btnAlert_Delete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.tbpScripts = new System.Windows.Forms.TabPage();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -105,6 +108,9 @@ namespace siemdotnet
             this.pnlMain.Panel1.SuspendLayout();
             this.pnlMain.Panel2.SuspendLayout();
             this.pnlMain.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pnlSystems)).BeginInit();
             this.pnlSystems.Panel1.SuspendLayout();
             this.pnlSystems.Panel2.SuspendLayout();
@@ -116,9 +122,6 @@ namespace siemdotnet
             this.tcSystem.SuspendLayout();
             this.tbpAlerts.SuspendLayout();
             this.toolStrip3.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -187,12 +190,29 @@ namespace siemdotnet
             // 
             this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton4});
+            this.toolStripButton2});
             this.tbMain.Location = new System.Drawing.Point(0, 24);
             this.tbMain.Name = "tbMain";
             this.tbMain.Size = new System.Drawing.Size(1205, 25);
             this.tbMain.TabIndex = 2;
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::poshsecframework.Properties.Resources.Diagram;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::poshsecframework.Properties.Resources.ServerExecute;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "toolStripButton2";
             // 
             // pnlMain
             // 
@@ -203,6 +223,8 @@ namespace siemdotnet
             // pnlMain.Panel1
             // 
             this.pnlMain.Panel1.Controls.Add(this.panel1);
+            this.pnlMain.Panel1.Controls.Add(this.splitter2);
+            this.pnlMain.Panel1.Controls.Add(this.splitter1);
             this.pnlMain.Panel1.Controls.Add(this.panel2);
             this.pnlMain.Panel1.Controls.Add(this.tvwNetworks);
             this.pnlMain.Panel1.Controls.Add(this.toolStrip1);
@@ -214,6 +236,197 @@ namespace siemdotnet
             this.pnlMain.SplitterDistance = 245;
             this.pnlMain.TabIndex = 3;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lvwScripts);
+            this.panel1.Controls.Add(this.toolStrip4);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 151);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(245, 235);
+            this.panel1.TabIndex = 10;
+            // 
+            // lvwScripts
+            // 
+            this.lvwScripts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chScriptName});
+            this.lvwScripts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvwScripts.FullRowSelect = true;
+            this.lvwScripts.Location = new System.Drawing.Point(0, 25);
+            this.lvwScripts.Name = "lvwScripts";
+            this.lvwScripts.Size = new System.Drawing.Size(245, 210);
+            this.lvwScripts.SmallImageList = this.imgList16;
+            this.lvwScripts.TabIndex = 1;
+            this.lvwScripts.UseCompatibleStateImageBehavior = false;
+            this.lvwScripts.View = System.Windows.Forms.View.Details;
+            this.lvwScripts.DoubleClick += new System.EventHandler(this.lvwScripts_DoubleClick);
+            // 
+            // chScriptName
+            // 
+            this.chScriptName.Text = "Script Name";
+            this.chScriptName.Width = 220;
+            // 
+            // imgList16
+            // 
+            this.imgList16.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgList16.ImageStream")));
+            this.imgList16.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgList16.Images.SetKeyName(0, "FolderClosed.png");
+            this.imgList16.Images.SetKeyName(1, "FolderOpen.png");
+            this.imgList16.Images.SetKeyName(2, "Server.png");
+            this.imgList16.Images.SetKeyName(3, "Diagram.png");
+            this.imgList16.Images.SetKeyName(4, "psscript.ico");
+            this.imgList16.Images.SetKeyName(5, "view-calendar-tasks.png");
+            this.imgList16.Images.SetKeyName(6, "psficon.ico");
+            this.imgList16.Images.SetKeyName(7, "computer-server.png");
+            // 
+            // toolStrip4
+            // 
+            this.toolStrip4.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip4.Name = "toolStrip4";
+            this.toolStrip4.Size = new System.Drawing.Size(245, 25);
+            this.toolStrip4.TabIndex = 0;
+            this.toolStrip4.Text = "toolStrip4";
+            // 
+            // splitter2
+            // 
+            this.splitter2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitter2.Location = new System.Drawing.Point(0, 144);
+            this.splitter2.Name = "splitter2";
+            this.splitter2.Size = new System.Drawing.Size(245, 7);
+            this.splitter2.TabIndex = 9;
+            this.splitter2.TabStop = false;
+            // 
+            // splitter1
+            // 
+            this.splitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitter1.Location = new System.Drawing.Point(0, 386);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(245, 7);
+            this.splitter1.TabIndex = 8;
+            this.splitter1.TabStop = false;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.lvwCommands);
+            this.panel2.Controls.Add(this.toolStrip2);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 393);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(245, 181);
+            this.panel2.TabIndex = 7;
+            // 
+            // lvwCommands
+            // 
+            this.lvwCommands.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chLibName,
+            this.chLibModule});
+            this.lvwCommands.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvwCommands.FullRowSelect = true;
+            this.lvwCommands.Location = new System.Drawing.Point(0, 25);
+            this.lvwCommands.Name = "lvwCommands";
+            this.lvwCommands.ShowItemToolTips = true;
+            this.lvwCommands.Size = new System.Drawing.Size(245, 156);
+            this.lvwCommands.SmallImageList = this.imgListLibrary;
+            this.lvwCommands.TabIndex = 2;
+            this.lvwCommands.UseCompatibleStateImageBehavior = false;
+            this.lvwCommands.View = System.Windows.Forms.View.Details;
+            // 
+            // chLibName
+            // 
+            this.chLibName.Text = "Name";
+            this.chLibName.Width = 102;
+            // 
+            // chLibModule
+            // 
+            this.chLibModule.Text = "Module";
+            this.chLibModule.Width = 118;
+            // 
+            // imgListLibrary
+            // 
+            this.imgListLibrary.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListLibrary.ImageStream")));
+            this.imgListLibrary.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgListLibrary.Images.SetKeyName(0, "tag-blue.png");
+            this.imgListLibrary.Images.SetKeyName(1, "tag-green.png");
+            this.imgListLibrary.Images.SetKeyName(2, "tag-orange.png");
+            this.imgListLibrary.Images.SetKeyName(3, "tag-red.png");
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmbLibraryTypes,
+            this.btnLibraryRefresh,
+            this.btnShowAliases,
+            this.btnShowFunctions,
+            this.btnShowCmdlets});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(245, 25);
+            this.toolStrip2.TabIndex = 1;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // cmbLibraryTypes
+            // 
+            this.cmbLibraryTypes.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.cmbLibraryTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLibraryTypes.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.cmbLibraryTypes.Items.AddRange(new object[] {
+            "All",
+            "PoshSecFramework"});
+            this.cmbLibraryTypes.Name = "cmbLibraryTypes";
+            this.cmbLibraryTypes.Size = new System.Drawing.Size(121, 25);
+            this.cmbLibraryTypes.SelectedIndexChanged += new System.EventHandler(this.cmbLibraryTypes_SelectedIndexChanged);
+            // 
+            // btnLibraryRefresh
+            // 
+            this.btnLibraryRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLibraryRefresh.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.btnLibraryRefresh.Image = global::poshsecframework.Properties.Resources.view_refresh_7;
+            this.btnLibraryRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLibraryRefresh.Name = "btnLibraryRefresh";
+            this.btnLibraryRefresh.Size = new System.Drawing.Size(23, 22);
+            this.btnLibraryRefresh.Text = "Refresh";
+            this.btnLibraryRefresh.ToolTipText = "Refresh";
+            this.btnLibraryRefresh.Click += new System.EventHandler(this.btnLibraryRefresh_Click);
+            // 
+            // btnShowAliases
+            // 
+            this.btnShowAliases.Checked = true;
+            this.btnShowAliases.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnShowAliases.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowAliases.Image = global::poshsecframework.Properties.Resources.tag_red;
+            this.btnShowAliases.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowAliases.Name = "btnShowAliases";
+            this.btnShowAliases.Size = new System.Drawing.Size(23, 22);
+            this.btnShowAliases.ToolTipText = "Show Aliases";
+            this.btnShowAliases.Click += new System.EventHandler(this.btnShowAliases_Click);
+            // 
+            // btnShowFunctions
+            // 
+            this.btnShowFunctions.Checked = true;
+            this.btnShowFunctions.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnShowFunctions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowFunctions.Image = global::poshsecframework.Properties.Resources.tag_blue;
+            this.btnShowFunctions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowFunctions.Name = "btnShowFunctions";
+            this.btnShowFunctions.Size = new System.Drawing.Size(23, 22);
+            this.btnShowFunctions.Text = "toolStripButton5";
+            this.btnShowFunctions.ToolTipText = "Show Functions";
+            this.btnShowFunctions.Click += new System.EventHandler(this.btnShowFunctions_Click);
+            // 
+            // btnShowCmdlets
+            // 
+            this.btnShowCmdlets.Checked = true;
+            this.btnShowCmdlets.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnShowCmdlets.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowCmdlets.Image = global::poshsecframework.Properties.Resources.tag_green;
+            this.btnShowCmdlets.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowCmdlets.Name = "btnShowCmdlets";
+            this.btnShowCmdlets.Size = new System.Drawing.Size(23, 22);
+            this.btnShowCmdlets.Text = "toolStripButton6";
+            this.btnShowCmdlets.ToolTipText = "Show Cmdlets";
+            this.btnShowCmdlets.Click += new System.EventHandler(this.btnShowCmdlets_Click);
+            // 
             // tvwNetworks
             // 
             this.tvwNetworks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -224,29 +437,20 @@ namespace siemdotnet
             this.tvwNetworks.ImageList = this.imgList16;
             this.tvwNetworks.Location = new System.Drawing.Point(0, 25);
             this.tvwNetworks.Name = "tvwNetworks";
-            treeNode3.ImageKey = "Diagram.png";
-            treeNode3.Name = "ndNone";
-            treeNode3.SelectedImageKey = "Diagram.png";
-            treeNode3.Tag = "1";
-            treeNode3.Text = "Local Network";
-            treeNode4.Name = "ndNetwork";
-            treeNode4.Text = "Networks";
+            treeNode1.ImageKey = "Diagram.png";
+            treeNode1.Name = "ndNone";
+            treeNode1.SelectedImageKey = "Diagram.png";
+            treeNode1.Tag = "1";
+            treeNode1.Text = "Local Network";
+            treeNode2.Name = "ndNetwork";
+            treeNode2.Text = "Networks";
             this.tvwNetworks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4});
+            treeNode2});
             this.tvwNetworks.SelectedImageIndex = 1;
             this.tvwNetworks.ShowPlusMinus = false;
             this.tvwNetworks.ShowRootLines = false;
             this.tvwNetworks.Size = new System.Drawing.Size(245, 119);
             this.tvwNetworks.TabIndex = 5;
-            // 
-            // imgList16
-            // 
-            this.imgList16.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgList16.ImageStream")));
-            this.imgList16.TransparentColor = System.Drawing.Color.Transparent;
-            this.imgList16.Images.SetKeyName(0, "FolderClosed.png");
-            this.imgList16.Images.SetKeyName(1, "FolderOpen.png");
-            this.imgList16.Images.SetKeyName(2, "Server.png");
-            this.imgList16.Images.SetKeyName(3, "Diagram.png");
             // 
             // toolStrip1
             // 
@@ -279,7 +483,9 @@ namespace siemdotnet
             // 
             this.tcMain.Controls.Add(this.tbpSystems);
             this.tcMain.Controls.Add(this.tbpPowerShell);
+            this.tcMain.Controls.Add(this.tbpSchedScripts);
             this.tcMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcMain.ImageList = this.imgList16;
             this.tcMain.Location = new System.Drawing.Point(0, 0);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
@@ -289,10 +495,11 @@ namespace siemdotnet
             // tbpSystems
             // 
             this.tbpSystems.Controls.Add(this.lvwSystems);
-            this.tbpSystems.Location = new System.Drawing.Point(4, 22);
+            this.tbpSystems.ImageIndex = 7;
+            this.tbpSystems.Location = new System.Drawing.Point(4, 23);
             this.tbpSystems.Name = "tbpSystems";
             this.tbpSystems.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpSystems.Size = new System.Drawing.Size(948, 314);
+            this.tbpSystems.Size = new System.Drawing.Size(948, 313);
             this.tbpSystems.TabIndex = 0;
             this.tbpSystems.Text = "Systems";
             this.tbpSystems.UseVisualStyleBackColor = true;
@@ -314,7 +521,7 @@ namespace siemdotnet
             this.lvwSystems.FullRowSelect = true;
             this.lvwSystems.Location = new System.Drawing.Point(3, 3);
             this.lvwSystems.Name = "lvwSystems";
-            this.lvwSystems.Size = new System.Drawing.Size(942, 308);
+            this.lvwSystems.Size = new System.Drawing.Size(942, 307);
             this.lvwSystems.SmallImageList = this.imgList16;
             this.lvwSystems.TabIndex = 1;
             this.lvwSystems.UseCompatibleStateImageBehavior = false;
@@ -387,10 +594,11 @@ namespace siemdotnet
             // 
             this.tbpPowerShell.BackColor = System.Drawing.Color.SteelBlue;
             this.tbpPowerShell.Controls.Add(this.txtPShellOutput);
-            this.tbpPowerShell.Location = new System.Drawing.Point(4, 22);
+            this.tbpPowerShell.ImageIndex = 4;
+            this.tbpPowerShell.Location = new System.Drawing.Point(4, 23);
             this.tbpPowerShell.Name = "tbpPowerShell";
             this.tbpPowerShell.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpPowerShell.Size = new System.Drawing.Size(948, 314);
+            this.tbpPowerShell.Size = new System.Drawing.Size(948, 313);
             this.tbpPowerShell.TabIndex = 1;
             this.tbpPowerShell.Text = "PowerShell";
             // 
@@ -408,9 +616,20 @@ namespace siemdotnet
             this.txtPShellOutput.Name = "txtPShellOutput";
             this.txtPShellOutput.ReadOnly = true;
             this.txtPShellOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtPShellOutput.Size = new System.Drawing.Size(942, 308);
+            this.txtPShellOutput.Size = new System.Drawing.Size(942, 307);
             this.txtPShellOutput.TabIndex = 3;
             this.txtPShellOutput.Text = "psf > ";
+            // 
+            // tbpSchedScripts
+            // 
+            this.tbpSchedScripts.ImageIndex = 5;
+            this.tbpSchedScripts.Location = new System.Drawing.Point(4, 23);
+            this.tbpSchedScripts.Name = "tbpSchedScripts";
+            this.tbpSchedScripts.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpSchedScripts.Size = new System.Drawing.Size(948, 313);
+            this.tbpSchedScripts.TabIndex = 2;
+            this.tbpSchedScripts.Text = "Scheduled Scripts";
+            this.tbpSchedScripts.UseVisualStyleBackColor = true;
             // 
             // tcSystem
             // 
@@ -468,33 +687,6 @@ namespace siemdotnet
             this.chScript.Text = "Script";
             this.chScript.Width = 191;
             // 
-            // toolStrip3
-            // 
-            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnClearAlerts,
-            this.btnAlert_MarkResolved,
-            this.toolStripSeparator1,
-            this.btnAlert_Delete,
-            this.toolStripButton6,
-            this.toolStripButton7,
-            this.toolStripButton8,
-            this.toolStripButton9});
-            this.toolStrip3.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(942, 25);
-            this.toolStrip3.TabIndex = 0;
-            this.toolStrip3.Text = "toolStrip3";
-            // 
-            // tbpScripts
-            // 
-            this.tbpScripts.BackColor = System.Drawing.Color.Transparent;
-            this.tbpScripts.Location = new System.Drawing.Point(4, 4);
-            this.tbpScripts.Name = "tbpScripts";
-            this.tbpScripts.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpScripts.Size = new System.Drawing.Size(948, 204);
-            this.tbpScripts.TabIndex = 2;
-            this.tbpScripts.Text = "Active Scripts";
-            // 
             // imgListAlerts
             // 
             this.imgListAlerts.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListAlerts.ImageStream")));
@@ -505,162 +697,23 @@ namespace siemdotnet
             this.imgListAlerts.Images.SetKeyName(3, "dialog-warning-2.png");
             this.imgListAlerts.Images.SetKeyName(4, "exclamation.png");
             // 
-            // imgListLibrary
+            // toolStrip3
             // 
-            this.imgListLibrary.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListLibrary.ImageStream")));
-            this.imgListLibrary.TransparentColor = System.Drawing.Color.Transparent;
-            this.imgListLibrary.Images.SetKeyName(0, "tag-blue.png");
-            this.imgListLibrary.Images.SetKeyName(1, "tag-green.png");
-            this.imgListLibrary.Images.SetKeyName(2, "tag-orange.png");
-            this.imgListLibrary.Images.SetKeyName(3, "tag-red.png");
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.lvwLibrary);
-            this.panel2.Controls.Add(this.toolStrip2);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 393);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(245, 181);
-            this.panel2.TabIndex = 7;
-            // 
-            // lvwLibrary
-            // 
-            this.lvwLibrary.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chLibName,
-            this.chLibModule});
-            this.lvwLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvwLibrary.FullRowSelect = true;
-            this.lvwLibrary.Location = new System.Drawing.Point(0, 25);
-            this.lvwLibrary.Name = "lvwLibrary";
-            this.lvwLibrary.ShowItemToolTips = true;
-            this.lvwLibrary.Size = new System.Drawing.Size(245, 156);
-            this.lvwLibrary.SmallImageList = this.imgListLibrary;
-            this.lvwLibrary.TabIndex = 2;
-            this.lvwLibrary.UseCompatibleStateImageBehavior = false;
-            this.lvwLibrary.View = System.Windows.Forms.View.Details;
-            // 
-            // chLibName
-            // 
-            this.chLibName.Text = "Name";
-            this.chLibName.Width = 102;
-            // 
-            // chLibModule
-            // 
-            this.chLibModule.Text = "Module";
-            this.chLibModule.Width = 118;
-            // 
-            // toolStrip2
-            // 
-            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmbLibraryTypes,
-            this.btnLibraryRefresh,
-            this.btnShowAliases,
-            this.btnShowFunctions,
-            this.btnShowCmdlets});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(245, 25);
-            this.toolStrip2.TabIndex = 1;
-            this.toolStrip2.Text = "toolStrip2";
-            // 
-            // cmbLibraryTypes
-            // 
-            this.cmbLibraryTypes.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.cmbLibraryTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbLibraryTypes.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.cmbLibraryTypes.Items.AddRange(new object[] {
-            "All",
-            "PoshSecFramework"});
-            this.cmbLibraryTypes.Name = "cmbLibraryTypes";
-            this.cmbLibraryTypes.Size = new System.Drawing.Size(121, 25);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.lvwScripts);
-            this.panel1.Controls.Add(this.toolStrip4);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 144);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(245, 249);
-            this.panel1.TabIndex = 8;
-            // 
-            // lvwScripts
-            // 
-            this.lvwScripts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chScriptName});
-            this.lvwScripts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvwScripts.Location = new System.Drawing.Point(0, 25);
-            this.lvwScripts.Name = "lvwScripts";
-            this.lvwScripts.Size = new System.Drawing.Size(245, 224);
-            this.lvwScripts.TabIndex = 1;
-            this.lvwScripts.UseCompatibleStateImageBehavior = false;
-            this.lvwScripts.View = System.Windows.Forms.View.Details;
-            // 
-            // chScriptName
-            // 
-            this.chScriptName.Text = "Script Name";
-            this.chScriptName.Width = 220;
-            // 
-            // toolStrip4
-            // 
-            this.toolStrip4.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip4.Name = "toolStrip4";
-            this.toolStrip4.Size = new System.Drawing.Size(245, 25);
-            this.toolStrip4.TabIndex = 0;
-            this.toolStrip4.Text = "toolStrip4";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnLibraryRefresh
-            // 
-            this.btnLibraryRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnLibraryRefresh.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.btnLibraryRefresh.Image = global::poshsecframework.Properties.Resources.view_refresh_7;
-            this.btnLibraryRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLibraryRefresh.Name = "btnLibraryRefresh";
-            this.btnLibraryRefresh.Size = new System.Drawing.Size(23, 22);
-            this.btnLibraryRefresh.Text = "Refresh";
-            this.btnLibraryRefresh.ToolTipText = "Refresh";
-            // 
-            // btnShowAliases
-            // 
-            this.btnShowAliases.Checked = true;
-            this.btnShowAliases.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnShowAliases.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowAliases.Image = global::poshsecframework.Properties.Resources.tag_red;
-            this.btnShowAliases.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowAliases.Name = "btnShowAliases";
-            this.btnShowAliases.Size = new System.Drawing.Size(23, 22);
-            this.btnShowAliases.ToolTipText = "Show Aliases";
-            // 
-            // btnShowFunctions
-            // 
-            this.btnShowFunctions.Checked = true;
-            this.btnShowFunctions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnShowFunctions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowFunctions.Image = global::poshsecframework.Properties.Resources.tag_blue;
-            this.btnShowFunctions.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowFunctions.Name = "btnShowFunctions";
-            this.btnShowFunctions.Size = new System.Drawing.Size(23, 22);
-            this.btnShowFunctions.Text = "toolStripButton5";
-            this.btnShowFunctions.ToolTipText = "Show Functions";
-            // 
-            // btnShowCmdlets
-            // 
-            this.btnShowCmdlets.Checked = true;
-            this.btnShowCmdlets.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnShowCmdlets.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowCmdlets.Image = global::poshsecframework.Properties.Resources.tag_green;
-            this.btnShowCmdlets.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowCmdlets.Name = "btnShowCmdlets";
-            this.btnShowCmdlets.Size = new System.Drawing.Size(23, 22);
-            this.btnShowCmdlets.Text = "toolStripButton6";
-            this.btnShowCmdlets.ToolTipText = "Show Cmdlets";
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnClearAlerts,
+            this.btnAlert_MarkResolved,
+            this.toolStripSeparator1,
+            this.tslblDisplay,
+            this.btnAlert_Delete,
+            this.toolStripButton6,
+            this.toolStripButton7,
+            this.toolStripButton8,
+            this.toolStripButton9});
+            this.toolStrip3.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(942, 25);
+            this.toolStrip3.TabIndex = 0;
+            this.toolStrip3.Text = "toolStrip3";
             // 
             // btnClearAlerts
             // 
@@ -682,6 +735,17 @@ namespace siemdotnet
             this.btnAlert_MarkResolved.Size = new System.Drawing.Size(23, 22);
             this.btnAlert_MarkResolved.Text = "toolStripButton3";
             this.btnAlert_MarkResolved.ToolTipText = "Mark Resolved";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tslblDisplay
+            // 
+            this.tslblDisplay.Name = "tslblDisplay";
+            this.tslblDisplay.Size = new System.Drawing.Size(48, 22);
+            this.tslblDisplay.Text = "Display:";
             // 
             // btnAlert_Delete
             // 
@@ -739,33 +803,15 @@ namespace siemdotnet
             this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton9.Text = "toolStripButton9";
             // 
-            // toolStripButton1
+            // tbpScripts
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::poshsecframework.Properties.Resources.Diagram;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::poshsecframework.Properties.Resources.ServerExecute;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
-            // 
-            // toolStripButton4
-            // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton4.Text = "toolStripButton4";
-            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
+            this.tbpScripts.BackColor = System.Drawing.Color.Transparent;
+            this.tbpScripts.Location = new System.Drawing.Point(4, 4);
+            this.tbpScripts.Name = "tbpScripts";
+            this.tbpScripts.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpScripts.Size = new System.Drawing.Size(948, 204);
+            this.tbpScripts.TabIndex = 2;
+            this.tbpScripts.Text = "Active Scripts";
             // 
             // frmMain
             // 
@@ -793,6 +839,12 @@ namespace siemdotnet
             this.pnlMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pnlMain)).EndInit();
             this.pnlMain.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.pnlSystems.Panel1.ResumeLayout(false);
             this.pnlSystems.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pnlSystems)).EndInit();
@@ -807,12 +859,6 @@ namespace siemdotnet
             this.tbpAlerts.PerformLayout();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -841,7 +887,6 @@ namespace siemdotnet
         private System.Windows.Forms.ToolStripMenuItem powerShellToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem windowsUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem waucheckps1ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.TreeView tvwNetworks;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ListView lvwAlerts;
@@ -865,7 +910,7 @@ namespace siemdotnet
         private System.Windows.Forms.ImageList imgListAlerts;
         private System.Windows.Forms.ImageList imgListLibrary;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListView lvwLibrary;
+        private System.Windows.Forms.ListView lvwCommands;
         private System.Windows.Forms.ColumnHeader chLibName;
         private System.Windows.Forms.ColumnHeader chLibModule;
         private System.Windows.Forms.ToolStrip toolStrip2;
@@ -874,10 +919,6 @@ namespace siemdotnet
         private System.Windows.Forms.ToolStripButton btnShowAliases;
         private System.Windows.Forms.ToolStripButton btnShowFunctions;
         private System.Windows.Forms.ToolStripButton btnShowCmdlets;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ListView lvwScripts;
-        private System.Windows.Forms.ColumnHeader chScriptName;
-        private System.Windows.Forms.ToolStrip toolStrip4;
         private System.Windows.Forms.ToolStripButton btnAlert_MarkResolved;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnAlert_Delete;
@@ -885,6 +926,14 @@ namespace siemdotnet
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.ToolStripButton toolStripButton8;
         private System.Windows.Forms.ToolStripButton toolStripButton9;
+        private System.Windows.Forms.ToolStripLabel tslblDisplay;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ListView lvwScripts;
+        private System.Windows.Forms.ColumnHeader chScriptName;
+        private System.Windows.Forms.ToolStrip toolStrip4;
+        private System.Windows.Forms.Splitter splitter2;
+        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.TabPage tbpSchedScripts;
     }
 }
 

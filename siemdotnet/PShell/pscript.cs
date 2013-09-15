@@ -25,10 +25,35 @@ namespace siemdotnet.PShell
         public EventHandler<pseventargs> ScriptCompleted;
         #endregion
 
+        #region " Private Methods "
+        private void InitializeScript()
+        {
+            rspaceconfig = RunspaceConfiguration.Create();
+            rspace = RunspaceFactory.CreateRunspace(rspaceconfig);
+            rspace.Open();
+            rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSRoot("PSRoot"));
+            rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSModRoot("PSModRoot"));
+            rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSFramework("PSFramework"));
+            rspace.SessionStateProxy.SetVariable("PSMessageBox", new psmethods.PSMessageBox());
+            rspace.SessionStateProxy.SetVariable("PSAlert", new psmethods.PSAlert(scriptpath, frm));
+        }
+        #endregion
+
         #region " Public Methods "
         public void Test()
         {
             OnScriptComplete(new pseventargs("It worked!"));
+        }
+
+
+        public Collection<PSObject> GetCommand()
+        {
+            InitializeScript();
+            Pipeline pline = rspace.CreatePipeline();
+            pline.Commands.AddScript("Import-Module C:\\pstest\\Modules\\PoshSecFramework\\PoshSecFramework.psm1" + Environment.NewLine + "Get-Command");
+            Collection<PSObject> rslt = pline.Invoke();
+            rspace.Close();
+            return rslt;
         }
 
         public void RunScript()
@@ -36,15 +61,7 @@ namespace siemdotnet.PShell
             try
             {
                 rslts.AppendLine("Running script: " + scriptpath);
-                rspaceconfig = RunspaceConfiguration.Create();
-                rspace = RunspaceFactory.CreateRunspace(rspaceconfig);
-                rspace.Open();
-                rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSRoot("PSRoot"));
-                rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSModRoot("PSModRoot"));
-                rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSFramework("PSFramework"));
-                rspace.SessionStateProxy.SetVariable("PSMessageBox", new psmethods.PSMessageBox());
-                rspace.SessionStateProxy.SetVariable("PSAlert", new psmethods.PSAlert(scriptpath, frm));
-
+                InitializeScript();
                 scriptparams = CheckForParams(rspace, scriptpath);
                 if (!cancel)
                 {

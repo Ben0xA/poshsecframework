@@ -32,7 +32,7 @@ namespace siemdotnet.PShell
         
         public void RunScript(string ScriptName)
         {
-            String spath = Path.Combine(pspath, ScriptName + ".ps1");
+            String spath = Path.Combine(pspath, ScriptName);
             if(File.Exists(spath))
             {
                 try

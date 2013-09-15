@@ -8,8 +8,8 @@ using System.DirectoryServices;
 using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.Management.Automation;
-using System.Management.Automation.Runspaces;
 using System.Net;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -43,6 +43,7 @@ namespace siemdotnet
             cmbLibraryTypes.SelectedIndex = 1;
             GetNetworks();
             GetLibrary();
+            GetCommand();
         }
         #endregion
 
@@ -271,72 +272,107 @@ namespace siemdotnet
             }
         }
 
+        private void GetCommand()
+        {
+            try
+            {
+                PShell.pscript ps = new PShell.pscript();
+                Collection<PSObject> rslt = ps.GetCommand();
+                ps = null;
+                if (rslt != null)
+                {
+                    lvwCommands.Items.Clear();
+                    lvwCommands.BeginUpdate();
+                    foreach (PSObject po in rslt)
+                    {
+                        ListViewItem lvw = null;
+                        switch (po.BaseObject.GetType().Name)
+                        {
+                            case "AliasInfo":
+                                AliasInfo ai = (AliasInfo)po.BaseObject;
+                                if (btnShowAliases.Checked)
+                                {
+                                    lvw = new ListViewItem();
+                                    lvw.Text = ai.Name;
+                                    lvw.ToolTipText = ai.Name;
+                                    lvw.SubItems.Add(ai.ModuleName);
+                                    lvw.ImageIndex = (int)LibraryImages.Alias;
+                                }
+                                break;
+                            case "FunctionInfo":
+                                FunctionInfo fi = (FunctionInfo)po.BaseObject;
+                                if (btnShowFunctions.Checked)
+                                {
+                                    lvw = new ListViewItem();
+                                    lvw.Text = fi.Name;
+                                    lvw.ToolTipText = fi.Name;
+                                    lvw.SubItems.Add(fi.ModuleName);
+                                    lvw.ImageIndex = (int)LibraryImages.Function;
+                                }
+                                break;
+                            case "CmdletInfo":
+                                CmdletInfo cmi = (CmdletInfo)po.BaseObject;
+                                if (btnShowCmdlets.Checked)
+                                {
+                                    lvw = new ListViewItem();
+                                    lvw.Text = cmi.Name;
+                                    lvw.ToolTipText = cmi.Name;
+                                    lvw.SubItems.Add(cmi.ModuleName);
+                                    lvw.ImageIndex = (int)LibraryImages.Cmdlet;
+                                }
+                                break;
+                            default:
+                                Console.WriteLine(po.BaseObject.GetType().Name);
+                                break;
+                        }
+                        if (lvw != null && (cmbLibraryTypes.Text == "All" || cmbLibraryTypes.Text == lvw.SubItems[1].Text))
+                        {
+                            lvwCommands.Items.Add(lvw);
+                        }
+                        else
+                        {
+                            lvw = null;
+                        }
+                    }
+                    lvwCommands.EndUpdate();
+                }
+            }
+            catch (Exception e)
+            {
+                DisplayError(e);
+            }
+        }
+
         private void GetLibrary()
         {
-            Runspace rspace = RunspaceFactory.CreateRunspace();
-            Pipeline pline = rspace.CreatePipeline();
-            rspace.Open();
-
-            pline.Commands.AddScript("Import-Module C:\\pstest\\Modules\\PoshSecFramework\\PoshSecFramework.psm1" + Environment.NewLine + "Get-Command");
-            Collection<PSObject> rslt = pline.Invoke();
-            rspace.Close();
-            if (rslt != null)
+            try
             {
-                lvwLibrary.Items.Clear();
-                lvwLibrary.BeginUpdate();
-                foreach (PSObject po in rslt)
+                String scriptroot = "C:\\pstest\\"; // Get this variable from Settings.
+                String[] scpaths = Directory.GetFiles(scriptroot, "*.ps1", SearchOption.TopDirectoryOnly);
+                if (scpaths != null)
                 {
-                    ListViewItem lvw = null;
-                    switch(po.BaseObject.GetType().Name)
-                    {
-                        case "AliasInfo":
-                            AliasInfo ai = (AliasInfo)po.BaseObject;
-                            if (btnShowAliases.Checked)
-                            {
-                                lvw = new ListViewItem();
-                                lvw.Text = ai.Name;
-                                lvw.ToolTipText = ai.Name;
-                                lvw.SubItems.Add(ai.ModuleName);
-                                lvw.ImageIndex = (int)LibraryImages.Alias;                            
-                            }                            
-                            break;
-                        case "FunctionInfo":
-                            FunctionInfo fi = (FunctionInfo)po.BaseObject;
-                            if (btnShowFunctions.Checked)
-                            {
-                                lvw = new ListViewItem();
-                                lvw.Text = fi.Name;
-                                lvw.ToolTipText = fi.Name;
-                                lvw.SubItems.Add(fi.ModuleName);
-                                lvw.ImageIndex = (int)LibraryImages.Function;
-                            }                            
-                            break;
-                        case "CmdletInfo":
-                            CmdletInfo cmi = (CmdletInfo)po.BaseObject;
-                            if (btnShowCmdlets.Checked)
-                            {
-                                lvw = new ListViewItem();
-                                lvw.Text = cmi.Name;
-                                lvw.ToolTipText = cmi.Name;
-                                lvw.SubItems.Add(cmi.ModuleName);
-                                lvw.ImageIndex = (int)LibraryImages.Cmdlet;
-                            }
-                            break;
-                        default:
-                            Console.WriteLine(po.BaseObject.GetType().Name);
-                            break;
-                    }
-                    if (lvw != null && (cmbLibraryTypes.Text == "All" || cmbLibraryTypes.Text == lvw.SubItems[1].Text))
-                    {
-                        lvwLibrary.Items.Add(lvw);
-                    }
-                    else
-                    {
-                        lvw = null;
+                    foreach (String scpath in scpaths)
+                    { 
+                        ListViewItem lvw = new ListViewItem();
+                        lvw.Text = new FileInfo(scpath).Name;
+                        lvw.ImageIndex = 4;
+                        lvw.Tag = scpath;
+                        lvwScripts.Items.Add(lvw);
                     }
                 }
-                lvwLibrary.EndUpdate();
             }
+            catch (Exception e)
+            {
+                DisplayError(e);
+            }
+        }
+        #endregion
+
+        #region " Display Error "
+        private void DisplayError(Exception e)
+        {
+            DisplayOutput(Environment.NewLine + "Unhandled exception." + Environment.NewLine + e.Message + Environment.NewLine + "Stack Trace:" + Environment.NewLine + e.StackTrace);
+            tcMain.SelectedTab = tbpPowerShell;
         }
         #endregion
 
@@ -364,40 +400,33 @@ namespace siemdotnet
         #endregion
 
         #endregion
-
-        private void toolStripButton4_Click(object sender, EventArgs e)
-        {
-            PShell.pshell p = new PShell.pshell();
-            p.ParentForm = this;
-            p.RunScript("psftest");
-        }
-
+        
         private void btnLibraryRefresh_Click(object sender, EventArgs e)
         {
-            GetLibrary();
+            GetCommand();
         }
 
         private void btnShowAliases_Click(object sender, EventArgs e)
         {
             btnShowAliases.Checked = !btnShowAliases.Checked;
-            GetLibrary();
+            GetCommand();
         }
 
         private void btnShowFunctions_Click(object sender, EventArgs e)
         {
             btnShowFunctions.Checked = !btnShowFunctions.Checked;
-            GetLibrary();
+            GetCommand();
         }
 
         private void btnShowCmdlets_Click(object sender, EventArgs e)
         {
             btnShowCmdlets.Checked = !btnShowCmdlets.Checked;
-            GetLibrary();
+            GetCommand();
         }
 
         private void cmbLibraryTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GetLibrary();
+            GetCommand();
         }
 
         private void btnClearAlerts_Click(object sender, EventArgs e)
@@ -406,6 +435,18 @@ namespace siemdotnet
             {
                 lvwAlerts.Items.Clear();
                 lvwAlerts_Update();
+            }
+        }
+
+        private void lvwScripts_DoubleClick(object sender, EventArgs e)
+        {
+            if (lvwScripts.SelectedItems.Count > 0)
+            {
+                ListViewItem lvw = lvwScripts.SelectedItems[0];
+                PShell.pshell p = new PShell.pshell();
+                p.ParentForm = this;
+                p.RunScript(lvw.Text);
+                p = null;
             }
         }
 
