@@ -11,12 +11,14 @@ using System.Management.Automation;
 using System.Net;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace siemdotnet
 {
     public partial class frmMain : Form
     {
+
         #region Private Variables 
         Network.NetworkBrowser scnr = new Network.NetworkBrowser();
 
@@ -230,13 +232,13 @@ namespace siemdotnet
         #endregion
 
         #region "PowerShell"
-        public void DisplayOutput(String output)
+        public void DisplayOutput(String output, ListViewItem lvw)
         {
             if (this.InvokeRequired)
             {
                 MethodInvoker del = delegate
                 {
-                    DisplayOutput(output);
+                    DisplayOutput(output, lvw);
                 };
                 this.Invoke(del);
             }
@@ -246,6 +248,10 @@ namespace siemdotnet
                 txtPShellOutput.Text += Environment.NewLine + "psf > ";
                 txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
                 txtPShellOutput.ScrollToCaret();
+                if (lvw != null)
+                {
+                    lvw.Remove();
+                }                
             }
             
         }
@@ -262,13 +268,36 @@ namespace siemdotnet
             }
             else 
             {
-                ListViewItem lvwitm = new ListViewItem();
-                lvwitm.Text = alerttype.ToString();
-                lvwitm.ImageIndex = (int)alerttype;
-                lvwitm.SubItems.Add(message);
-                lvwitm.SubItems.Add(scriptname);
-                lvwAlerts.Items.Add(lvwitm);
-                lvwAlerts_Update();
+                try
+                {
+                    ListViewItem lvwitm = new ListViewItem();
+                    lvwitm.Text = alerttype.ToString();
+                    lvwitm.ImageIndex = (int)alerttype;
+                    lvwitm.SubItems.Add(message);
+                    lvwitm.SubItems.Add(scriptname);
+                    lvwAlerts.Items.Add(lvwitm);
+                    lvwAlerts_Update();
+                }
+                catch (Exception e)
+                {
+                    DisplayError(e);
+                }                
+            }
+        }
+
+        public void AddActiveScript(ListViewItem lvw)
+        {
+            if (this.InvokeRequired)
+            {
+                MethodInvoker del = delegate
+                {
+                    AddActiveScript(lvw);
+                };
+                this.Invoke(del);
+            }
+            else
+            {
+                lvwActiveScripts.Items.Add(lvw);
             }
         }
 
@@ -371,7 +400,7 @@ namespace siemdotnet
         #region " Display Error "
         private void DisplayError(Exception e)
         {
-            DisplayOutput(Environment.NewLine + "Unhandled exception." + Environment.NewLine + e.Message + Environment.NewLine + "Stack Trace:" + Environment.NewLine + e.StackTrace);
+            DisplayOutput(Environment.NewLine + "Unhandled exception." + Environment.NewLine + e.Message + Environment.NewLine + "Stack Trace:" + Environment.NewLine + e.StackTrace, null);
             tcMain.SelectedTab = tbpPowerShell;
         }
         #endregion
@@ -392,15 +421,26 @@ namespace siemdotnet
         }
         #endregion 
 
-        #region " List View "
+        #region List View
         private void lvwAlerts_Update()
         {
             tbpAlerts.Text = "Alerts (" + lvwAlerts.Items.Count.ToString() + ")";
         }
+
+        private void lvwScripts_DoubleClick(object sender, EventArgs e)
+        {
+            if (lvwScripts.SelectedItems.Count > 0)
+            {
+                ListViewItem lvw = lvwScripts.SelectedItems[0];
+                PShell.pshell p = new PShell.pshell();
+                p.ParentForm = this;
+                p.RunScript(lvw.Text);
+                p = null;
+            }
+        }
         #endregion
 
-        #endregion
-        
+        #region Button Clicks
         private void btnLibraryRefresh_Click(object sender, EventArgs e)
         {
             GetCommand();
@@ -424,9 +464,27 @@ namespace siemdotnet
             GetCommand();
         }
 
-        private void cmbLibraryTypes_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmnuActiveScripts_Opening(object sender, CancelEventArgs e)
         {
-            GetCommand();
+            if (lvwActiveScripts.SelectedItems.Count == 0)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void cmbtnCancelScript_Click(object sender, EventArgs e)
+        {
+            if (lvwActiveScripts.SelectedItems.Count > 0)
+            {
+                ListViewItem lvw = lvwActiveScripts.SelectedItems[0];
+                Thread thd = (Thread)lvw.Tag;
+                thd.Abort();
+                lvw.SubItems[1].Text = "Aborting... ThreadState = " + thd.ThreadState.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Please select an active script.");
+            }
         }
 
         private void btnClearAlerts_Click(object sender, EventArgs e)
@@ -437,19 +495,16 @@ namespace siemdotnet
                 lvwAlerts_Update();
             }
         }
+        #endregion
 
-        private void lvwScripts_DoubleClick(object sender, EventArgs e)
+        #region ComboBox Events
+        private void cmbLibraryTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lvwScripts.SelectedItems.Count > 0)
-            {
-                ListViewItem lvw = lvwScripts.SelectedItems[0];
-                PShell.pshell p = new PShell.pshell();
-                p.ParentForm = this;
-                p.RunScript(lvw.Text);
-                p = null;
-            }
+            GetCommand();
         }
-
-
+        #endregion
+        
+        #endregion
+        
     }
 }

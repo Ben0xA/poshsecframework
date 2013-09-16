@@ -5,6 +5,8 @@ using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace siemdotnet.PShell
 {
@@ -19,6 +21,7 @@ namespace siemdotnet.PShell
         private psexception psexec = new psexception();
         private bool cancel = false;
         private frmMain frm = null;
+        private ListViewItem scriptlvw;
         #endregion
 
         #region " Public Events "
@@ -42,7 +45,7 @@ namespace siemdotnet.PShell
         #region " Public Methods "
         public void Test()
         {
-            OnScriptComplete(new pseventargs("It worked!"));
+            OnScriptComplete(new pseventargs("It worked!", null));
         }
 
 
@@ -92,11 +95,18 @@ namespace siemdotnet.PShell
                     rslts.AppendLine("Script cancelled by user.");
                 }
             }
+            catch (ThreadAbortException thde)
+            {
+                rslts.AppendLine("Script cancelled by user." + Environment.NewLine + thde.Message);
+            }
             catch (Exception e)
             {
                 rslts.AppendLine(psexec.psexceptionhandler(e));
             }
-            OnScriptComplete(new pseventargs(rslts.ToString()));
+            finally
+            {
+                OnScriptComplete(new pseventargs(rslts.ToString(), scriptlvw));
+            }            
         }
         #endregion
 
@@ -245,6 +255,11 @@ namespace siemdotnet.PShell
         public frmMain ParentForm
         {
             set { frm = value; }
+        }
+
+        public ListViewItem ScriptListView
+        {
+            set { scriptlvw = value; }
         }
         #endregion
     }

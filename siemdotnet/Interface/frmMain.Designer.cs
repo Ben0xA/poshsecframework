@@ -30,9 +30,9 @@ namespace siemdotnet
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Local Network");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Local Network");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
+            treeNode3});
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuScan = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +101,12 @@ namespace siemdotnet
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.tbpScripts = new System.Windows.Forms.TabPage();
+            this.toolStrip5 = new System.Windows.Forms.ToolStrip();
+            this.lvwActiveScripts = new System.Windows.Forms.ListView();
+            this.chActScrScriptName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chActScrStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cmnuActiveScripts = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmbtnCancelScript = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -122,6 +128,8 @@ namespace siemdotnet
             this.tcSystem.SuspendLayout();
             this.tbpAlerts.SuspendLayout();
             this.toolStrip3.SuspendLayout();
+            this.tbpScripts.SuspendLayout();
+            this.cmnuActiveScripts.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -217,6 +225,7 @@ namespace siemdotnet
             // pnlMain
             // 
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.pnlMain.Location = new System.Drawing.Point(0, 49);
             this.pnlMain.Name = "pnlMain";
             // 
@@ -437,15 +446,15 @@ namespace siemdotnet
             this.tvwNetworks.ImageList = this.imgList16;
             this.tvwNetworks.Location = new System.Drawing.Point(0, 25);
             this.tvwNetworks.Name = "tvwNetworks";
-            treeNode1.ImageKey = "Diagram.png";
-            treeNode1.Name = "ndNone";
-            treeNode1.SelectedImageKey = "Diagram.png";
-            treeNode1.Tag = "1";
-            treeNode1.Text = "Local Network";
-            treeNode2.Name = "ndNetwork";
-            treeNode2.Text = "Networks";
+            treeNode3.ImageKey = "Diagram.png";
+            treeNode3.Name = "ndNone";
+            treeNode3.SelectedImageKey = "Diagram.png";
+            treeNode3.Tag = "1";
+            treeNode3.Text = "Local Network";
+            treeNode4.Name = "ndNetwork";
+            treeNode4.Text = "Networks";
             this.tvwNetworks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode4});
             this.tvwNetworks.SelectedImageIndex = 1;
             this.tvwNetworks.ShowPlusMinus = false;
             this.tvwNetworks.ShowRootLines = false;
@@ -806,12 +815,64 @@ namespace siemdotnet
             // tbpScripts
             // 
             this.tbpScripts.BackColor = System.Drawing.Color.Transparent;
+            this.tbpScripts.Controls.Add(this.lvwActiveScripts);
+            this.tbpScripts.Controls.Add(this.toolStrip5);
             this.tbpScripts.Location = new System.Drawing.Point(4, 4);
             this.tbpScripts.Name = "tbpScripts";
             this.tbpScripts.Padding = new System.Windows.Forms.Padding(3);
             this.tbpScripts.Size = new System.Drawing.Size(948, 204);
             this.tbpScripts.TabIndex = 2;
             this.tbpScripts.Text = "Active Scripts";
+            // 
+            // toolStrip5
+            // 
+            this.toolStrip5.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip5.Name = "toolStrip5";
+            this.toolStrip5.Size = new System.Drawing.Size(942, 25);
+            this.toolStrip5.TabIndex = 0;
+            this.toolStrip5.Text = "toolStrip5";
+            // 
+            // lvwActiveScripts
+            // 
+            this.lvwActiveScripts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chActScrScriptName,
+            this.chActScrStatus});
+            this.lvwActiveScripts.ContextMenuStrip = this.cmnuActiveScripts;
+            this.lvwActiveScripts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvwActiveScripts.Location = new System.Drawing.Point(3, 28);
+            this.lvwActiveScripts.Name = "lvwActiveScripts";
+            this.lvwActiveScripts.Size = new System.Drawing.Size(942, 173);
+            this.lvwActiveScripts.SmallImageList = this.imgList16;
+            this.lvwActiveScripts.TabIndex = 1;
+            this.lvwActiveScripts.UseCompatibleStateImageBehavior = false;
+            this.lvwActiveScripts.View = System.Windows.Forms.View.Details;
+            // 
+            // chActScrScriptName
+            // 
+            this.chActScrScriptName.Text = "Script Name";
+            this.chActScrScriptName.Width = 185;
+            // 
+            // chActScrStatus
+            // 
+            this.chActScrStatus.Text = "Status";
+            this.chActScrStatus.Width = 242;
+            // 
+            // cmnuActiveScripts
+            // 
+            this.cmnuActiveScripts.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.cmnuActiveScripts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmbtnCancelScript});
+            this.cmnuActiveScripts.Name = "cmnuActiveScripts";
+            this.cmnuActiveScripts.Size = new System.Drawing.Size(153, 48);
+            this.cmnuActiveScripts.Opening += new System.ComponentModel.CancelEventHandler(this.cmnuActiveScripts_Opening);
+            // 
+            // cmbtnCancelScript
+            // 
+            this.cmbtnCancelScript.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.cmbtnCancelScript.Name = "cmbtnCancelScript";
+            this.cmbtnCancelScript.Size = new System.Drawing.Size(152, 22);
+            this.cmbtnCancelScript.Text = "Cancel Script";
+            this.cmbtnCancelScript.Click += new System.EventHandler(this.cmbtnCancelScript_Click);
             // 
             // frmMain
             // 
@@ -859,6 +920,9 @@ namespace siemdotnet
             this.tbpAlerts.PerformLayout();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
+            this.tbpScripts.ResumeLayout(false);
+            this.tbpScripts.PerformLayout();
+            this.cmnuActiveScripts.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -934,6 +998,12 @@ namespace siemdotnet
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.TabPage tbpSchedScripts;
+        private System.Windows.Forms.ListView lvwActiveScripts;
+        private System.Windows.Forms.ToolStrip toolStrip5;
+        private System.Windows.Forms.ColumnHeader chActScrScriptName;
+        private System.Windows.Forms.ColumnHeader chActScrStatus;
+        private System.Windows.Forms.ContextMenuStrip cmnuActiveScripts;
+        private System.Windows.Forms.ToolStripMenuItem cmbtnCancelScript;
     }
 }
 

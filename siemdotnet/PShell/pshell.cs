@@ -37,11 +37,21 @@ namespace siemdotnet.PShell
             {
                 try
                 {
+                    ListViewItem lvw = new ListViewItem();
+                    lvw.Text = ScriptName;
+                    lvw.SubItems.Add("Running...");
+                    lvw.ImageIndex = 4;
+
                     ps.ParentForm = frm;
                     ps.ScriptPath = spath;
+                    ps.ScriptListView = lvw;
                     ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
+                    
                     Thread thd = new Thread(ps.RunScript);
                     thd.SetApartmentState(ApartmentState.STA);
+                    lvw.Tag = thd;
+
+                    frm.AddActiveScript(lvw);
                     thd.Start();
                 }
                 catch (Exception e)
@@ -57,7 +67,7 @@ namespace siemdotnet.PShell
         private void ScriptCompleted(object sender, EventArgs e)
         {
             pseventargs rslts = (pseventargs)e;
-            frm.DisplayOutput(rslts.Results);
+            frm.DisplayOutput(rslts.Results, rslts.ScriptListView);
         }
         #endregion
 
