@@ -101,12 +101,12 @@ namespace siemdotnet
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.tbpScripts = new System.Windows.Forms.TabPage();
-            this.toolStrip5 = new System.Windows.Forms.ToolStrip();
             this.lvwActiveScripts = new System.Windows.Forms.ListView();
             this.chActScrScriptName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chActScrStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmnuActiveScripts = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmbtnCancelScript = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip5 = new System.Windows.Forms.ToolStrip();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -339,6 +339,7 @@ namespace siemdotnet
             this.lvwCommands.TabIndex = 2;
             this.lvwCommands.UseCompatibleStateImageBehavior = false;
             this.lvwCommands.View = System.Windows.Forms.View.Details;
+            this.lvwCommands.DoubleClick += new System.EventHandler(this.lvwCommands_DoubleClick);
             // 
             // chLibName
             // 
@@ -824,14 +825,6 @@ namespace siemdotnet
             this.tbpScripts.TabIndex = 2;
             this.tbpScripts.Text = "Active Scripts";
             // 
-            // toolStrip5
-            // 
-            this.toolStrip5.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip5.Name = "toolStrip5";
-            this.toolStrip5.Size = new System.Drawing.Size(942, 25);
-            this.toolStrip5.TabIndex = 0;
-            this.toolStrip5.Text = "toolStrip5";
-            // 
             // lvwActiveScripts
             // 
             this.lvwActiveScripts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -863,16 +856,24 @@ namespace siemdotnet
             this.cmnuActiveScripts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cmbtnCancelScript});
             this.cmnuActiveScripts.Name = "cmnuActiveScripts";
-            this.cmnuActiveScripts.Size = new System.Drawing.Size(153, 48);
+            this.cmnuActiveScripts.Size = new System.Drawing.Size(137, 26);
             this.cmnuActiveScripts.Opening += new System.ComponentModel.CancelEventHandler(this.cmnuActiveScripts_Opening);
             // 
             // cmbtnCancelScript
             // 
             this.cmbtnCancelScript.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.cmbtnCancelScript.Name = "cmbtnCancelScript";
-            this.cmbtnCancelScript.Size = new System.Drawing.Size(152, 22);
+            this.cmbtnCancelScript.Size = new System.Drawing.Size(136, 22);
             this.cmbtnCancelScript.Text = "Cancel Script";
             this.cmbtnCancelScript.Click += new System.EventHandler(this.cmbtnCancelScript_Click);
+            // 
+            // toolStrip5
+            // 
+            this.toolStrip5.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip5.Name = "toolStrip5";
+            this.toolStrip5.Size = new System.Drawing.Size(942, 25);
+            this.toolStrip5.TabIndex = 0;
+            this.toolStrip5.Text = "toolStrip5";
             // 
             // frmMain
             // 

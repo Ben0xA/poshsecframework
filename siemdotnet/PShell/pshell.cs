@@ -30,20 +30,28 @@ namespace siemdotnet.PShell
             thd.Start();
         }
         
-        public void RunScript(string ScriptName)
+        public void Run(string ScriptCommand, bool IsCommand = false)
         {
-            String spath = Path.Combine(pspath, ScriptName);
-            if(File.Exists(spath))
+            String spath = Path.Combine(pspath, ScriptCommand);
+            if(IsCommand || File.Exists(spath))
             {
                 try
                 {
                     ListViewItem lvw = new ListViewItem();
-                    lvw.Text = ScriptName;
+                    lvw.Text = ScriptCommand;
                     lvw.SubItems.Add("Running...");
                     lvw.ImageIndex = 4;
 
                     ps.ParentForm = frm;
-                    ps.ScriptPath = spath;
+                    if (IsCommand)
+                    {
+                        ps.Script = ScriptCommand;
+                    }
+                    else
+                    {
+                        ps.Script = spath;
+                    }
+                    ps.IsCommand = IsCommand;
                     ps.ScriptListView = lvw;
                     ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
                     

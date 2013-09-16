@@ -434,7 +434,19 @@ namespace siemdotnet
                 ListViewItem lvw = lvwScripts.SelectedItems[0];
                 PShell.pshell p = new PShell.pshell();
                 p.ParentForm = this;
-                p.RunScript(lvw.Text);
+                p.Run(lvw.Text);
+                p = null;
+            }
+        }
+
+        private void lvwCommands_DoubleClick(object sender, EventArgs e)
+        {
+            if (lvwCommands.SelectedItems.Count > 0)
+            {
+                ListViewItem lvw = lvwCommands.SelectedItems[0];
+                PShell.pshell p = new PShell.pshell();
+                p.ParentForm = this;
+                p.Run(lvw.Text, true);
                 p = null;
             }
         }
@@ -503,8 +515,8 @@ namespace siemdotnet
             GetCommand();
         }
         #endregion
-        
+
         #endregion
-        
+
     }
 }

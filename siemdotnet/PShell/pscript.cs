@@ -15,7 +15,8 @@ namespace siemdotnet.PShell
         #region " Private Variables "
         private RunspaceConfiguration rspaceconfig;
         private Runspace rspace;
-        private String scriptpath;
+        private String scriptcommand;
+        private bool iscommand = false;
         private List<psparameter> scriptparams;
         private StringBuilder rslts = new StringBuilder();
         private psexception psexec = new psexception();
@@ -38,7 +39,7 @@ namespace siemdotnet.PShell
             rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSModRoot("PSModRoot"));
             rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSFramework("PSFramework"));
             rspace.SessionStateProxy.SetVariable("PSMessageBox", new psmethods.PSMessageBox());
-            rspace.SessionStateProxy.SetVariable("PSAlert", new psmethods.PSAlert(scriptpath, frm));
+            rspace.SessionStateProxy.SetVariable("PSAlert", new psmethods.PSAlert(scriptcommand, frm));
         }
         #endregion
 
@@ -62,29 +63,46 @@ namespace siemdotnet.PShell
             GC.Collect();
             return rslt;
         }
-
+        
         public void RunScript()
         {
             Pipeline pline = null;
             try
             {
-                rslts.AppendLine("Running script: " + scriptpath);
+                if (iscommand)
+                {
+                    rslts.AppendLine("Running command: " + scriptcommand);
+                }
+                else
+                {
+                    rslts.AppendLine("Running script: " + scriptcommand);
+                }
                 InitializeScript();
-                scriptparams = CheckForParams(rspace, scriptpath);
+                scriptparams = CheckForParams(rspace, scriptcommand);
                 if (!cancel)
                 {
-                    Command pscmd = new Command(scriptpath);
+                    Command pscmd = new Command(scriptcommand);
+                    String cmdparams = "";
                     if (scriptparams != null)
-                    {
+                    {                        
                         foreach (psparameter param in scriptparams)
                         {
                             CommandParameter prm = new CommandParameter(param.Name, param.Value ?? param.DefaultValue);
                             pscmd.Parameters.Add(prm);
+                            cmdparams += " -" + param.Name + " " + param.Value;
                         }
                     }
 
                     pline = rspace.CreatePipeline();
-                    pline.Commands.Add(pscmd);
+                    if (iscommand)
+                    {
+                        String cmdscript = "Import-Module $PSFramework" + Environment.NewLine + scriptcommand + cmdparams;
+                        pline.Commands.AddScript(cmdscript);
+                    }
+                    else
+                    {
+                        pline.Commands.Add(pscmd);
+                    }                    
                     Collection<PSObject> rslt = pline.Invoke();
                     rspace.Close();
                     if (rslt != null)
@@ -102,8 +120,11 @@ namespace siemdotnet.PShell
             }
             catch (ThreadAbortException thde)
             {
-                pline.Stop();
-                pline.Dispose();
+                if (pline != null)
+                {
+                    pline.Stop();
+                    pline.Dispose();
+                }
                 GC.Collect();
                 rslts.AppendLine("Script cancelled by user." + Environment.NewLine + thde.Message);
             }
@@ -113,9 +134,12 @@ namespace siemdotnet.PShell
             }
             finally
             {
-                pline.Stop();
-                pline.StopAsync();
-                pline.Dispose();
+                if (pline != null)
+                {
+                    pline.Stop();
+                    pline.StopAsync();
+                    pline.Dispose();
+                }
                 rspace.Close();
                 rspace.Dispose();
                 rspace = null;
@@ -127,14 +151,19 @@ namespace siemdotnet.PShell
         #endregion
 
         #region " Private Methods "
-        private List<psparameter>CheckForParams(Runspace rspace, String scriptpath)
+        private List<psparameter>CheckForParams(Runspace rspace, String scriptcommand)
         {
             List<psparameter> parms = null;
             psparamtype parm = new psparamtype();
 
             Pipeline pline = rspace.CreatePipeline();
 
-            pline.Commands.AddScript("Get-Help " + scriptpath + " -full");
+            String scrpt = "Get-Help " + scriptcommand + " -full";
+            if (iscommand)
+            {
+                scrpt = "Import-Module $PSFramework" + Environment.NewLine + scrpt;
+            }
+            pline.Commands.AddScript(scrpt);
             pline.Commands.Add("Out-String");
 
             Collection<PSObject> rslt = pline.Invoke();
@@ -185,18 +214,21 @@ namespace siemdotnet.PShell
                                     }
                                     idx += 2;
                                     line = lines[idx];
-                                    String defval = line.Replace("Default value", "").Trim();
-                                    if (defval != "")
+                                    if (line.Contains("Default value"))
                                     {
-                                        if (defval.ToLower() == "true" || defval.ToLower() == "false")
+                                        String defval = line.Replace("Default value", "").Trim();
+                                        if (defval != "")
                                         {
-                                            prm.DefaultValue = bool.Parse(defval);
+                                            if (defval.ToLower() == "true" || defval.ToLower() == "false")
+                                            {
+                                                prm.DefaultValue = bool.Parse(defval);
+                                            }
+                                            else
+                                            {
+                                                prm.DefaultValue = defval;
+                                            }
                                         }
-                                        else 
-                                        {
-                                            prm.DefaultValue = defval;
-                                        }                                        
-                                    }
+                                    }                                    
                                     parm.Properties.Add(prm);
                                 }
                                 idx++;
@@ -228,12 +260,12 @@ namespace siemdotnet.PShell
         private Type GetTypeFromString(String typename)
         {
             Type rtn = null;
-            switch (typename)
+            switch (typename.ToLower())
             { 
-                case "<String>":
+                case "<string>":
                     rtn = typeof(string);
                     break;
-                case "<Boolean>":
+                case "<boolean>":
                     rtn = typeof(Boolean);
                     break;
                 default:
@@ -254,9 +286,14 @@ namespace siemdotnet.PShell
         #endregion
 
         #region " Public Properties "
-        public String ScriptPath
+        public String Script
         {
-            set { this.scriptpath = value;  }
+            set { this.scriptcommand = value;  }
+        }
+
+        public bool IsCommand
+        {
+            set { this.iscommand = value; }
         }
 
         public List<psparameter> Parameters
