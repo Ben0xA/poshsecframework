@@ -4,7 +4,6 @@ PoshSec
 =======
 The main PoshSec repository.
 
-For a simple how to get started with PoshSec, please visit https://github.com/PoshSec/PoshSec/wiki/Getting-Started-with-PoshSec.
 
 Current Release Features
 ========
@@ -46,15 +45,10 @@ This project started by Will Steele (@pen_test) and Matt Johnson (@mwjcomputing)
 - Be a location to obtain links to others using PowerShell in the information security space.
 
 Current Developers are:
-* Matt Johnson - @mwjcomputing
-* J Wolfgang Goerlich - @jwgoerlich
-* Rich Cassara - @rjcassara
-* Michael Ortega - @securitymoey
-* Nick Jacob - @MortiousPrime 
-* Ben Ten - @ben0xA
+Matt Johnson - @mwjcomputing; J Wolfgang Goerlich - @jwgoerlich; Rich Cassara - @rjcassara; Michael Ortega - @securitymoey; Nick Jacob - @MortiousPrime 
 
 Contact
 ==========
-* www.poshsec.com
-* You can offer your support by emailing team@poshsec.com
-* Twitter: @poshsec
+www.poshsec.com
+You can offer your support by emailing team[at]poshsec[dot]com
+twitter: @poshsec
