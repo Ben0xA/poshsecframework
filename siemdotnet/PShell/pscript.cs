@@ -55,12 +55,17 @@ namespace siemdotnet.PShell
             Pipeline pline = rspace.CreatePipeline();
             pline.Commands.AddScript("Import-Module C:\\pstest\\Modules\\PoshSecFramework\\PoshSecFramework.psm1" + Environment.NewLine + "Get-Command");
             Collection<PSObject> rslt = pline.Invoke();
+            pline.Dispose();
+            pline = null;
             rspace.Close();
+            rspace = null;
+            GC.Collect();
             return rslt;
         }
 
         public void RunScript()
         {
+            Pipeline pline = null;
             try
             {
                 rslts.AppendLine("Running script: " + scriptpath);
@@ -78,7 +83,7 @@ namespace siemdotnet.PShell
                         }
                     }
 
-                    Pipeline pline = rspace.CreatePipeline();
+                    pline = rspace.CreatePipeline();
                     pline.Commands.Add(pscmd);
                     Collection<PSObject> rslt = pline.Invoke();
                     rspace.Close();
@@ -97,6 +102,9 @@ namespace siemdotnet.PShell
             }
             catch (ThreadAbortException thde)
             {
+                pline.Stop();
+                pline.Dispose();
+                GC.Collect();
                 rslts.AppendLine("Script cancelled by user." + Environment.NewLine + thde.Message);
             }
             catch (Exception e)
@@ -105,6 +113,14 @@ namespace siemdotnet.PShell
             }
             finally
             {
+                pline.Stop();
+                pline.StopAsync();
+                pline.Dispose();
+                rspace.Close();
+                rspace.Dispose();
+                rspace = null;
+                pline = null;
+                GC.Collect();
                 OnScriptComplete(new pseventargs(rslts.ToString(), scriptlvw));
             }            
         }
@@ -189,9 +205,10 @@ namespace siemdotnet.PShell
                     }
                 }
             }
-            pline.Commands.Clear();
+            pline.Stop();
             pline.Dispose();
-
+            pline = null;
+            GC.Collect();
             if (parm.Properties.Count > 0)
             {
                 Interface.frmParams frm = new Interface.frmParams();
