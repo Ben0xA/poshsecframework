@@ -81,7 +81,6 @@ namespace siemdotnet
             this.windowsUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.waucheckps1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbpPowerShell = new System.Windows.Forms.TabPage();
-            this.txtPShellOutput = new System.Windows.Forms.TextBox();
             this.tbpSchedScripts = new System.Windows.Forms.TabPage();
             this.tcSystem = new System.Windows.Forms.TabControl();
             this.tbpAlerts = new System.Windows.Forms.TabPage();
@@ -107,6 +106,7 @@ namespace siemdotnet
             this.cmnuActiveScripts = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmbtnCancelScript = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
+            this.txtPShellOutput = new System.Windows.Forms.RichTextBox();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -501,6 +501,7 @@ namespace siemdotnet
             this.tcMain.SelectedIndex = 0;
             this.tcMain.Size = new System.Drawing.Size(956, 340);
             this.tcMain.TabIndex = 0;
+            this.tcMain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tcMain_Selected);
             // 
             // tbpSystems
             // 
@@ -611,24 +612,6 @@ namespace siemdotnet
             this.tbpPowerShell.Size = new System.Drawing.Size(948, 313);
             this.tbpPowerShell.TabIndex = 1;
             this.tbpPowerShell.Text = "PowerShell";
-            // 
-            // txtPShellOutput
-            // 
-            this.txtPShellOutput.BackColor = System.Drawing.Color.SteelBlue;
-            this.txtPShellOutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtPShellOutput.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.txtPShellOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPShellOutput.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPShellOutput.ForeColor = System.Drawing.Color.White;
-            this.txtPShellOutput.Location = new System.Drawing.Point(3, 3);
-            this.txtPShellOutput.Margin = new System.Windows.Forms.Padding(5);
-            this.txtPShellOutput.Multiline = true;
-            this.txtPShellOutput.Name = "txtPShellOutput";
-            this.txtPShellOutput.ReadOnly = true;
-            this.txtPShellOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtPShellOutput.Size = new System.Drawing.Size(942, 307);
-            this.txtPShellOutput.TabIndex = 3;
-            this.txtPShellOutput.Text = "psf > ";
             // 
             // tbpSchedScripts
             // 
@@ -875,6 +858,23 @@ namespace siemdotnet
             this.toolStrip5.TabIndex = 0;
             this.toolStrip5.Text = "toolStrip5";
             // 
+            // txtPShellOutput
+            // 
+            this.txtPShellOutput.BackColor = System.Drawing.Color.SteelBlue;
+            this.txtPShellOutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPShellOutput.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.txtPShellOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPShellOutput.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPShellOutput.ForeColor = System.Drawing.Color.White;
+            this.txtPShellOutput.Location = new System.Drawing.Point(3, 3);
+            this.txtPShellOutput.Margin = new System.Windows.Forms.Padding(5, 5, 5, 0);
+            this.txtPShellOutput.Name = "txtPShellOutput";
+            this.txtPShellOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.txtPShellOutput.Size = new System.Drawing.Size(942, 307);
+            this.txtPShellOutput.TabIndex = 0;
+            this.txtPShellOutput.Text = "psf > ";
+            this.txtPShellOutput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPShellOutput_KeyDown);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -915,7 +915,6 @@ namespace siemdotnet
             this.tbpSystems.ResumeLayout(false);
             this.cmnuHosts.ResumeLayout(false);
             this.tbpPowerShell.ResumeLayout(false);
-            this.tbpPowerShell.PerformLayout();
             this.tcSystem.ResumeLayout(false);
             this.tbpAlerts.ResumeLayout(false);
             this.tbpAlerts.PerformLayout();
@@ -971,7 +970,6 @@ namespace siemdotnet
         private System.Windows.Forms.ColumnHeader chAlerts;
         private System.Windows.Forms.ColumnHeader chLastScan;
         private System.Windows.Forms.TabPage tbpPowerShell;
-        private System.Windows.Forms.TextBox txtPShellOutput;
         private System.Windows.Forms.ImageList imgListAlerts;
         private System.Windows.Forms.ImageList imgListLibrary;
         private System.Windows.Forms.Panel panel2;
@@ -1005,6 +1003,7 @@ namespace siemdotnet
         private System.Windows.Forms.ColumnHeader chActScrStatus;
         private System.Windows.Forms.ContextMenuStrip cmnuActiveScripts;
         private System.Windows.Forms.ToolStripMenuItem cmbtnCancelScript;
+        private System.Windows.Forms.RichTextBox txtPShellOutput;
     }
 }
 

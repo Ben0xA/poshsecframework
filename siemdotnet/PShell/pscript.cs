@@ -17,6 +17,7 @@ namespace siemdotnet.PShell
         private Runspace rspace;
         private String scriptcommand;
         private bool iscommand = false;
+        private bool localecho = true;
         private List<psparameter> scriptparams;
         private StringBuilder rslts = new StringBuilder();
         private psexception psexec = new psexception();
@@ -69,16 +70,13 @@ namespace siemdotnet.PShell
             Pipeline pline = null;
             try
             {
-                if (iscommand)
-                {
-                    rslts.AppendLine("Running command: " + scriptcommand);
-                }
-                else
-                {
-                    rslts.AppendLine("Running script: " + scriptcommand);
-                }
                 InitializeScript();
-                scriptparams = CheckForParams(rspace, scriptcommand);
+                if (localecho)
+                {
+                    //Only run this if the user double clicked a script or command.
+                    //If they typed the command then they should have passed params.
+                    scriptparams = CheckForParams(rspace, scriptcommand);
+                }                
                 if (!cancel)
                 {
                     Command pscmd = new Command(scriptcommand);
@@ -97,10 +95,19 @@ namespace siemdotnet.PShell
                     if (iscommand)
                     {
                         String cmdscript = "Import-Module $PSFramework" + Environment.NewLine + scriptcommand + cmdparams;
+                        if (localecho)
+                        {
+                            rslts.AppendLine(scriptcommand + cmdparams);
+                        }
+                        else
+                        {
+                            rslts.AppendLine("");
+                        }
                         pline.Commands.AddScript(cmdscript);
                     }
                     else
                     {
+                        rslts.AppendLine("Running script: " + scriptcommand);
                         pline.Commands.Add(pscmd);
                     }                    
                     Collection<PSObject> rslt = pline.Invoke();
@@ -109,7 +116,10 @@ namespace siemdotnet.PShell
                     {
                         foreach (PSObject po in rslt)
                         {
-                            rslts.AppendLine(po.ToString());
+                            if (po != null)
+                            {
+                                rslts.AppendLine(po.ToString());
+                            }
                         }
                     }
                 }
@@ -126,11 +136,18 @@ namespace siemdotnet.PShell
                     pline.Dispose();
                 }
                 GC.Collect();
-                rslts.AppendLine("Script cancelled by user." + Environment.NewLine + thde.Message);
+                if (iscommand)
+                {
+                    rslts.AppendLine("Command cancelled by user." + Environment.NewLine + thde.Message);
+                }
+                else
+                {
+                    rslts.AppendLine("Script cancelled by user." + Environment.NewLine + thde.Message);
+                }                
             }
             catch (Exception e)
             {
-                rslts.AppendLine(psexec.psexceptionhandler(e));
+                rslts.AppendLine(psexec.psexceptionhandler(e,iscommand));
             }
             finally
             {
@@ -294,6 +311,11 @@ namespace siemdotnet.PShell
         public bool IsCommand
         {
             set { this.iscommand = value; }
+        }
+
+        public bool LocalEcho
+        {
+            set { this.localecho = value; }
         }
 
         public List<psparameter> Parameters

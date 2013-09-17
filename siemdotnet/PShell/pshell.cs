@@ -14,6 +14,7 @@ namespace siemdotnet.PShell
         private String pspath;
         private frmMain frm;
         private pscript ps;
+        private bool localecho;
         #endregion
 
         #region " Public Methods "
@@ -30,9 +31,14 @@ namespace siemdotnet.PShell
             thd.Start();
         }
         
-        public void Run(string ScriptCommand, bool IsCommand = false)
+        public void Run(string ScriptCommand, bool IsCommand = false, bool LocalEcho = true)
         {
-            String spath = Path.Combine(pspath, ScriptCommand);
+            localecho = LocalEcho;
+            String spath = "";
+            if (!IsCommand)
+            {
+                spath = Path.Combine(pspath, ScriptCommand);
+            } 
             if(IsCommand || File.Exists(spath))
             {
                 try
@@ -52,6 +58,7 @@ namespace siemdotnet.PShell
                         ps.Script = spath;
                     }
                     ps.IsCommand = IsCommand;
+                    ps.LocalEcho = LocalEcho;
                     ps.ScriptListView = lvw;
                     ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
                     
@@ -75,7 +82,7 @@ namespace siemdotnet.PShell
         private void ScriptCompleted(object sender, EventArgs e)
         {
             pseventargs rslts = (pseventargs)e;
-            frm.DisplayOutput(rslts.Results, rslts.ScriptListView);
+            frm.DisplayOutput(rslts.Results, rslts.ScriptListView, localecho);
         }
         #endregion
 

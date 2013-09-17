@@ -21,6 +21,9 @@ namespace siemdotnet
 
         #region Private Variables 
         Network.NetworkBrowser scnr = new Network.NetworkBrowser();
+        private int mincurpos = 6;
+        private Collection<String> cmdhist = new Collection<string>();
+        private int cmdhistidx = -1;
 
         enum SystemType
         { 
@@ -41,6 +44,7 @@ namespace siemdotnet
         public frmMain()
         {
             InitializeComponent();
+            txtPShellOutput.SelectionStart = mincurpos;
             scnr.ParentForm = this;
             cmbLibraryTypes.SelectedIndex = 1;
             GetNetworks();
@@ -59,7 +63,7 @@ namespace siemdotnet
                 //Get Domain Name
                 Forest hostForest = Forest.GetCurrentForest();
                 DomainCollection domains = hostForest.Domains;
-
+                /*
                 foreach (Domain domain in domains)
                 {
                     TreeNode node = new TreeNode();
@@ -69,7 +73,7 @@ namespace siemdotnet
                     node.Tag = SystemType.Domain;
                     TreeNode rootnode = tvwNetworks.Nodes[0];
                     rootnode.Nodes.Add(node);
-                }
+                }*/
             }
             catch
             {
@@ -84,8 +88,10 @@ namespace siemdotnet
 
                 ListViewItem lvwItm = new ListViewItem();
 
-                lvwItm.Text = localHost;
-                lvwItm.SubItems.Add(localIP);
+                //lvwItm.Text = localHost;
+                //lvwItm.SubItems.Add(localIP);
+                lvwItm.Text = "localhost";
+                lvwItm.SubItems.Add("[hidden]");
                 lvwItm.SubItems.Add("00-00-00-00-00-00");
                 lvwItm.SubItems.Add("Up");
                 lvwItm.SubItems.Add("Not Installed");
@@ -232,28 +238,36 @@ namespace siemdotnet
         #endregion
 
         #region "PowerShell"
-        public void DisplayOutput(String output, ListViewItem lvw)
+        public void DisplayOutput(String output, ListViewItem lvw, bool localecho)
         {
             if (this.InvokeRequired)
             {
                 MethodInvoker del = delegate
                 {
-                    DisplayOutput(output, lvw);
+                    DisplayOutput(output, lvw, localecho);
                 };
                 this.Invoke(del);
             }
             else
             {
-                txtPShellOutput.Text += output;
-                txtPShellOutput.Text += Environment.NewLine + "psf > ";
-                txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
-                txtPShellOutput.ScrollToCaret();
+                if ((txtPShellOutput.Text.Length + output.Length + (Environment.NewLine + "psf > ").Length) > txtPShellOutput.MaxLength)
+                {
+                    txtPShellOutput.Text = txtPShellOutput.Text.Substring(output.Length + 500, txtPShellOutput.Text.Length - (output.Length + 500));
+                }
+                txtPShellOutput.AppendText(output);
+                txtPShellOutput.AppendText(Environment.NewLine + "psf > ");
+                mincurpos = txtPShellOutput.Text.Length;
+                if (localecho)
+                {
+                    //Not sure why this happens, but if you type the command the scroll to caret isn't needed.
+                    //If you initiate a script or command by double clicking you do.
+                    txtPShellOutput.ScrollToCaret();               
+                }                
                 if (lvw != null)
                 {
                     lvw.Remove();
                 }                
-            }
-            
+            }            
         }
 
         public void AddAlert(String message, PShell.psmethods.PSAlert.AlertType alerttype, String scriptname)
@@ -298,6 +312,33 @@ namespace siemdotnet
             else
             {
                 lvwActiveScripts.Items.Add(lvw);
+            }
+        }
+
+        private void ProcessCommand(String cmd)
+        {
+            try
+            {
+                cmdhist.Add(cmd);
+                cmdhistidx = cmdhist.Count;
+                switch (cmd.ToUpper())
+                { 
+                    case "CLS":
+                        txtPShellOutput.Text = "psf > ";
+                        txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
+                        mincurpos = txtPShellOutput.Text.Length;
+                        break;
+                    default:
+                        PShell.pshell p = new PShell.pshell();
+                        p.ParentForm = this;
+                        p.Run(cmd, true, false);
+                        p = null;
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("ProcessCommand Unhandled Exception: " + e.Message + Environment.NewLine + "Stack Trace:" + Environment.NewLine);
             }
         }
 
@@ -400,7 +441,7 @@ namespace siemdotnet
         #region " Display Error "
         private void DisplayError(Exception e)
         {
-            DisplayOutput(Environment.NewLine + "Unhandled exception." + Environment.NewLine + e.Message + Environment.NewLine + "Stack Trace:" + Environment.NewLine + e.StackTrace, null);
+            DisplayOutput(Environment.NewLine + "Unhandled exception." + Environment.NewLine + e.Message + Environment.NewLine + "Stack Trace:" + Environment.NewLine + e.StackTrace, null, true);
             tcMain.SelectedTab = tbpPowerShell;
         }
         #endregion
@@ -448,6 +489,123 @@ namespace siemdotnet
                 p.ParentForm = this;
                 p.Run(lvw.Text, true);
                 p = null;
+            }
+        }
+        #endregion
+
+        #region TextBox
+        private void txtPShellOutput_KeyDown(object sender, KeyEventArgs e)
+        {
+            //This code is required to emulate a powershell command prompt.
+            //otherwise it's just a textbox.
+            switch (e.KeyCode)
+            { 
+                case Keys.Back:
+                    if (txtPShellOutput.SelectionStart <= mincurpos)
+                    {
+                        e.Handled = true;
+                        e.SuppressKeyPress = true;
+                    }
+                    break;
+                case Keys.Delete:
+                    if (txtPShellOutput.SelectionStart < mincurpos)
+                    {
+                        e.Handled = true;
+                        e.SuppressKeyPress = true;
+                    }
+                    break;
+                case Keys.Left:
+                    if (txtPShellOutput.SelectionStart <= mincurpos)
+                    {
+                        e.Handled = true;
+                        e.SuppressKeyPress = true;
+                        txtPShellOutput.SelectionStart = mincurpos;                    
+                    }
+                    break;
+                case Keys.Home:
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;                   
+                    txtPShellOutput.SelectionStart = mincurpos;
+                    txtPShellOutput.ScrollToCaret();
+                    break;
+                case Keys.End:
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;                   
+                    txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
+                    txtPShellOutput.ScrollToCaret();
+                    break;
+                case Keys.Enter:
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    String cmd = txtPShellOutput.Text.Substring(mincurpos, txtPShellOutput.Text.Length - mincurpos);
+                    ProcessCommand(cmd);
+                    break;
+                case Keys.ControlKey: case Keys.Alt:
+                    e.SuppressKeyPress = false;
+                    e.Handled = false;
+                    break;
+                case Keys.Up:                    
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    if (cmdhist != null && cmdhist.Count > 0)
+                    {
+                        if (cmdhistidx <= cmdhist.Count && cmdhistidx > 0)
+                        {
+                            cmdhistidx -= 1;
+                            txtPShellOutput.Text = txtPShellOutput.Text.Substring(0, mincurpos);
+                            txtPShellOutput.AppendText(cmdhist[cmdhistidx]);
+                            txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
+                        }
+                    }
+                    break;
+                case Keys.Down:
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    if (cmdhist != null && cmdhist.Count > 0)
+                    {                       
+                        if (cmdhistidx >= 0 && cmdhistidx < cmdhist.Count - 1)
+                        {
+                            cmdhistidx += 1;
+                            txtPShellOutput.Text = txtPShellOutput.Text.Substring(0, mincurpos);
+                            txtPShellOutput.AppendText(cmdhist[cmdhistidx]);
+                            txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
+                            
+                        }
+                        else 
+                        {
+                            txtPShellOutput.Text = txtPShellOutput.Text.Substring(0, mincurpos);
+                            txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
+                            cmdhistidx = cmdhist.Count;
+                        }
+                    }
+                    break;
+                case Keys.L: case Keys.C: case Keys.X: case Keys.V:
+                    if (e.Control)
+                    {
+                        switch (e.KeyCode)
+                        { 
+                            case Keys.L:
+                                //Ctrl+L for CLS!
+                                e.Handled = true;
+                                e.SuppressKeyPress = true;
+                                txtPShellOutput.Text = "psf > ";
+                                mincurpos = txtPShellOutput.Text.Length;
+                                txtPShellOutput.ScrollToCaret();
+                                break;
+                            default:
+                                e.Handled = false;
+                                e.SuppressKeyPress = false;
+                                break;
+                        }                        
+                    }
+                    break;
+                default:
+                    if (txtPShellOutput.SelectionStart < mincurpos)
+                    {
+                        txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
+                        txtPShellOutput.ScrollToCaret();
+                    }
+                    break;
             }
         }
         #endregion
@@ -515,6 +673,14 @@ namespace siemdotnet
             GetCommand();
         }
         #endregion
+
+        private void tcMain_Selected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage == tbpPowerShell)
+            {
+                txtPShellOutput.Select();
+            }
+        }
 
         #endregion
 

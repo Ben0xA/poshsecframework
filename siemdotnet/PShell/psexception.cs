@@ -8,9 +8,17 @@ namespace siemdotnet.PShell
     class psexception
     {
         #region " Public Methods "
-        public String psexceptionhandler(Exception e)
+        public String psexceptionhandler(Exception e, bool iscommand = true)
         {
-            String rtn = "Script Failed to Run!" + Environment.NewLine + Environment.NewLine;
+            String rtn = "";
+            if (iscommand)
+            {
+                rtn += Environment.NewLine;
+            }
+            else
+            {
+                rtn += "Script Failed to Run!" + Environment.NewLine + Environment.NewLine;
+            }
             switch (e.GetType().Name)
             { 
                 case "PSSecurityException":
@@ -21,6 +29,9 @@ namespace siemdotnet.PShell
                     break;
                 case "ParameterBindingException":
                     rtn += ParameterBindingException((System.Management.Automation.ParameterBindingException)e);
+                    break;
+                case "CommandNotFoundException":
+                    rtn += CommandNotFoundException((System.Management.Automation.CommandNotFoundException)e);
                     break;
                 default:
                     rtn += PSException(e);
@@ -42,6 +53,12 @@ namespace siemdotnet.PShell
             return rtn;
         }
 
+        private String CommandNotFoundException(System.Management.Automation.CommandNotFoundException e)
+        {
+            String rtn = e.Message.ToString();
+            return rtn;
+        }
+
         private String PSSecurityException(System.Management.Automation.PSSecurityException e)
         {
             String rtn = "";
@@ -56,7 +73,7 @@ namespace siemdotnet.PShell
         private String CmdletInvocationException(System.Management.Automation.CmdletInvocationException e)
         {
             String rtn = "";
-            rtn += "There was an error in your script. Please see the error message below." + Environment.NewLine + Environment.NewLine;
+            rtn += "There was an error in your script or command. Please see the error message below." + Environment.NewLine + Environment.NewLine;
             rtn += "Error Message:" + Environment.NewLine;
             rtn += e.Message.ToString();
             return rtn;
@@ -66,7 +83,7 @@ namespace siemdotnet.PShell
         {
             String rtn = "";
             rtn += "Missing Parameters!" + Environment.NewLine + Environment.NewLine;
-            rtn += "Please check the script file and ensure that the parameters are defined properly." + Environment.NewLine + Environment.NewLine;
+            rtn += "Please check the command or script file and ensure that the parameters are defined properly." + Environment.NewLine + Environment.NewLine;
             rtn += "Error Message:" + Environment.NewLine;
             rtn += e.Message.ToString();
             return rtn;
