@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace siemdotnet.PShell
+namespace psframework.PShell
 {
     class pshell
     {
@@ -14,7 +14,7 @@ namespace siemdotnet.PShell
         private String pspath;
         private frmMain frm;
         private pscript ps;
-        private bool localecho;
+        private bool clicked;
         #endregion
 
         #region " Public Methods "
@@ -31,9 +31,9 @@ namespace siemdotnet.PShell
             thd.Start();
         }
         
-        public void Run(string ScriptCommand, bool IsCommand = false, bool LocalEcho = true)
+        public void Run(string ScriptCommand, bool IsCommand = false, bool Clicked = true)
         {
-            localecho = LocalEcho;
+            clicked = Clicked;
             String spath = "";
             if (!IsCommand)
             {
@@ -58,7 +58,7 @@ namespace siemdotnet.PShell
                         ps.Script = spath;
                     }
                     ps.IsCommand = IsCommand;
-                    ps.LocalEcho = LocalEcho;
+                    ps.Clicked = clicked;
                     ps.ScriptListView = lvw;
                     ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
                     
@@ -82,7 +82,7 @@ namespace siemdotnet.PShell
         private void ScriptCompleted(object sender, EventArgs e)
         {
             pseventargs rslts = (pseventargs)e;
-            frm.DisplayOutput(rslts.Results, rslts.ScriptListView, localecho);
+            frm.DisplayOutput(rslts.Results, rslts.ScriptListView, clicked, rslts.Cancelled);
         }
         #endregion
 

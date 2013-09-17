@@ -10,15 +10,15 @@ using System.Drawing;
 using System.Management.Automation;
 using System.Net;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace siemdotnet
+namespace psframework
 {
     public partial class frmMain : Form
     {
-
         #region Private Variables 
         Network.NetworkBrowser scnr = new Network.NetworkBrowser();
         private int mincurpos = 6;
@@ -238,13 +238,13 @@ namespace siemdotnet
         #endregion
 
         #region "PowerShell"
-        public void DisplayOutput(String output, ListViewItem lvw, bool localecho)
+        public void DisplayOutput(String output, ListViewItem lvw, bool clicked, bool cancelled = false)
         {
             if (this.InvokeRequired)
             {
                 MethodInvoker del = delegate
                 {
-                    DisplayOutput(output, lvw, localecho);
+                    DisplayOutput(output, lvw, clicked, cancelled);
                 };
                 this.Invoke(del);
             }
@@ -257,12 +257,13 @@ namespace siemdotnet
                 txtPShellOutput.AppendText(output);
                 txtPShellOutput.AppendText(Environment.NewLine + "psf > ");
                 mincurpos = txtPShellOutput.Text.Length;
-                if (localecho)
+                if (clicked || cancelled)
                 {
                     //Not sure why this happens, but if you type the command the scroll to caret isn't needed.
-                    //If you initiate a script or command by double clicking you do.
-                    txtPShellOutput.ScrollToCaret();               
-                }                
+                    //If you initiate a script or command by double clicking, or you abort the thread you do.
+                    txtPShellOutput.ScrollToCaret();
+                }
+                txtPShellOutput.ReadOnly = false;
                 if (lvw != null)
                 {
                     lvw.Remove();
@@ -331,6 +332,9 @@ namespace siemdotnet
                     default:
                         PShell.pshell p = new PShell.pshell();
                         p.ParentForm = this;
+                        txtPShellOutput.AppendText(Environment.NewLine);
+                        mincurpos = txtPShellOutput.Text.Length;
+                        txtPShellOutput.ReadOnly = true;
                         p.Run(cmd, true, false);
                         p = null;
                         break;
@@ -683,6 +687,5 @@ namespace siemdotnet
         }
 
         #endregion
-
     }
 }

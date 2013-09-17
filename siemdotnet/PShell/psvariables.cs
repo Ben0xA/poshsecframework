@@ -4,7 +4,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Text;
 
-namespace siemdotnet.PShell
+namespace psframework.PShell
 {
     class psvariables
     {

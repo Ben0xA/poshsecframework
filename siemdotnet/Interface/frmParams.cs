@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace siemdotnet.Interface
+namespace psframework.Interface
 {
     public partial class frmParams : Form
     {

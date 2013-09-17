@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace siemdotnet.PShell
+namespace psframework.PShell
 {
     class pscript
     {
@@ -17,7 +17,7 @@ namespace siemdotnet.PShell
         private Runspace rspace;
         private String scriptcommand;
         private bool iscommand = false;
-        private bool localecho = true;
+        private bool clicked = true;
         private List<psparameter> scriptparams;
         private StringBuilder rslts = new StringBuilder();
         private psexception psexec = new psexception();
@@ -47,7 +47,7 @@ namespace siemdotnet.PShell
         #region " Public Methods "
         public void Test()
         {
-            OnScriptComplete(new pseventargs("It worked!", null));
+            OnScriptComplete(new pseventargs("It worked!", null, false));
         }
 
 
@@ -68,10 +68,11 @@ namespace siemdotnet.PShell
         public void RunScript()
         {
             Pipeline pline = null;
+            bool cancelled = false;
             try
             {
                 InitializeScript();
-                if (localecho)
+                if (clicked)
                 {
                     //Only run this if the user double clicked a script or command.
                     //If they typed the command then they should have passed params.
@@ -95,13 +96,9 @@ namespace siemdotnet.PShell
                     if (iscommand)
                     {
                         String cmdscript = "Import-Module $PSFramework" + Environment.NewLine + scriptcommand + cmdparams;
-                        if (localecho)
+                        if (clicked)
                         {
                             rslts.AppendLine(scriptcommand + cmdparams);
-                        }
-                        else
-                        {
-                            rslts.AppendLine("");
                         }
                         pline.Commands.AddScript(cmdscript);
                     }
@@ -136,6 +133,7 @@ namespace siemdotnet.PShell
                     pline.Dispose();
                 }
                 GC.Collect();
+                cancelled = true;
                 if (iscommand)
                 {
                     rslts.AppendLine("Command cancelled by user." + Environment.NewLine + thde.Message);
@@ -162,7 +160,7 @@ namespace siemdotnet.PShell
                 rspace = null;
                 pline = null;
                 GC.Collect();
-                OnScriptComplete(new pseventargs(rslts.ToString(), scriptlvw));
+                OnScriptComplete(new pseventargs(rslts.ToString(), scriptlvw, cancelled));
             }            
         }
         #endregion
@@ -313,9 +311,9 @@ namespace siemdotnet.PShell
             set { this.iscommand = value; }
         }
 
-        public bool LocalEcho
+        public bool Clicked
         {
-            set { this.localecho = value; }
+            set { this.clicked = value; }
         }
 
         public List<psparameter> Parameters

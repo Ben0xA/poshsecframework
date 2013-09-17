@@ -1,4 +1,4 @@
-﻿namespace siemdotnet.Interface
+﻿namespace psframework.Interface
 {
     partial class frmParams
     {

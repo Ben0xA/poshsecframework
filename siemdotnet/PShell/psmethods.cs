@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace siemdotnet.PShell
+namespace psframework.PShell
 {
     public class psmethods
     {

@@ -5,9 +5,9 @@ using System.DirectoryServices;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
-using siemdotnet.Structures;
+using psframework.Structures;
 
-namespace siemdotnet.Network
+namespace psframework.Network
 {
     class NetworkBrowser
     {

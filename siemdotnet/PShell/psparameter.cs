@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace siemdotnet.PShell
+namespace psframework.PShell
 {
     public class psparameter
     {

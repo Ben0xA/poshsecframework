@@ -4,20 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace siemdotnet.PShell
+namespace psframework.PShell
 {
     class pseventargs : EventArgs
     {
         #region " Private Variables "
         private String rslts;
         private ListViewItem lvw;
+        private bool cancelled;
         #endregion
 
         #region " Public Methods "
-        public pseventargs(String ResultsText, ListViewItem ScriptListView)
+        public pseventargs(String ResultsText, ListViewItem ScriptListView, bool Cancelled)
         {
             rslts = ResultsText;
             lvw = ScriptListView;
+            cancelled = Cancelled;
         }
         #endregion
 
@@ -33,6 +35,11 @@ namespace siemdotnet.PShell
         public ListViewItem ScriptListView
         {
             get { return lvw; }
+        }
+
+        public bool Cancelled
+        {
+            get { return cancelled; }
         }
         #endregion
     }
