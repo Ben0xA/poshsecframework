@@ -140,7 +140,7 @@ namespace psframework
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message + "\n" + e.StackTrace);
+                MessageBox.Show(e.Message + Environment.NewLine + e.StackTrace);
             }
         }
 
@@ -294,7 +294,7 @@ namespace psframework
                 if (clicked || cancelled)
                 {
                     //Not sure why this happens, but if you type the command the scroll to caret isn't needed.
-                    //If you initiate a script or command by double clicking, or you abort the thread you do.
+                    //If you initiate a script or command by double clicking, or you abort the thread, you do.
                     txtPShellOutput.ScrollToCaret();
                 }
                 txtPShellOutput.ReadOnly = false;
