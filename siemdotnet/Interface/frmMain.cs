@@ -41,7 +41,7 @@ namespace psframework
         }
         #endregion
 
-        #region Load
+        #region Form
         public frmMain()
         {
             InitializeComponent();
@@ -52,6 +52,38 @@ namespace psframework
             GetNetworks();
             GetLibrary();
             GetCommand();
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                if (lvwActiveScripts.Items.Count > 0)
+                {
+                    if (MessageBox.Show("You have active scripts running. If you exit, all running scripts will be terminated. Are you sure you want to exit?", "Active Scripts", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        foreach (ListViewItem lvw in lvwActiveScripts.Items)
+                        {
+                            Thread thd = (Thread)lvw.Tag;
+                            thd.Abort();
+                            do
+                            {
+                                Application.DoEvents();
+                            } while (thd.ThreadState != ThreadState.Aborted);
+                        }
+                        this.Close();
+                    }
+                    else
+                    {
+                        e.Cancel = true;
+                    }
+                }
+            }
+            catch (Exception)
+            { 
+                //just exit.
+                this.Close();
+            }
         }
         #endregion
 
@@ -302,6 +334,30 @@ namespace psframework
             }
         }
 
+        public void UpdateStatus(String message, ListViewItem lvw)
+        {
+            if (this.InvokeRequired)
+            {
+                MethodInvoker del = delegate
+                {
+                    UpdateStatus(message, lvw);
+                };
+                this.Invoke(del);
+            }
+            else
+            {
+                try
+                {
+                    lvw.SubItems[1].Text = message;
+                    lvwScripts.Refresh();
+                }
+                catch (Exception e)
+                {
+                    DisplayError(e);
+                }
+            }
+        }
+
         public void AddActiveScript(ListViewItem lvw)
         {
             if (this.InvokeRequired)
@@ -330,6 +386,9 @@ namespace psframework
                         txtPShellOutput.Text = "psf > ";
                         txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
                         mincurpos = txtPShellOutput.Text.Length;
+                        break;
+                    case "EXIT":
+                        this.Close();
                         break;
                     default:
                         txtPShellOutput.AppendText(Environment.NewLine);
@@ -476,7 +535,11 @@ namespace psframework
             if (lvwScripts.SelectedItems.Count > 0)
             {
                 ListViewItem lvw = lvwScripts.SelectedItems[0];
-                psf.Run(lvw.Text);
+                //This needs to be a separate runspace.
+                PShell.pshell ps = new PShell.pshell();
+                ps.ParentForm = this;                
+                ps.Run(lvw.Text);
+                ps = null;
             }
         }
 
@@ -680,5 +743,6 @@ namespace psframework
         }
 
         #endregion
+
     }
 }

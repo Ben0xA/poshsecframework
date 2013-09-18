@@ -46,5 +46,22 @@ namespace psframework.PShell
                 set { scriptname = value; }
             }
         }
+
+        public class PSStatus
+        {
+            private frmMain frm = null;
+            private ListViewItem lvw = null;
+
+            public PSStatus(frmMain ParentForm, ListViewItem StatusListViewItem)
+            {
+                frm = ParentForm;
+                lvw = StatusListViewItem;
+            }
+
+            public void Update(String StatusMessage)
+            {
+                frm.UpdateStatus(StatusMessage, lvw);
+            }
+        }
     }
 }
