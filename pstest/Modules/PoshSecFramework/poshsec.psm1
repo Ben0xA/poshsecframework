@@ -4,4 +4,3 @@ if ($PSVersionTable.PSVersion.Major -gt 2) {
 } else {
     Import-Module $PSScriptRoot\PoshSec.PowerShell.Commands 3.5\PoshSec.PowerShell.Commands\bin\release\PoshSec.PowerShell.Commands.dll
 }
-    

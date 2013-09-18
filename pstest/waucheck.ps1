@@ -65,6 +65,7 @@ Function Get-KBs($pcname){
 	}
 	else{
 		$rslt += "$pcname,$kb,RPC_Error`r`n"
+    $PSAlert.Add("$pcname is inaccessible. RPC_Error", 1)
 	}
 	return $rslt
 }
@@ -92,17 +93,22 @@ $kbItems = $kbs.Split(",")
 if(-not $computer){
 	$pcs = Get-PCs
 	
+  $idx = 0
+  $len = $pcs.length
 	foreach($pc in $pcs){
+    $idx += 1
 		$pcname = $pc.Properties.name
 		
 		if($pcname){
-			Write-Output "Querying $pcname, please wait..."
+			#Write-Output "Querying $pcname, please wait..."
+      $PSStatus.Update("Querying $pcname [$idx of $len]")
 			$wumaster += Get-KBs($pcname)
 		}	
 	}
 }
 else{
-	Write-Output "Querying $computer, please wait..."
+	#Write-Output "Querying $computer, please wait..."
+  $PSStatus.Update("Querying $computer, please wait...")
 	$wumaster += Get-KBs($computer)
 }
 
