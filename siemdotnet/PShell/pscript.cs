@@ -24,7 +24,11 @@ namespace psframework.PShell
         private bool cancel = false;
         private frmMain frm = null;
         private ListViewItem scriptlvw;
-        private Pipeline pline = null;
+        private psvariables.PSRoot PSRoot;
+        private psvariables.PSModRoot PSModRoot;
+        private psvariables.PSFramework PSFramework;
+        private psmethods.PSMessageBox PSMessageBox;
+        private psmethods.PSAlert PSAlert;
         #endregion
 
         #region " Public Events "
@@ -37,12 +41,21 @@ namespace psframework.PShell
             rspaceconfig = RunspaceConfiguration.Create();
             rspace = RunspaceFactory.CreateRunspace(rspaceconfig);
             rspace.Open();
-            rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSRoot("PSRoot"));
-            rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSModRoot("PSModRoot"));
-            rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSFramework("PSFramework"));
-            rspace.SessionStateProxy.SetVariable("PSMessageBox", new psmethods.PSMessageBox());
-            rspace.SessionStateProxy.SetVariable("PSAlert", new psmethods.PSAlert(scriptcommand, frm));
-            pline = rspace.CreateNestedPipeline();
+            InitializeSessionVars();
+        }
+
+        private void InitializeSessionVars()
+        {
+            PSAlert = new psmethods.PSAlert(frm);
+            PSRoot = new psvariables.PSRoot("PSRoot");
+            PSModRoot = new psvariables.PSModRoot("PSModRoot");
+            PSFramework = new psvariables.PSFramework("PSFramework");
+            PSMessageBox = new psmethods.PSMessageBox();
+            rspace.SessionStateProxy.PSVariable.Set(PSRoot);
+            rspace.SessionStateProxy.PSVariable.Set(PSModRoot);
+            rspace.SessionStateProxy.PSVariable.Set(PSFramework);
+            rspace.SessionStateProxy.SetVariable("PSMessageBox", PSMessageBox);
+            rspace.SessionStateProxy.SetVariable("PSAlert", PSAlert);
         }
         #endregion
 
@@ -66,15 +79,22 @@ namespace psframework.PShell
 
         public Collection<PSObject> GetCommand()
         {
-            //Pipeline pline = rspace.CreatePipeline();
+            Pipeline pline = rspace.CreatePipeline();
             pline.Commands.AddScript("Import-Module C:\\pstest\\Modules\\PoshSecFramework\\PoshSecFramework.psm1" + Environment.NewLine + "Get-Command");
             Collection<PSObject> rslt = pline.Invoke();
+            pline.Dispose();
             GC.Collect();
             return rslt;
         }
         
         public void RunScript()
         {
+            InitializeSessionVars();
+            PSAlert.StriptName = scriptcommand;
+            if (scriptparams != null)
+            {
+                scriptparams.Clear();
+            }
             Pipeline pline = null;
             bool cancelled = false;
             try
@@ -115,6 +135,8 @@ namespace psframework.PShell
                         pline.Commands.Add(pscmd);
                     }                    
                     Collection<PSObject> rslt = pline.Invoke();
+                    pline.Dispose();
+                    pline = null;
                     if (rslt != null)
                     {
                         foreach (PSObject po in rslt)
@@ -137,6 +159,7 @@ namespace psframework.PShell
                 {
                     pline.Stop();
                     pline.Dispose();
+                    pline = null;
                 }
                 GC.Collect();
                 cancelled = true;
@@ -157,13 +180,12 @@ namespace psframework.PShell
             {
                 if (pline != null)
                 {
-                    pline.Stop();
-                    pline.StopAsync();
                     pline.Dispose();
                 }
                 pline = null;
                 GC.Collect();
                 OnScriptComplete(new pseventargs(rslts.ToString(), scriptlvw, cancelled));
+                rslts.Clear();
             }            
         }
         #endregion

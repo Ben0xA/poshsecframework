@@ -30,15 +30,20 @@ namespace psframework.PShell
                 Critical
             }
 
-            public PSAlert(String ScriptName, frmMain ParentForm)
+            public PSAlert(frmMain ParentForm)
             {
-                scriptname = ScriptName;
                 frm = ParentForm;
             }
 
             public void Add(String message, AlertType alerttype)
             {
                 frm.AddAlert(message, alerttype, scriptname);
+            }
+
+            public String StriptName
+            {
+                get { return scriptname; }
+                set { scriptname = value; }
             }
         }
     }

@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Runtime.InteropServices;
+
+namespace poshsecframework.Controls
+{
+    class RichTextBoxCaret : RichTextBox
+    {
+        [DllImport("user32.dll")]
+        static extern bool CreateCaret(IntPtr hWnd, IntPtr hBitmap, int nWidth, int nHeight);
+        [DllImport("user32.dll")]
+        static extern bool ShowCaret(IntPtr hWnd);
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            this.DrawCaret();
+        }
+
+        public void DrawCaret()
+        {
+            Bitmap bmp = Properties.Resources.caret_underline;
+            Size sz = new Size(0, 0);
+            //This size matches the Lucidia Console 9.75pt font.
+            //Adjust as necessary.
+            sz.Width = 8;
+            sz.Height = 13;
+            CreateCaret(this.Handle, bmp.GetHbitmap(Color.White), sz.Width, sz.Height);
+            ShowCaret(this.Handle);
+        }
+    }
+}

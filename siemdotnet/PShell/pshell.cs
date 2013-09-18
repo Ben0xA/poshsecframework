@@ -22,11 +22,11 @@ namespace psframework.PShell
         {
             pspath = "C:\\pstest\\";
             ps = new pscript();
+            ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
         }
 
         public void Test()
         {
-            ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
             Thread thd = new Thread(ps.Test);
             thd.Start();
         }
@@ -59,8 +59,7 @@ namespace psframework.PShell
                     }
                     ps.IsCommand = IsCommand;
                     ps.Clicked = clicked;
-                    ps.ScriptListView = lvw;
-                    ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
+                    ps.ScriptListView = lvw;                    
                     
                     Thread thd = new Thread(ps.RunScript);
                     thd.SetApartmentState(ApartmentState.STA);
