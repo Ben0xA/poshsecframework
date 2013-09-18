@@ -24,6 +24,7 @@ namespace psframework.PShell
         private bool cancel = false;
         private frmMain frm = null;
         private ListViewItem scriptlvw;
+        private Pipeline pline = null;
         #endregion
 
         #region " Public Events "
@@ -41,6 +42,7 @@ namespace psframework.PShell
             rspace.SessionStateProxy.PSVariable.Set(new psvariables.PSFramework("PSFramework"));
             rspace.SessionStateProxy.SetVariable("PSMessageBox", new psmethods.PSMessageBox());
             rspace.SessionStateProxy.SetVariable("PSAlert", new psmethods.PSAlert(scriptcommand, frm));
+            pline = rspace.CreateNestedPipeline();
         }
         #endregion
 
@@ -50,17 +52,23 @@ namespace psframework.PShell
             OnScriptComplete(new pseventargs("It worked!", null, false));
         }
 
+        public pscript()
+        {
+            InitializeScript();
+        }
+
+        public void Dispose()
+        {
+            rspace.Close();
+            rspace.Dispose();
+            rspace = null;
+        }
 
         public Collection<PSObject> GetCommand()
         {
-            InitializeScript();
-            Pipeline pline = rspace.CreatePipeline();
+            //Pipeline pline = rspace.CreatePipeline();
             pline.Commands.AddScript("Import-Module C:\\pstest\\Modules\\PoshSecFramework\\PoshSecFramework.psm1" + Environment.NewLine + "Get-Command");
             Collection<PSObject> rslt = pline.Invoke();
-            pline.Dispose();
-            pline = null;
-            rspace.Close();
-            rspace = null;
             GC.Collect();
             return rslt;
         }
@@ -71,7 +79,6 @@ namespace psframework.PShell
             bool cancelled = false;
             try
             {
-                InitializeScript();
                 if (clicked)
                 {
                     //Only run this if the user double clicked a script or command.
@@ -108,7 +115,6 @@ namespace psframework.PShell
                         pline.Commands.Add(pscmd);
                     }                    
                     Collection<PSObject> rslt = pline.Invoke();
-                    rspace.Close();
                     if (rslt != null)
                     {
                         foreach (PSObject po in rslt)
@@ -155,9 +161,6 @@ namespace psframework.PShell
                     pline.StopAsync();
                     pline.Dispose();
                 }
-                rspace.Close();
-                rspace.Dispose();
-                rspace = null;
                 pline = null;
                 GC.Collect();
                 OnScriptComplete(new pseventargs(rslts.ToString(), scriptlvw, cancelled));

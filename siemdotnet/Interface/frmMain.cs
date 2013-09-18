@@ -24,6 +24,7 @@ namespace psframework
         private int mincurpos = 6;
         private Collection<String> cmdhist = new Collection<string>();
         private int cmdhistidx = -1;
+        private PShell.pshell psf = new PShell.pshell();
 
         enum SystemType
         { 
@@ -47,6 +48,7 @@ namespace psframework
             txtPShellOutput.SelectionStart = mincurpos;
             scnr.ParentForm = this;
             cmbLibraryTypes.SelectedIndex = 1;
+            psf.ParentForm = this;
             GetNetworks();
             GetLibrary();
             GetCommand();
@@ -330,13 +332,10 @@ namespace psframework
                         mincurpos = txtPShellOutput.Text.Length;
                         break;
                     default:
-                        PShell.pshell p = new PShell.pshell();
-                        p.ParentForm = this;
                         txtPShellOutput.AppendText(Environment.NewLine);
                         mincurpos = txtPShellOutput.Text.Length;
                         txtPShellOutput.ReadOnly = true;
-                        p.Run(cmd, true, false);
-                        p = null;
+                        psf.Run(cmd, true, false);
                         break;
                 }
             }
@@ -477,10 +476,7 @@ namespace psframework
             if (lvwScripts.SelectedItems.Count > 0)
             {
                 ListViewItem lvw = lvwScripts.SelectedItems[0];
-                PShell.pshell p = new PShell.pshell();
-                p.ParentForm = this;
-                p.Run(lvw.Text);
-                p = null;
+                psf.Run(lvw.Text);
             }
         }
 
@@ -489,10 +485,7 @@ namespace psframework
             if (lvwCommands.SelectedItems.Count > 0)
             {
                 ListViewItem lvw = lvwCommands.SelectedItems[0];
-                PShell.pshell p = new PShell.pshell();
-                p.ParentForm = this;
-                p.Run(lvw.Text, true);
-                p = null;
+                psf.Run(lvw.Text, true);
             }
         }
         #endregion
