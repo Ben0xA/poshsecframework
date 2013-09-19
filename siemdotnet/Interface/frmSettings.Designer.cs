@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.tbpGeneral = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
             this.gbScriptSetting = new System.Windows.Forms.GroupBox();
@@ -48,8 +50,6 @@
             this.btnBrowseScript = new System.Windows.Forms.Button();
             this.lblScriptDirectory = new System.Windows.Forms.Label();
             this.tcSettings = new System.Windows.Forms.TabControl();
-            this.btnRun = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tbpGeneral.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -62,13 +62,33 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnRun);
+            this.panel1.Controls.Add(this.btnOK);
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 210);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(460, 34);
             this.panel1.TabIndex = 0;
+            // 
+            // btnOK
+            // 
+            this.btnOK.Location = new System.Drawing.Point(297, 6);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 3;
+            this.btnOK.Text = "&OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(378, 6);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "&Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // tbpGeneral
             // 
@@ -197,6 +217,7 @@
             // 
             // btnBrowseFramework
             // 
+            this.btnBrowseFramework.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnBrowseFramework.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnBrowseFramework.Image = global::poshsecframework.Properties.Resources.document_open_folder;
             this.btnBrowseFramework.Location = new System.Drawing.Point(420, 0);
@@ -236,6 +257,7 @@
             // 
             // btnBrowseScript
             // 
+            this.btnBrowseScript.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnBrowseScript.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnBrowseScript.Image = global::poshsecframework.Properties.Resources.document_open_folder;
             this.btnBrowseScript.Location = new System.Drawing.Point(420, 0);
@@ -264,29 +286,11 @@
             this.tcSettings.Size = new System.Drawing.Size(460, 210);
             this.tcSettings.TabIndex = 1;
             // 
-            // btnRun
-            // 
-            this.btnRun.Location = new System.Drawing.Point(297, 6);
-            this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 23);
-            this.btnRun.TabIndex = 3;
-            this.btnRun.Text = "&OK";
-            this.btnRun.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(378, 6);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "&Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(460, 244);
             this.ControlBox = false;
             this.Controls.Add(this.tcSettings);
@@ -337,7 +341,7 @@
         private System.Windows.Forms.TextBox txtFrameworkDirectory;
         private System.Windows.Forms.Button btnBrowseFramework;
         private System.Windows.Forms.Label lblFrameworkDirectory;
-        private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
     }
 }

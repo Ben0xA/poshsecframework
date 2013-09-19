@@ -45,15 +45,8 @@ namespace psframework
         public frmMain()
         {
             InitializeComponent();
-            CheckSettings();
-            psf = new PShell.pshell();
-            txtPShellOutput.SelectionStart = mincurpos;
-            scnr.ParentForm = this;
-            cmbLibraryTypes.SelectedIndex = 1;
-            psf.ParentForm = this;
+            Initialize();
             GetNetworks();
-            GetLibrary();
-            GetCommand();
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -90,6 +83,20 @@ namespace psframework
         #endregion
 
         #region Private Methods
+
+        private void Initialize()
+        {
+            CheckSettings();
+            psf = new PShell.pshell();
+            txtPShellOutput.Text = "psf > ";
+            mincurpos = txtPShellOutput.Text.Length;
+            txtPShellOutput.SelectionStart = mincurpos;
+            scnr.ParentForm = this;
+            cmbLibraryTypes.SelectedIndex = 1;
+            psf.ParentForm = this;
+            GetLibrary();
+            GetCommand();
+        }
 
         #region Network
         private void GetNetworks()
@@ -335,6 +342,7 @@ namespace psframework
                 if (lvw != null)
                 {
                     lvw.Remove();
+                    tbpScripts.Text = "Active Scripts (" + lvwActiveScripts.Items.Count.ToString() + ")";
                 }                
             }            
         }
@@ -405,6 +413,7 @@ namespace psframework
             else
             {
                 lvwActiveScripts.Items.Add(lvw);
+                tbpScripts.Text = "Active Scripts (" + lvwActiveScripts.Items.Count.ToString() + ")";
             }
         }
 
@@ -588,9 +597,21 @@ namespace psframework
 
         private void mnuOptions_Click(object sender, EventArgs e)
         {
-            poshsecframework.Interface.frmSettings frm = new poshsecframework.Interface.frmSettings();
-            frm.ShowDialog();
-            frm = null;
+            if (lvwActiveScripts.Items.Count == 0)
+            {
+                poshsecframework.Interface.frmSettings frm = new poshsecframework.Interface.frmSettings();
+                System.Windows.Forms.DialogResult rslt = frm.ShowDialog();
+                frm.Dispose();
+                frm = null;
+                if (rslt == System.Windows.Forms.DialogResult.OK)
+                {
+                    Initialize();
+                };
+            }
+            else
+            {
+                MessageBox.Show("You can not change the settings while scripts or commands are running. Please stop any commands or scripts and then try again.");
+            }
         }
         #endregion 
 
@@ -602,7 +623,15 @@ namespace psframework
 
         private void lvwScripts_DoubleClick(object sender, EventArgs e)
         {
-            RunScript();
+            switch (poshsecframework.Properties.Settings.Default.ScriptDefaultAction)
+            {
+                case 0:
+                    RunScript();
+                    break;
+                case 1:
+                    ViewScript();
+                    break;
+            }
         }
 
         private void lvwCommands_DoubleClick(object sender, EventArgs e)
