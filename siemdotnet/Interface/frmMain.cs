@@ -478,6 +478,7 @@ namespace psframework
             try
             {
                 PShell.pscript ps = new PShell.pscript();
+                ps.ParentForm = this;
                 Collection<PSObject> rslt = ps.GetCommand();
                 ps = null;
                 if (rslt != null)
@@ -549,20 +550,27 @@ namespace psframework
             try
             {
                 String scriptroot = poshsecframework.Properties.Settings.Default["ScriptPath"].ToString(); ; // Get this variable from Settings.
-                String[] scpaths = Directory.GetFiles(scriptroot, "*.ps1", SearchOption.TopDirectoryOnly);
-                if (scpaths != null)
+                if (Directory.Exists(scriptroot))
                 {
-                    lvwScripts.BeginUpdate();
-                    lvwScripts.Items.Clear();
-                    foreach (String scpath in scpaths)
-                    { 
-                        ListViewItem lvw = new ListViewItem();
-                        lvw.Text = new FileInfo(scpath).Name;
-                        lvw.ImageIndex = 4;
-                        lvw.Tag = scpath;
-                        lvwScripts.Items.Add(lvw);
+                    String[] scpaths = Directory.GetFiles(scriptroot, "*.ps1", SearchOption.TopDirectoryOnly);
+                    if (scpaths != null)
+                    {
+                        lvwScripts.BeginUpdate();
+                        lvwScripts.Items.Clear();
+                        foreach (String scpath in scpaths)
+                        {
+                            ListViewItem lvw = new ListViewItem();
+                            lvw.Text = new FileInfo(scpath).Name;
+                            lvw.ImageIndex = 4;
+                            lvw.Tag = scpath;
+                            lvwScripts.Items.Add(lvw);
+                        }
+                        lvwScripts.EndUpdate();
                     }
-                    lvwScripts.EndUpdate();
+                }
+                else
+                { 
+                    AddAlert("Unable to find the Script Path. Check your settings", PShell.psmethods.PSAlert.AlertType.Error, "PoshSec Framework");
                 }
             }
             catch (Exception e)

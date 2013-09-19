@@ -90,12 +90,20 @@ namespace psframework.PShell
 
         public Collection<PSObject> GetCommand()
         {
-            Pipeline pline = rspace.CreatePipeline();
-            String scrpt = "Import-Module " + poshsecframework.Properties.Settings.Default.FrameworkPath + Environment.NewLine + "Get-Command";
-            pline.Commands.AddScript(scrpt);
-            Collection<PSObject> rslt = pline.Invoke();
-            pline.Dispose();
-            GC.Collect();
+            Collection<PSObject> rslt = null; ;
+            if (System.IO.File.Exists(poshsecframework.Properties.Settings.Default.FrameworkPath))
+            {
+                Pipeline pline = rspace.CreatePipeline();
+                String scrpt = "Import-Module " + poshsecframework.Properties.Settings.Default.FrameworkPath + Environment.NewLine + "Get-Command";
+                pline.Commands.AddScript(scrpt);
+                rslt = pline.Invoke();
+                pline.Dispose();
+                GC.Collect();
+            }
+            else
+            {
+                frm.AddAlert("Can not locate the Framework file. Check your settings.", psmethods.PSAlert.AlertType.Error,"PoshSec Framework");
+            }
             return rslt;
         }
         
