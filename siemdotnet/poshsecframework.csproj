@@ -66,6 +66,12 @@
     <Compile Include="Interface\frmParams.Designer.cs">
       <DependentUpon>frmParams.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interface\frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Network\NetworkBrowser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +81,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interface\frmParams.resx">
       <DependentUpon>frmParams.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -120,6 +129,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Images\psficon.ico" />
+    <None Include="Resources\document-open-folder.png" />
     <None Include="Resources\run.png" />
     <None Include="Resources\document-open-7.png" />
     <None Include="Resources\caret_underline.png" />

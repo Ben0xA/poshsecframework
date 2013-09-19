@@ -91,7 +91,6 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.TopMost = true;
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
