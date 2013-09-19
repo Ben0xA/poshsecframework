@@ -672,7 +672,7 @@ namespace psframework
             //This code is required to emulate a powershell command prompt.
             //otherwise it's just a textbox.
             switch (e.KeyCode)
-            { 
+            {
                 case Keys.Back:
                     if (txtPShellOutput.SelectionStart <= mincurpos)
                     {
@@ -780,6 +780,11 @@ namespace psframework
                     }
                     break;
             }
+        }
+
+        private void txtPShellOutput_TabPressed(object sender, EventArgs e)
+        {
+            txtPShellOutput.Text = "Woo hoo!";
         }
         #endregion
 
@@ -889,6 +894,5 @@ namespace psframework
         }
 
         #endregion
-
     }
 }

@@ -742,6 +742,7 @@ namespace psframework
             this.txtPShellOutput.Size = new System.Drawing.Size(942, 307);
             this.txtPShellOutput.TabIndex = 0;
             this.txtPShellOutput.Text = "psf > ";
+            this.txtPShellOutput.TabPressed += new System.EventHandler(this.txtPShellOutput_TabPressed);
             this.txtPShellOutput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPShellOutput_KeyDown);
             // 
             // tbpSchedScripts
