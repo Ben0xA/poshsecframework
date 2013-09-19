@@ -16,9 +16,6 @@ Ben0xA
 Import-Module $PSFramework
 
 [boolean]$scan = $True;
-[string]$basefile = ".\baseline.xml"
-[string]$actvfile = ".\active.xml"
-
 $baseline = @()
 $active = @()
 
@@ -44,7 +41,7 @@ do
       $protocol = $rslt.InputObject.Protocol
       $rport = $rslt.InputObject.RemotePort
       $pname = $rslt.InputObject.ProcessName
-      $PSAlert.Add("New port detected. $protocl/$rport ($pname))", 3)
+      $PSAlert.Add("New port detected. $protocol/$rport ($pname)", 2)
     }  
   }
 } while ($scan)
