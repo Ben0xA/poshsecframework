@@ -24,7 +24,7 @@ namespace psframework
         private int mincurpos = 6;
         private Collection<String> cmdhist = new Collection<string>();
         private int cmdhistidx = -1;
-        private PShell.pshell psf = new PShell.pshell();
+        private PShell.pshell psf;
 
         enum SystemType
         { 
@@ -45,6 +45,8 @@ namespace psframework
         public frmMain()
         {
             InitializeComponent();
+            CheckSettings();
+            psf = new PShell.pshell();
             txtPShellOutput.SelectionStart = mincurpos;
             scnr.ParentForm = this;
             cmbLibraryTypes.SelectedIndex = 1;
@@ -436,6 +438,32 @@ namespace psframework
             }
         }
 
+        private void CheckSettings()
+        {
+            //Ensure we have settings and that if it's .\ to change to application path.
+            String scrpath = poshsecframework.Properties.Settings.Default.ScriptPath;
+            String frwpath = poshsecframework.Properties.Settings.Default.FrameworkPath;
+            String modpath = poshsecframework.Properties.Settings.Default.ModulePath;
+            if (poshsecframework.Properties.Settings.Default.ScriptDefaultAction == null)
+            {
+                poshsecframework.Properties.Settings.Default["ScriptDefaultAction"] = 0;
+            }
+            if (scrpath.StartsWith(".") || scrpath.Trim() == "")
+            {
+                poshsecframework.Properties.Settings.Default["ScriptPath"] = Path.Combine(Application.StartupPath, scrpath).Replace("\\.\\", "\\");
+            }
+            if (frwpath.StartsWith(".") || frwpath.Trim() == "")
+            {
+                poshsecframework.Properties.Settings.Default["FrameworkPath"] = Path.Combine(Application.StartupPath, frwpath).Replace("\\.\\", "\\");
+            }
+            if (modpath.StartsWith(".") || modpath.Trim() == "")
+            {
+                poshsecframework.Properties.Settings.Default["ModulePath"] = Path.Combine(Application.StartupPath, modpath).Replace("\\.\\", "\\");
+            }
+            poshsecframework.Properties.Settings.Default.Save();
+            poshsecframework.Properties.Settings.Default.Reload();
+        }
+
         private void GetCommand()
         {
             try
@@ -489,7 +517,7 @@ namespace psframework
                                 Console.WriteLine(po.BaseObject.GetType().Name);
                                 break;
                         }
-                        if (lvw != null && (cmbLibraryTypes.Text == "All" || cmbLibraryTypes.Text == lvw.SubItems[1].Text))
+                        if (lvw != null && (cmbLibraryTypes.Text == "All" || cmbLibraryTypes.Text.ToLower() == lvw.SubItems[1].Text.ToLower()))
                         {
                             lvwCommands.Items.Add(lvw);
                         }
@@ -511,7 +539,7 @@ namespace psframework
         {
             try
             {
-                String scriptroot = "C:\\pstest\\"; // Get this variable from Settings.
+                String scriptroot = poshsecframework.Properties.Settings.Default["ScriptPath"].ToString(); ; // Get this variable from Settings.
                 String[] scpaths = Directory.GetFiles(scriptroot, "*.ps1", SearchOption.TopDirectoryOnly);
                 if (scpaths != null)
                 {
@@ -556,6 +584,13 @@ namespace psframework
         private void mnuScan_Click(object sender, EventArgs e)
         {
             Scan();
+        }
+
+        private void mnuOptions_Click(object sender, EventArgs e)
+        {
+            poshsecframework.Interface.frmSettings frm = new poshsecframework.Interface.frmSettings();
+            frm.ShowDialog();
+            frm = null;
         }
         #endregion 
 
@@ -817,5 +852,6 @@ namespace psframework
         }
 
         #endregion
+
     }
 }

@@ -10,7 +10,7 @@ namespace psframework.PShell
     {
         public class PSRoot : PSVariable
         {
-            private String psroot = "C:\\pstest\\";
+            private String psroot = poshsecframework.Properties.Settings.Default.ScriptPath;
 
             public PSRoot(string name): base(name) { }
 
@@ -22,7 +22,7 @@ namespace psframework.PShell
 
         public class PSModRoot : PSVariable
         {
-            private String psmodroot = "C:\\pstest\\Modules\\";
+            private String psmodroot = poshsecframework.Properties.Settings.Default.ModulePath;
 
             public PSModRoot(string name) : base(name) { }
 
@@ -34,7 +34,7 @@ namespace psframework.PShell
 
         public class PSFramework : PSVariable
         {
-            private String psf = "C:\\pstest\\Modules\\PoshSecFramework\\poshsecframework.psm1";
+            private String psf = poshsecframework.Properties.Settings.Default.FrameworkPath;
 
             public PSFramework(string name) : base(name) { }
 

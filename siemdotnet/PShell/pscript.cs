@@ -91,7 +91,8 @@ namespace psframework.PShell
         public Collection<PSObject> GetCommand()
         {
             Pipeline pline = rspace.CreatePipeline();
-            pline.Commands.AddScript("Import-Module C:\\pstest\\Modules\\PoshSecFramework\\PoshSecFramework.psm1" + Environment.NewLine + "Get-Command");
+            String scrpt = "Import-Module " + poshsecframework.Properties.Settings.Default.FrameworkPath + Environment.NewLine + "Get-Command";
+            pline.Commands.AddScript(scrpt);
             Collection<PSObject> rslt = pline.Invoke();
             pline.Dispose();
             GC.Collect();

@@ -93,6 +93,11 @@ namespace psframework
             this.cmnuActiveScripts = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmbtnCancelScript = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
+            this.cmnuScripts = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmbtnRunScript = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbtnViewScript = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtPShellOutput = new poshsecframework.Controls.RichTextBoxCaret();
+            this.mnuTools = new System.Windows.Forms.ToolStripMenuItem();
             this.btnRefreshScripts = new System.Windows.Forms.ToolStripButton();
             this.btnRunScript = new System.Windows.Forms.ToolStripButton();
             this.btnViewScript = new System.Windows.Forms.ToolStripButton();
@@ -109,10 +114,10 @@ namespace psframework
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.btnAddNetwork = new System.Windows.Forms.ToolStripButton();
             this.btnAddSystem = new System.Windows.Forms.ToolStripButton();
-            this.cmnuScripts = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cmbtnRunScript = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmbtnViewScript = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtPShellOutput = new poshsecframework.Controls.RichTextBoxCaret();
+            this.mnuOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCheckforUpdates = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuPSFWiki = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
             this.tbMain.SuspendLayout();
@@ -143,7 +148,9 @@ namespace psframework
             // mnuMain
             // 
             this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuFile});
+            this.mnuFile,
+            this.mnuTools,
+            this.mnuHelp});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
             this.mnuMain.Size = new System.Drawing.Size(1205, 24);
@@ -161,14 +168,14 @@ namespace psframework
             // mnuScan
             // 
             this.mnuScan.Name = "mnuScan";
-            this.mnuScan.Size = new System.Drawing.Size(99, 22);
+            this.mnuScan.Size = new System.Drawing.Size(152, 22);
             this.mnuScan.Text = "Scan";
             this.mnuScan.Click += new System.EventHandler(this.mnuScan_Click);
             // 
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(99, 22);
+            this.mnuExit.Size = new System.Drawing.Size(152, 22);
             this.mnuExit.Text = "E&xit";
             this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
             // 
@@ -732,6 +739,54 @@ namespace psframework
             this.toolStrip5.TabIndex = 0;
             this.toolStrip5.Text = "toolStrip5";
             // 
+            // cmnuScripts
+            // 
+            this.cmnuScripts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmbtnRunScript,
+            this.cmbtnViewScript});
+            this.cmnuScripts.Name = "contextMenuStrip1";
+            this.cmnuScripts.Size = new System.Drawing.Size(133, 48);
+            this.cmnuScripts.Opening += new System.ComponentModel.CancelEventHandler(this.cmnuScripts_Opening);
+            // 
+            // cmbtnRunScript
+            // 
+            this.cmbtnRunScript.Name = "cmbtnRunScript";
+            this.cmbtnRunScript.Size = new System.Drawing.Size(132, 22);
+            this.cmbtnRunScript.Text = "Run Script";
+            this.cmbtnRunScript.Click += new System.EventHandler(this.cmbtnRunScript_Click);
+            // 
+            // cmbtnViewScript
+            // 
+            this.cmbtnViewScript.Name = "cmbtnViewScript";
+            this.cmbtnViewScript.Size = new System.Drawing.Size(132, 22);
+            this.cmbtnViewScript.Text = "View Script";
+            this.cmbtnViewScript.Click += new System.EventHandler(this.cmbtnViewScript_Click);
+            // 
+            // txtPShellOutput
+            // 
+            this.txtPShellOutput.BackColor = System.Drawing.Color.SteelBlue;
+            this.txtPShellOutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPShellOutput.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.txtPShellOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPShellOutput.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPShellOutput.ForeColor = System.Drawing.Color.White;
+            this.txtPShellOutput.Location = new System.Drawing.Point(3, 3);
+            this.txtPShellOutput.Margin = new System.Windows.Forms.Padding(5, 5, 5, 0);
+            this.txtPShellOutput.Name = "txtPShellOutput";
+            this.txtPShellOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.txtPShellOutput.Size = new System.Drawing.Size(942, 307);
+            this.txtPShellOutput.TabIndex = 0;
+            this.txtPShellOutput.Text = "psf > ";
+            this.txtPShellOutput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPShellOutput_KeyDown);
+            // 
+            // mnuTools
+            // 
+            this.mnuTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuOptions});
+            this.mnuTools.Name = "mnuTools";
+            this.mnuTools.Size = new System.Drawing.Size(48, 20);
+            this.mnuTools.Text = "&Tools";
+            // 
             // btnRefreshScripts
             // 
             this.btnRefreshScripts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -907,45 +962,34 @@ namespace psframework
             this.btnAddSystem.Name = "btnAddSystem";
             this.btnAddSystem.Size = new System.Drawing.Size(23, 22);
             // 
-            // cmnuScripts
+            // mnuOptions
             // 
-            this.cmnuScripts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmbtnRunScript,
-            this.cmbtnViewScript});
-            this.cmnuScripts.Name = "contextMenuStrip1";
-            this.cmnuScripts.Size = new System.Drawing.Size(133, 48);
-            this.cmnuScripts.Opening += new System.ComponentModel.CancelEventHandler(this.cmnuScripts_Opening);
+            this.mnuOptions.Image = global::poshsecframework.Properties.Resources.system_settings;
+            this.mnuOptions.Name = "mnuOptions";
+            this.mnuOptions.Size = new System.Drawing.Size(152, 22);
+            this.mnuOptions.Text = "Options...";
+            this.mnuOptions.Click += new System.EventHandler(this.mnuOptions_Click);
             // 
-            // cmbtnRunScript
+            // mnuHelp
             // 
-            this.cmbtnRunScript.Name = "cmbtnRunScript";
-            this.cmbtnRunScript.Size = new System.Drawing.Size(152, 22);
-            this.cmbtnRunScript.Text = "Run Script";
-            this.cmbtnRunScript.Click += new System.EventHandler(this.cmbtnRunScript_Click);
+            this.mnuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuCheckforUpdates,
+            this.mnuPSFWiki});
+            this.mnuHelp.Name = "mnuHelp";
+            this.mnuHelp.Size = new System.Drawing.Size(44, 20);
+            this.mnuHelp.Text = "&Help";
             // 
-            // cmbtnViewScript
+            // mnuCheckforUpdates
             // 
-            this.cmbtnViewScript.Name = "cmbtnViewScript";
-            this.cmbtnViewScript.Size = new System.Drawing.Size(152, 22);
-            this.cmbtnViewScript.Text = "View Script";
-            this.cmbtnViewScript.Click += new System.EventHandler(this.cmbtnViewScript_Click);
+            this.mnuCheckforUpdates.Name = "mnuCheckforUpdates";
+            this.mnuCheckforUpdates.Size = new System.Drawing.Size(206, 22);
+            this.mnuCheckforUpdates.Text = "Check for Updates...";
             // 
-            // txtPShellOutput
+            // mnuPSFWiki
             // 
-            this.txtPShellOutput.BackColor = System.Drawing.Color.SteelBlue;
-            this.txtPShellOutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtPShellOutput.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.txtPShellOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPShellOutput.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPShellOutput.ForeColor = System.Drawing.Color.White;
-            this.txtPShellOutput.Location = new System.Drawing.Point(3, 3);
-            this.txtPShellOutput.Margin = new System.Windows.Forms.Padding(5, 5, 5, 0);
-            this.txtPShellOutput.Name = "txtPShellOutput";
-            this.txtPShellOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.txtPShellOutput.Size = new System.Drawing.Size(942, 307);
-            this.txtPShellOutput.TabIndex = 0;
-            this.txtPShellOutput.Text = "psf > ";
-            this.txtPShellOutput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPShellOutput_KeyDown);
+            this.mnuPSFWiki.Name = "mnuPSFWiki";
+            this.mnuPSFWiki.Size = new System.Drawing.Size(206, 22);
+            this.mnuPSFWiki.Text = "PoshSec Framework Wiki";
             // 
             // frmMain
             // 
@@ -1087,6 +1131,11 @@ namespace psframework
         private System.Windows.Forms.ContextMenuStrip cmnuScripts;
         private System.Windows.Forms.ToolStripMenuItem cmbtnRunScript;
         private System.Windows.Forms.ToolStripMenuItem cmbtnViewScript;
+        private System.Windows.Forms.ToolStripMenuItem mnuTools;
+        private System.Windows.Forms.ToolStripMenuItem mnuOptions;
+        private System.Windows.Forms.ToolStripMenuItem mnuHelp;
+        private System.Windows.Forms.ToolStripMenuItem mnuCheckforUpdates;
+        private System.Windows.Forms.ToolStripMenuItem mnuPSFWiki;
     }
 }
 

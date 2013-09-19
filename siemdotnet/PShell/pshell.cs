@@ -22,7 +22,7 @@ namespace psframework.PShell
         {
             try
             {
-                pspath = "C:\\pstest\\";
+                pspath = poshsecframework.Properties.Settings.Default["ScriptPath"].ToString();
                 ps = new pscript();
                 ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
             }
