@@ -69,8 +69,16 @@ namespace psframework.PShell
         }
 
         public pscript()
-        {
-            InitializeScript();
+        {            
+            try
+            {
+                InitializeScript();
+            }
+            catch (Exception e)
+            {
+                //Base Exception Handler
+                OnScriptComplete(new pseventargs("Unhandled exception in script function." + Environment.NewLine + e.Message + Environment.NewLine + "Stack Trace:" + Environment.NewLine + e.StackTrace, null, false));
+            } 
         }
 
         public void Dispose()

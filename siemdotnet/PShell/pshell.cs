@@ -20,9 +20,17 @@ namespace psframework.PShell
         #region " Public Methods "
         public pshell()
         {
-            pspath = "C:\\pstest\\";
-            ps = new pscript();
-            ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
+            try
+            {
+                pspath = "C:\\pstest\\";
+                ps = new pscript();
+                ps.ScriptCompleted += new EventHandler<pseventargs>(ScriptCompleted);
+            }
+            catch (Exception e)
+            { 
+                //Base Exception Handler
+                MessageBox.Show("Unhandled exception in script function." + Environment.NewLine + e.Message + Environment.NewLine + "Stack Trace:" + Environment.NewLine + e.StackTrace);
+            }            
         }
 
         public void Test()
