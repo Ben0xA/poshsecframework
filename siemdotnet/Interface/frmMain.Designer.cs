@@ -30,9 +30,9 @@ namespace psframework
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Local Network");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Local Network");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Networks", new System.Windows.Forms.TreeNode[] {
+            treeNode3});
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuScan = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,13 +59,6 @@ namespace psframework
             this.cmbLibraryTypes = new System.Windows.Forms.ToolStripComboBox();
             this.tvwNetworks = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.cmnuHosts = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.powerShellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.windowsUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.waucheckps1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imgListAlerts = new System.Windows.Forms.ImageList(this.components);
-            this.cmnuActiveScripts = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cmbtnCancelScript = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlSystems = new System.Windows.Forms.SplitContainer();
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tbpSystems = new System.Windows.Forms.TabPage();
@@ -77,6 +70,10 @@ namespace psframework
             this.chClientInstalled = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chAlerts = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chLastScan = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cmnuHosts = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.powerShellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.windowsUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waucheckps1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbpPowerShell = new System.Windows.Forms.TabPage();
             this.tbpSchedScripts = new System.Windows.Forms.TabPage();
             this.tcSystem = new System.Windows.Forms.TabControl();
@@ -85,6 +82,7 @@ namespace psframework
             this.chSeverity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chMessage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imgListAlerts = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tslblDisplay = new System.Windows.Forms.ToolStripLabel();
@@ -92,7 +90,12 @@ namespace psframework
             this.lvwActiveScripts = new System.Windows.Forms.ListView();
             this.chActScrScriptName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chActScrStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cmnuActiveScripts = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmbtnCancelScript = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
+            this.btnRefreshScripts = new System.Windows.Forms.ToolStripButton();
+            this.btnRunScript = new System.Windows.Forms.ToolStripButton();
+            this.btnViewScript = new System.Windows.Forms.ToolStripButton();
             this.btnLibraryRefresh = new System.Windows.Forms.ToolStripButton();
             this.btnShowAliases = new System.Windows.Forms.ToolStripButton();
             this.btnShowFunctions = new System.Windows.Forms.ToolStripButton();
@@ -104,8 +107,11 @@ namespace psframework
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.btnAddNetwork = new System.Windows.Forms.ToolStripButton();
+            this.btnAddSystem = new System.Windows.Forms.ToolStripButton();
+            this.cmnuScripts = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmbtnRunScript = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbtnViewScript = new System.Windows.Forms.ToolStripMenuItem();
             this.txtPShellOutput = new poshsecframework.Controls.RichTextBoxCaret();
             this.mnuMain.SuspendLayout();
             this.stsMain.SuspendLayout();
@@ -115,21 +121,23 @@ namespace psframework
             this.pnlMain.Panel2.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.toolStrip4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.toolStrip2.SuspendLayout();
-            this.cmnuHosts.SuspendLayout();
-            this.cmnuActiveScripts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pnlSystems)).BeginInit();
             this.pnlSystems.Panel1.SuspendLayout();
             this.pnlSystems.Panel2.SuspendLayout();
             this.pnlSystems.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tbpSystems.SuspendLayout();
+            this.cmnuHosts.SuspendLayout();
             this.tbpPowerShell.SuspendLayout();
             this.tcSystem.SuspendLayout();
             this.tbpAlerts.SuspendLayout();
             this.toolStrip3.SuspendLayout();
             this.tbpScripts.SuspendLayout();
+            this.cmnuActiveScripts.SuspendLayout();
+            this.cmnuScripts.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -197,8 +205,8 @@ namespace psframework
             // tbMain
             // 
             this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
+            this.btnAddNetwork,
+            this.btnAddSystem});
             this.tbMain.Location = new System.Drawing.Point(0, 24);
             this.tbMain.Name = "tbMain";
             this.tbMain.Size = new System.Drawing.Size(1205, 25);
@@ -241,8 +249,10 @@ namespace psframework
             // 
             this.lvwScripts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chScriptName});
+            this.lvwScripts.ContextMenuStrip = this.cmnuScripts;
             this.lvwScripts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvwScripts.FullRowSelect = true;
+            this.lvwScripts.HideSelection = false;
             this.lvwScripts.Location = new System.Drawing.Point(0, 25);
             this.lvwScripts.Name = "lvwScripts";
             this.lvwScripts.Size = new System.Drawing.Size(245, 210);
@@ -250,6 +260,7 @@ namespace psframework
             this.lvwScripts.TabIndex = 1;
             this.lvwScripts.UseCompatibleStateImageBehavior = false;
             this.lvwScripts.View = System.Windows.Forms.View.Details;
+            this.lvwScripts.SelectedIndexChanged += new System.EventHandler(this.lvwScripts_SelectedIndexChanged);
             this.lvwScripts.DoubleClick += new System.EventHandler(this.lvwScripts_DoubleClick);
             // 
             // chScriptName
@@ -272,6 +283,10 @@ namespace psframework
             // 
             // toolStrip4
             // 
+            this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnRefreshScripts,
+            this.btnRunScript,
+            this.btnViewScript});
             this.toolStrip4.Location = new System.Drawing.Point(0, 0);
             this.toolStrip4.Name = "toolStrip4";
             this.toolStrip4.Size = new System.Drawing.Size(245, 25);
@@ -313,6 +328,7 @@ namespace psframework
             this.chLibModule});
             this.lvwCommands.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvwCommands.FullRowSelect = true;
+            this.lvwCommands.HideSelection = false;
             this.lvwCommands.Location = new System.Drawing.Point(0, 25);
             this.lvwCommands.Name = "lvwCommands";
             this.lvwCommands.ShowItemToolTips = true;
@@ -379,15 +395,15 @@ namespace psframework
             this.tvwNetworks.ImageList = this.imgList16;
             this.tvwNetworks.Location = new System.Drawing.Point(0, 25);
             this.tvwNetworks.Name = "tvwNetworks";
-            treeNode1.ImageKey = "Diagram.png";
-            treeNode1.Name = "ndNone";
-            treeNode1.SelectedImageKey = "Diagram.png";
-            treeNode1.Tag = "1";
-            treeNode1.Text = "Local Network";
-            treeNode2.Name = "ndNetwork";
-            treeNode2.Text = "Networks";
+            treeNode3.ImageKey = "Diagram.png";
+            treeNode3.Name = "ndNone";
+            treeNode3.SelectedImageKey = "Diagram.png";
+            treeNode3.Tag = "1";
+            treeNode3.Text = "Local Network";
+            treeNode4.Name = "ndNetwork";
+            treeNode4.Text = "Networks";
             this.tvwNetworks.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode4});
             this.tvwNetworks.SelectedImageIndex = 1;
             this.tvwNetworks.ShowPlusMinus = false;
             this.tvwNetworks.ShowRootLines = false;
@@ -402,62 +418,6 @@ namespace psframework
             this.toolStrip1.Size = new System.Drawing.Size(245, 25);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // cmnuHosts
-            // 
-            this.cmnuHosts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.powerShellToolStripMenuItem});
-            this.cmnuHosts.Name = "cmnuHosts";
-            this.cmnuHosts.Size = new System.Drawing.Size(136, 26);
-            // 
-            // powerShellToolStripMenuItem
-            // 
-            this.powerShellToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.windowsUpdatesToolStripMenuItem});
-            this.powerShellToolStripMenuItem.Name = "powerShellToolStripMenuItem";
-            this.powerShellToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.powerShellToolStripMenuItem.Text = "Power Shell";
-            // 
-            // windowsUpdatesToolStripMenuItem
-            // 
-            this.windowsUpdatesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.waucheckps1ToolStripMenuItem});
-            this.windowsUpdatesToolStripMenuItem.Name = "windowsUpdatesToolStripMenuItem";
-            this.windowsUpdatesToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.windowsUpdatesToolStripMenuItem.Text = "Windows Updates";
-            // 
-            // waucheckps1ToolStripMenuItem
-            // 
-            this.waucheckps1ToolStripMenuItem.Name = "waucheckps1ToolStripMenuItem";
-            this.waucheckps1ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.waucheckps1ToolStripMenuItem.Text = "waucheck.ps1";
-            // 
-            // imgListAlerts
-            // 
-            this.imgListAlerts.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListAlerts.ImageStream")));
-            this.imgListAlerts.TransparentColor = System.Drawing.Color.Transparent;
-            this.imgListAlerts.Images.SetKeyName(0, "dialog-information-3.png");
-            this.imgListAlerts.Images.SetKeyName(1, "dialog-error-4.png");
-            this.imgListAlerts.Images.SetKeyName(2, "dialog-warning-3.png");
-            this.imgListAlerts.Images.SetKeyName(3, "dialog-warning-2.png");
-            this.imgListAlerts.Images.SetKeyName(4, "exclamation.png");
-            // 
-            // cmnuActiveScripts
-            // 
-            this.cmnuActiveScripts.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.cmnuActiveScripts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmbtnCancelScript});
-            this.cmnuActiveScripts.Name = "cmnuActiveScripts";
-            this.cmnuActiveScripts.Size = new System.Drawing.Size(137, 26);
-            this.cmnuActiveScripts.Opening += new System.ComponentModel.CancelEventHandler(this.cmnuActiveScripts_Opening);
-            // 
-            // cmbtnCancelScript
-            // 
-            this.cmbtnCancelScript.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.cmbtnCancelScript.Name = "cmbtnCancelScript";
-            this.cmbtnCancelScript.Size = new System.Drawing.Size(136, 22);
-            this.cmbtnCancelScript.Text = "Cancel Script";
-            this.cmbtnCancelScript.Click += new System.EventHandler(this.cmbtnCancelScript_Click);
             // 
             // pnlSystems
             // 
@@ -518,6 +478,7 @@ namespace psframework
             this.lvwSystems.ContextMenuStrip = this.cmnuHosts;
             this.lvwSystems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvwSystems.FullRowSelect = true;
+            this.lvwSystems.HideSelection = false;
             this.lvwSystems.Location = new System.Drawing.Point(3, 3);
             this.lvwSystems.Name = "lvwSystems";
             this.lvwSystems.Size = new System.Drawing.Size(942, 307);
@@ -559,6 +520,35 @@ namespace psframework
             // 
             this.chLastScan.Text = "Last Scan";
             this.chLastScan.Width = 173;
+            // 
+            // cmnuHosts
+            // 
+            this.cmnuHosts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.powerShellToolStripMenuItem});
+            this.cmnuHosts.Name = "cmnuHosts";
+            this.cmnuHosts.Size = new System.Drawing.Size(136, 26);
+            // 
+            // powerShellToolStripMenuItem
+            // 
+            this.powerShellToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.windowsUpdatesToolStripMenuItem});
+            this.powerShellToolStripMenuItem.Name = "powerShellToolStripMenuItem";
+            this.powerShellToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.powerShellToolStripMenuItem.Text = "Power Shell";
+            // 
+            // windowsUpdatesToolStripMenuItem
+            // 
+            this.windowsUpdatesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.waucheckps1ToolStripMenuItem});
+            this.windowsUpdatesToolStripMenuItem.Name = "windowsUpdatesToolStripMenuItem";
+            this.windowsUpdatesToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.windowsUpdatesToolStripMenuItem.Text = "Windows Updates";
+            // 
+            // waucheckps1ToolStripMenuItem
+            // 
+            this.waucheckps1ToolStripMenuItem.Name = "waucheckps1ToolStripMenuItem";
+            this.waucheckps1ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.waucheckps1ToolStripMenuItem.Text = "waucheck.ps1";
             // 
             // tbpPowerShell
             // 
@@ -639,6 +629,16 @@ namespace psframework
             this.chScript.Text = "Script";
             this.chScript.Width = 191;
             // 
+            // imgListAlerts
+            // 
+            this.imgListAlerts.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListAlerts.ImageStream")));
+            this.imgListAlerts.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgListAlerts.Images.SetKeyName(0, "dialog-information-3.png");
+            this.imgListAlerts.Images.SetKeyName(1, "dialog-error-4.png");
+            this.imgListAlerts.Images.SetKeyName(2, "dialog-warning-3.png");
+            this.imgListAlerts.Images.SetKeyName(3, "dialog-warning-2.png");
+            this.imgListAlerts.Images.SetKeyName(4, "exclamation.png");
+            // 
             // toolStrip3
             // 
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -687,6 +687,8 @@ namespace psframework
             this.chActScrStatus});
             this.lvwActiveScripts.ContextMenuStrip = this.cmnuActiveScripts;
             this.lvwActiveScripts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvwActiveScripts.FullRowSelect = true;
+            this.lvwActiveScripts.HideSelection = false;
             this.lvwActiveScripts.Location = new System.Drawing.Point(3, 28);
             this.lvwActiveScripts.Name = "lvwActiveScripts";
             this.lvwActiveScripts.Size = new System.Drawing.Size(942, 173);
@@ -705,6 +707,23 @@ namespace psframework
             this.chActScrStatus.Text = "Status";
             this.chActScrStatus.Width = 242;
             // 
+            // cmnuActiveScripts
+            // 
+            this.cmnuActiveScripts.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.cmnuActiveScripts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmbtnCancelScript});
+            this.cmnuActiveScripts.Name = "cmnuActiveScripts";
+            this.cmnuActiveScripts.Size = new System.Drawing.Size(137, 26);
+            this.cmnuActiveScripts.Opening += new System.ComponentModel.CancelEventHandler(this.cmnuActiveScripts_Opening);
+            // 
+            // cmbtnCancelScript
+            // 
+            this.cmbtnCancelScript.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.cmbtnCancelScript.Name = "cmbtnCancelScript";
+            this.cmbtnCancelScript.Size = new System.Drawing.Size(136, 22);
+            this.cmbtnCancelScript.Text = "Cancel Script";
+            this.cmbtnCancelScript.Click += new System.EventHandler(this.cmbtnCancelScript_Click);
+            // 
             // toolStrip5
             // 
             this.toolStrip5.Location = new System.Drawing.Point(3, 3);
@@ -712,6 +731,38 @@ namespace psframework
             this.toolStrip5.Size = new System.Drawing.Size(942, 25);
             this.toolStrip5.TabIndex = 0;
             this.toolStrip5.Text = "toolStrip5";
+            // 
+            // btnRefreshScripts
+            // 
+            this.btnRefreshScripts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRefreshScripts.Image = global::poshsecframework.Properties.Resources.view_refresh_7;
+            this.btnRefreshScripts.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefreshScripts.Name = "btnRefreshScripts";
+            this.btnRefreshScripts.Size = new System.Drawing.Size(23, 22);
+            this.btnRefreshScripts.ToolTipText = "Refresh Scripts";
+            this.btnRefreshScripts.Click += new System.EventHandler(this.btnRefreshScripts_Click);
+            // 
+            // btnRunScript
+            // 
+            this.btnRunScript.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRunScript.Enabled = false;
+            this.btnRunScript.Image = global::poshsecframework.Properties.Resources.run;
+            this.btnRunScript.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRunScript.Name = "btnRunScript";
+            this.btnRunScript.Size = new System.Drawing.Size(23, 22);
+            this.btnRunScript.ToolTipText = "Run Script";
+            this.btnRunScript.Click += new System.EventHandler(this.btnRunScript_Click);
+            // 
+            // btnViewScript
+            // 
+            this.btnViewScript.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnViewScript.Enabled = false;
+            this.btnViewScript.Image = global::poshsecframework.Properties.Resources.document_open_7;
+            this.btnViewScript.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnViewScript.Name = "btnViewScript";
+            this.btnViewScript.Size = new System.Drawing.Size(23, 22);
+            this.btnViewScript.ToolTipText = "View Script";
+            this.btnViewScript.Click += new System.EventHandler(this.btnViewScript_Click);
             // 
             // btnLibraryRefresh
             // 
@@ -840,23 +891,44 @@ namespace psframework
             this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton9.Text = "toolStripButton9";
             // 
-            // toolStripButton1
+            // btnAddNetwork
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::poshsecframework.Properties.Resources.Diagram;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.btnAddNetwork.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAddNetwork.Image = global::poshsecframework.Properties.Resources.Diagram;
+            this.btnAddNetwork.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddNetwork.Name = "btnAddNetwork";
+            this.btnAddNetwork.Size = new System.Drawing.Size(23, 22);
             // 
-            // toolStripButton2
+            // btnAddSystem
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::poshsecframework.Properties.Resources.ServerExecute;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
+            this.btnAddSystem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAddSystem.Image = global::poshsecframework.Properties.Resources.ServerExecute;
+            this.btnAddSystem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddSystem.Name = "btnAddSystem";
+            this.btnAddSystem.Size = new System.Drawing.Size(23, 22);
+            // 
+            // cmnuScripts
+            // 
+            this.cmnuScripts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmbtnRunScript,
+            this.cmbtnViewScript});
+            this.cmnuScripts.Name = "contextMenuStrip1";
+            this.cmnuScripts.Size = new System.Drawing.Size(133, 48);
+            this.cmnuScripts.Opening += new System.ComponentModel.CancelEventHandler(this.cmnuScripts_Opening);
+            // 
+            // cmbtnRunScript
+            // 
+            this.cmbtnRunScript.Name = "cmbtnRunScript";
+            this.cmbtnRunScript.Size = new System.Drawing.Size(152, 22);
+            this.cmbtnRunScript.Text = "Run Script";
+            this.cmbtnRunScript.Click += new System.EventHandler(this.cmbtnRunScript_Click);
+            // 
+            // cmbtnViewScript
+            // 
+            this.cmbtnViewScript.Name = "cmbtnViewScript";
+            this.cmbtnViewScript.Size = new System.Drawing.Size(152, 22);
+            this.cmbtnViewScript.Text = "View Script";
+            this.cmbtnViewScript.Click += new System.EventHandler(this.cmbtnViewScript_Click);
             // 
             // txtPShellOutput
             // 
@@ -904,18 +976,19 @@ namespace psframework
             this.pnlMain.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.toolStrip4.ResumeLayout(false);
+            this.toolStrip4.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
-            this.cmnuHosts.ResumeLayout(false);
-            this.cmnuActiveScripts.ResumeLayout(false);
             this.pnlSystems.Panel1.ResumeLayout(false);
             this.pnlSystems.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pnlSystems)).EndInit();
             this.pnlSystems.ResumeLayout(false);
             this.tcMain.ResumeLayout(false);
             this.tbpSystems.ResumeLayout(false);
+            this.cmnuHosts.ResumeLayout(false);
             this.tbpPowerShell.ResumeLayout(false);
             this.tcSystem.ResumeLayout(false);
             this.tbpAlerts.ResumeLayout(false);
@@ -924,6 +997,8 @@ namespace psframework
             this.toolStrip3.PerformLayout();
             this.tbpScripts.ResumeLayout(false);
             this.tbpScripts.PerformLayout();
+            this.cmnuActiveScripts.ResumeLayout(false);
+            this.cmnuScripts.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -943,8 +1018,8 @@ namespace psframework
         private System.Windows.Forms.ImageList imgList16;
         private System.Windows.Forms.TabControl tcSystem;
         private System.Windows.Forms.TabPage tbpAlerts;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton btnAddNetwork;
+        private System.Windows.Forms.ToolStripButton btnAddSystem;
         private System.Windows.Forms.ToolStripStatusLabel lblsbSpacer;
         private System.Windows.Forms.ToolStripProgressBar pbStatus;
         private System.Windows.Forms.TabPage tbpScripts;
@@ -1006,6 +1081,12 @@ namespace psframework
         private System.Windows.Forms.ToolStripMenuItem cmbtnCancelScript;
         //private System.Windows.Forms.RichTextBox txtPShellOutput;
         private poshsecframework.Controls.RichTextBoxCaret txtPShellOutput;
+        private System.Windows.Forms.ToolStripButton btnRefreshScripts;
+        private System.Windows.Forms.ToolStripButton btnViewScript;
+        private System.Windows.Forms.ToolStripButton btnRunScript;
+        private System.Windows.Forms.ContextMenuStrip cmnuScripts;
+        private System.Windows.Forms.ToolStripMenuItem cmbtnRunScript;
+        private System.Windows.Forms.ToolStripMenuItem cmbtnViewScript;
     }
 }
 

@@ -120,6 +120,8 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Images\psficon.ico" />
+    <None Include="Resources\run.png" />
+    <None Include="Resources\document-open-7.png" />
     <None Include="Resources\caret_underline.png" />
     <None Include="Resources\test.png" />
     <None Include="Resources\dialog-error-4.png" />

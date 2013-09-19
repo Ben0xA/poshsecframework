@@ -241,6 +241,38 @@ namespace psframework
             HideProgress();
             lblStatus.Text = "Ready";
         }
+
+        private void RunScript()
+        {
+            if (lvwScripts.SelectedItems.Count > 0)
+            {
+                ListViewItem lvw = lvwScripts.SelectedItems[0];
+                //This needs to be a separate runspace.
+                PShell.pshell ps = new PShell.pshell();
+                ps.ParentForm = this;
+                ps.Run(lvw.Text);
+                ps = null;
+            }
+        }
+
+        private void ViewScript()
+        {
+            if (lvwScripts.SelectedItems.Count > 0)
+            {
+                ListViewItem lvw = lvwScripts.SelectedItems[0];
+                String script = (String)lvw.Tag;
+                if (File.Exists(script))
+                {
+                    System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(script);
+                    psi.UseShellExecute = true;
+                    psi.Verb = "open";
+                    System.Diagnostics.Process prc = new System.Diagnostics.Process();
+                    prc.StartInfo = psi;
+                    prc.Start();
+                    prc = null;
+                }
+            }
+        }
         #endregion
 
         #region Status
@@ -483,6 +515,8 @@ namespace psframework
                 String[] scpaths = Directory.GetFiles(scriptroot, "*.ps1", SearchOption.TopDirectoryOnly);
                 if (scpaths != null)
                 {
+                    lvwScripts.BeginUpdate();
+                    lvwScripts.Items.Clear();
                     foreach (String scpath in scpaths)
                     { 
                         ListViewItem lvw = new ListViewItem();
@@ -491,6 +525,7 @@ namespace psframework
                         lvw.Tag = scpath;
                         lvwScripts.Items.Add(lvw);
                     }
+                    lvwScripts.EndUpdate();
                 }
             }
             catch (Exception e)
@@ -532,15 +567,7 @@ namespace psframework
 
         private void lvwScripts_DoubleClick(object sender, EventArgs e)
         {
-            if (lvwScripts.SelectedItems.Count > 0)
-            {
-                ListViewItem lvw = lvwScripts.SelectedItems[0];
-                //This needs to be a separate runspace.
-                PShell.pshell ps = new PShell.pshell();
-                ps.ParentForm = this;                
-                ps.Run(lvw.Text);
-                ps = null;
-            }
+            RunScript();
         }
 
         private void lvwCommands_DoubleClick(object sender, EventArgs e)
@@ -549,6 +576,20 @@ namespace psframework
             {
                 ListViewItem lvw = lvwCommands.SelectedItems[0];
                 psf.Run(lvw.Text, true);
+            }
+        }
+
+        private void lvwScripts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvwScripts.SelectedItems.Count > 0)
+            {
+                btnViewScript.Enabled = true;
+                btnRunScript.Enabled = true;
+            }
+            else
+            {
+                btnViewScript.Enabled = false;
+                btnRunScript.Enabled = false;
             }
         }
         #endregion
@@ -702,6 +743,14 @@ namespace psframework
             }
         }
 
+        private void cmnuScripts_Opening(object sender, CancelEventArgs e)
+        {
+            if (lvwScripts.SelectedItems.Count == 0)
+            {
+                e.Cancel = true;
+            }
+        }
+
         private void cmbtnCancelScript_Click(object sender, EventArgs e)
         {
             if (lvwActiveScripts.SelectedItems.Count > 0)
@@ -725,6 +774,31 @@ namespace psframework
                 lvwAlerts_Update();
             }
         }
+
+        private void btnRefreshScripts_Click(object sender, EventArgs e)
+        {
+            GetLibrary();
+        }
+
+        private void btnViewScript_Click(object sender, EventArgs e)
+        {
+            ViewScript();
+        }
+
+        private void btnRunScript_Click(object sender, EventArgs e)
+        {
+            RunScript();
+        }
+
+        private void cmbtnRunScript_Click(object sender, EventArgs e)
+        {
+            RunScript();
+        }
+
+        private void cmbtnViewScript_Click(object sender, EventArgs e)
+        {
+            ViewScript();
+        }
         #endregion
 
         #region ComboBox Events
@@ -743,6 +817,5 @@ namespace psframework
         }
 
         #endregion
-
     }
 }
