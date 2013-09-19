@@ -16,39 +16,15 @@ namespace poshsecframework.Controls
         static extern bool ShowCaret(IntPtr hWnd);
         public event EventHandler TabPressed;
 
-        protected override void OnMouseDown(MouseEventArgs e)
+        protected override void OnMouseHover(EventArgs e)
         {
-            base.OnMouseDown(e);
+            base.OnMouseHover(e);
             this.DrawCaret();
         }
 
-        protected override void OnMouseUp(MouseEventArgs mevent)
+        protected override void OnTextChanged(EventArgs e)
         {
-            base.OnMouseUp(mevent);
-            this.DrawCaret();
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            this.DrawCaret();
-        }
-
-        protected override void OnKeyPress(KeyPressEventArgs e)
-        {
-            base.OnKeyPress(e);
-            this.DrawCaret();
-        }
-
-        protected override void OnKeyUp(KeyEventArgs e)
-        {
-            base.OnKeyUp(e);
-            this.DrawCaret();
-        }
-
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
+            base.OnTextChanged(e);
             this.DrawCaret();
         }
 

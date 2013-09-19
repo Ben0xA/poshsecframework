@@ -893,6 +893,7 @@ namespace psframework
             }
         }
 
-        #endregion
+        #endregionxtPShellOutput.DrawCaret();
+        }
     }
 }
