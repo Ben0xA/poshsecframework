@@ -14,6 +14,12 @@ namespace poshsecframework.Controls
         static extern bool CreateCaret(IntPtr hWnd, IntPtr hBitmap, int nWidth, int nHeight);
         [DllImport("user32.dll")]
         static extern bool ShowCaret(IntPtr hWnd);
+        int tbidx = 0;
+        bool filter = true;
+        List<String> cmds = null;
+        List<String> acmds = null;
+        int cmdstart = 0;
+        int cmdstop = 0; 
 
         public RichTextBoxCaret()
         {
@@ -23,6 +29,11 @@ namespace poshsecframework.Controls
         private void InitializeComponent()
         {
             this.KeyDown += this_KeyDown;
+            cmds = new List<String>();
+            cmds.Add("awesome");
+            cmds.Add("Sweet");
+            cmds.Add("Apple");
+            cmds.Sort();
         }
 
         protected override void OnMouseHover(EventArgs e)
@@ -45,14 +56,34 @@ namespace poshsecframework.Controls
                 e.SuppressKeyPress = true;
                 AutoComplete();
             }
+            else
+            {
+                tbidx = 0;
+                filter = true;
+            }
         }
 
         private void AutoComplete()
-        {
-            int cmdstart = this.Text.LastIndexOf(' ', this.SelectionStart - 1) + 1;
-            int cmdstop = this.SelectionStart;
-            String cmdtxt = this.Text.Substring(cmdstart, cmdstop - cmdstart);
-            this.Text += cmdtxt;
+        {           
+            String cmdtxt = "";
+            if (filter)
+            {
+                cmdstart = this.Text.LastIndexOf(' ', this.SelectionStart - 1) + 1;
+                cmdstop = this.SelectionStart;
+                cmdtxt = this.Text.Substring(cmdstart, cmdstop - cmdstart);
+                acmds = cmds.Where(cmd => cmd.StartsWith(cmdtxt, StringComparison.OrdinalIgnoreCase)).ToList();
+                filter = false;
+            }
+            if (acmds != null && acmds.Count > 0)
+            {
+                this.Text = this.Text.Substring(0, cmdstart);
+                this.Text += acmds[tbidx];
+                tbidx++;
+                if (tbidx >= acmds.Count)
+                {
+                    tbidx = 0;
+                }
+            }
         }
 
         protected override bool IsInputKey(Keys keyData)
