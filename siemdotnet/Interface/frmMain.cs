@@ -609,6 +609,16 @@ namespace psframework
             Scan();
         }
 
+        private void mnuCheckforUpdates_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not implemented yet. Soon!");
+        }
+
+        private void mnuPSFWiki_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not implemented yet. Soon!");
+        }
+
         private void mnuOptions_Click(object sender, EventArgs e)
         {
             if (lvwActiveScripts.Items.Count == 0)
