@@ -42,7 +42,7 @@
             this.btnBrowseModule = new System.Windows.Forms.Button();
             this.lblModuleDirectory = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.txtFrameworkDirectory = new System.Windows.Forms.TextBox();
+            this.txtFrameworkFile = new System.Windows.Forms.TextBox();
             this.btnBrowseFramework = new System.Windows.Forms.Button();
             this.lblFrameworkDirectory = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -185,6 +185,7 @@
             this.btnBrowseModule.Size = new System.Drawing.Size(26, 26);
             this.btnBrowseModule.TabIndex = 1;
             this.btnBrowseModule.UseVisualStyleBackColor = true;
+            this.btnBrowseModule.Click += new System.EventHandler(this.btnBrowseModule_Click);
             // 
             // lblModuleDirectory
             // 
@@ -198,7 +199,7 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.txtFrameworkDirectory);
+            this.panel3.Controls.Add(this.txtFrameworkFile);
             this.panel3.Controls.Add(this.btnBrowseFramework);
             this.panel3.Controls.Add(this.lblFrameworkDirectory);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
@@ -207,17 +208,16 @@
             this.panel3.Size = new System.Drawing.Size(446, 26);
             this.panel3.TabIndex = 1;
             // 
-            // txtFrameworkDirectory
+            // txtFrameworkFile
             // 
-            this.txtFrameworkDirectory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtFrameworkDirectory.Location = new System.Drawing.Point(111, 0);
-            this.txtFrameworkDirectory.Name = "txtFrameworkDirectory";
-            this.txtFrameworkDirectory.Size = new System.Drawing.Size(309, 21);
-            this.txtFrameworkDirectory.TabIndex = 2;
+            this.txtFrameworkFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFrameworkFile.Location = new System.Drawing.Point(111, 0);
+            this.txtFrameworkFile.Name = "txtFrameworkFile";
+            this.txtFrameworkFile.Size = new System.Drawing.Size(309, 21);
+            this.txtFrameworkFile.TabIndex = 2;
             // 
             // btnBrowseFramework
             // 
-            this.btnBrowseFramework.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnBrowseFramework.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnBrowseFramework.Image = global::poshsecframework.Properties.Resources.document_open_folder;
             this.btnBrowseFramework.Location = new System.Drawing.Point(420, 0);
@@ -225,6 +225,7 @@
             this.btnBrowseFramework.Size = new System.Drawing.Size(26, 26);
             this.btnBrowseFramework.TabIndex = 1;
             this.btnBrowseFramework.UseVisualStyleBackColor = true;
+            this.btnBrowseFramework.Click += new System.EventHandler(this.btnBrowseFramework_Click);
             // 
             // lblFrameworkDirectory
             // 
@@ -233,7 +234,7 @@
             this.lblFrameworkDirectory.Name = "lblFrameworkDirectory";
             this.lblFrameworkDirectory.Size = new System.Drawing.Size(111, 26);
             this.lblFrameworkDirectory.TabIndex = 0;
-            this.lblFrameworkDirectory.Text = "Framework Directory:";
+            this.lblFrameworkDirectory.Text = "Framework File:";
             this.lblFrameworkDirectory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel2
@@ -257,7 +258,6 @@
             // 
             // btnBrowseScript
             // 
-            this.btnBrowseScript.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnBrowseScript.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnBrowseScript.Image = global::poshsecframework.Properties.Resources.document_open_folder;
             this.btnBrowseScript.Location = new System.Drawing.Point(420, 0);
@@ -265,6 +265,7 @@
             this.btnBrowseScript.Size = new System.Drawing.Size(26, 26);
             this.btnBrowseScript.TabIndex = 1;
             this.btnBrowseScript.UseVisualStyleBackColor = true;
+            this.btnBrowseScript.Click += new System.EventHandler(this.btnBrowseScript_Click);
             // 
             // lblScriptDirectory
             // 
@@ -338,7 +339,7 @@
         private System.Windows.Forms.Button btnBrowseModule;
         private System.Windows.Forms.Label lblModuleDirectory;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TextBox txtFrameworkDirectory;
+        private System.Windows.Forms.TextBox txtFrameworkFile;
         private System.Windows.Forms.Button btnBrowseFramework;
         private System.Windows.Forms.Label lblFrameworkDirectory;
         private System.Windows.Forms.Button btnOK;
