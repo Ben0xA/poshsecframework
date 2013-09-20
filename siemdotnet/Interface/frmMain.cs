@@ -781,11 +781,6 @@ namespace psframework
                     break;
             }
         }
-
-        private void txtPShellOutput_TabPressed(object sender, EventArgs e)
-        {
-            txtPShellOutput.Text = "Woo hoo!";
-        }
         #endregion
 
         #region Button Clicks
