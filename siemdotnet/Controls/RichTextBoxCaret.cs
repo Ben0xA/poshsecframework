@@ -29,11 +29,6 @@ namespace poshsecframework.Controls
         private void InitializeComponent()
         {
             this.KeyDown += this_KeyDown;
-            cmds = new List<String>();
-            cmds.Add("awesome");
-            cmds.Add("Sweet");
-            cmds.Add("Apple");
-            cmds.Sort();
         }
 
         protected override void OnMouseHover(EventArgs e)
@@ -54,7 +49,10 @@ namespace poshsecframework.Controls
             {
                 e.Handled = true;
                 e.SuppressKeyPress = true;
-                AutoComplete();
+                if (cmds != null)
+                {
+                    AutoComplete();
+                }
             }
             else
             {
@@ -68,11 +66,18 @@ namespace poshsecframework.Controls
             String cmdtxt = "";
             if (filter)
             {
+                if (acmds != null && acmds.Count > 0)
+                {
+                    acmds.Clear();
+                }                
                 cmdstart = this.Text.LastIndexOf(' ', this.SelectionStart - 1) + 1;
                 cmdstop = this.SelectionStart;
-                cmdtxt = this.Text.Substring(cmdstart, cmdstop - cmdstart);
-                acmds = cmds.Where(cmd => cmd.StartsWith(cmdtxt, StringComparison.OrdinalIgnoreCase)).ToList();
-                filter = false;
+                cmdtxt = this.Text.Substring(cmdstart, cmdstop - cmdstart);                
+                if (cmdtxt != "")
+                {
+                    acmds = cmds.Where(cmd => cmd.StartsWith(cmdtxt, StringComparison.OrdinalIgnoreCase)).ToList();
+                    filter = false;
+                }
             }
             if (acmds != null && acmds.Count > 0)
             {
@@ -107,6 +112,11 @@ namespace poshsecframework.Controls
             sz.Height = 13;
             CreateCaret(this.Handle, bmp.GetHbitmap(Color.White), sz.Width, sz.Height);
             ShowCaret(this.Handle);
+        }
+
+        public List<String> AutoCompleteCommands
+        {
+            set { cmds = value; }
         }
     }
 }

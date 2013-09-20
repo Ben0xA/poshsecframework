@@ -483,6 +483,7 @@ namespace psframework
                 ps = null;
                 if (rslt != null)
                 {
+                    List<String> accmds = new List<String>();
                     lvwCommands.Items.Clear();
                     lvwCommands.BeginUpdate();
                     foreach (PSObject po in rslt)
@@ -499,6 +500,7 @@ namespace psframework
                                     lvw.ToolTipText = ai.Name;
                                     lvw.SubItems.Add(ai.ModuleName);
                                     lvw.ImageIndex = (int)LibraryImages.Alias;
+                                    accmds.Add(ai.Name);
                                 }
                                 break;
                             case "FunctionInfo":
@@ -510,6 +512,7 @@ namespace psframework
                                     lvw.ToolTipText = fi.Name;
                                     lvw.SubItems.Add(fi.ModuleName);
                                     lvw.ImageIndex = (int)LibraryImages.Function;
+                                    accmds.Add(fi.Name);
                                 }
                                 break;
                             case "CmdletInfo":
@@ -521,6 +524,7 @@ namespace psframework
                                     lvw.ToolTipText = cmi.Name;
                                     lvw.SubItems.Add(cmi.ModuleName);
                                     lvw.ImageIndex = (int)LibraryImages.Cmdlet;
+                                    accmds.Add(cmi.Name);
                                 }
                                 break;
                             default:
@@ -537,6 +541,8 @@ namespace psframework
                         }
                     }
                     lvwCommands.EndUpdate();
+                    accmds.Sort();
+                    txtPShellOutput.AutoCompleteCommands = accmds;
                 }
             }
             catch (Exception e)
