@@ -769,6 +769,7 @@ namespace psframework
                                 e.SuppressKeyPress = true;
                                 txtPShellOutput.Text = "psf > ";
                                 mincurpos = txtPShellOutput.Text.Length;
+                                txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
                                 txtPShellOutput.ScrollToCaret();
                                 break;
                             default:

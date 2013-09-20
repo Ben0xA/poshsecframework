@@ -54,7 +54,7 @@ namespace poshsecframework.Controls
                     AutoComplete();
                 }
             }
-            else
+            else if (!e.Control && !e.Shift && !e.Alt)
             {
                 tbidx = 0;
                 filter = true;
