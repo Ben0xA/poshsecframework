@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "poshsecframework", "siemdotnet\poshsecframework.csproj", "{156F1B6C-69B5-44E5-BD5E-EE19516F9D4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "poshsecframework", "poshsecframework\poshsecframework.csproj", "{156F1B6C-69B5-44E5-BD5E-EE19516F9D4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psfclient", "siemdotnetclient\psfclient.csproj", "{61396921-ED24-4F47-9904-4C56F475419B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "psfclient", "psfclient\psfclient.csproj", "{61396921-ED24-4F47-9904-4C56F475419B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
