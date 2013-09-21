@@ -40,7 +40,7 @@ namespace psframework.PShell
                 frm.AddAlert(message, alerttype, scriptname);
             }
 
-            public String StriptName
+            public String ScriptName
             {
                 get { return scriptname; }
                 set { scriptname = value; }

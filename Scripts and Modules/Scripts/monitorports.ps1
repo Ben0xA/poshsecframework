@@ -43,7 +43,8 @@ do
       $protocol = $rslt.InputObject.Protocol
       $rport = $rslt.InputObject.RemotePort
       $pname = $rslt.InputObject.ProccessName
-      $PSAlert.Add("New port detected. $protocol/$rport ($pname)", 3)
+      $ipaddr = $rslt.InputObject.RemoteAddress
+      $PSAlert.Add("New port detected. $protocol $($ipaddr):$($rport) ($pname)", 3)
     }  
   }
 } while ($scan)
