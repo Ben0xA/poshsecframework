@@ -112,7 +112,7 @@ namespace psframework.PShell
         public void RunScript()
         {
             InitializeSessionVars();
-            PSAlert.StriptName = scriptcommand;
+            PSAlert.ScriptName = scriptcommand.Replace(poshsecframework.Properties.Settings.Default.ScriptPath, "");
             if (scriptparams != null)
             {
                 scriptparams.Clear();
@@ -153,7 +153,7 @@ namespace psframework.PShell
                     }
                     else
                     {
-                        rslts.AppendLine("Running script: " + scriptcommand);
+                        rslts.AppendLine("Running script: " + scriptcommand.Replace(poshsecframework.Properties.Settings.Default.ScriptPath, ""));
                         pline.Commands.Add(pscmd);
                     }                    
                     Collection<PSObject> rslt = pline.Invoke();
