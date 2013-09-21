@@ -37,12 +37,6 @@ namespace poshsecframework.Controls
             this.DrawCaret();
         }
 
-        protected override void OnTextChanged(EventArgs e)
-        {
-            base.OnTextChanged(e);
-            this.DrawCaret();
-        }
-
         private void this_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Tab)
@@ -59,6 +53,7 @@ namespace poshsecframework.Controls
                 tbidx = 0;
                 filter = true;
             }
+            this.DrawCaret();
         }
 
         private void AutoComplete()

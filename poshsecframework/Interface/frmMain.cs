@@ -332,6 +332,7 @@ namespace psframework
                 txtPShellOutput.AppendText(output);
                 txtPShellOutput.AppendText(Environment.NewLine + "psf > ");
                 mincurpos = txtPShellOutput.Text.Length;
+                txtPShellOutput.SelectionStart = mincurpos;
                 if (clicked || cancelled)
                 {
                     //Not sure why this happens, but if you type the command the scroll to caret isn't needed.
