@@ -793,6 +793,9 @@ namespace psframework
                         }                        
                     }
                     break;
+                case Keys.Tab:
+                    e.Handled = true;
+                    break;
                 default:
                     if (txtPShellOutput.SelectionStart < mincurpos)
                     {

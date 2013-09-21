@@ -78,6 +78,7 @@ namespace poshsecframework.Controls
             {
                 this.Text = this.Text.Substring(0, cmdstart);
                 this.Text += acmds[tbidx];
+                this.SelectionStart = this.Text.Length;
                 tbidx++;
                 if (tbidx >= acmds.Count)
                 {
