@@ -727,8 +727,11 @@ namespace psframework
                 case Keys.Enter:
                     e.Handled = true;
                     e.SuppressKeyPress = true;
-                    String cmd = txtPShellOutput.Text.Substring(mincurpos, txtPShellOutput.Text.Length - mincurpos);
-                    ProcessCommand(cmd);
+                    if (!txtPShellOutput.ReadOnly)
+                    {
+                        String cmd = txtPShellOutput.Text.Substring(mincurpos, txtPShellOutput.Text.Length - mincurpos);
+                        ProcessCommand(cmd);
+                    }
                     break;
                 case Keys.ControlKey: case Keys.Alt:
                     e.SuppressKeyPress = false;
