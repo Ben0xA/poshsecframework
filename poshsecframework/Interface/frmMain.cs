@@ -369,6 +369,7 @@ namespace psframework
                     lvwitm.SubItems.Add(scriptname);
                     lvwAlerts.Items.Add(lvwitm);
                     lvwAlerts_Update();
+                    lvwitm.EnsureVisible();
                 }
                 catch (Exception e)
                 {

@@ -18,15 +18,17 @@ Import-Module $PSFramework
 [boolean]$scan = $True;
 $baseline = @()
 $active = @()
-$remotewhitelist = @(0)
+$remoteportwhitelist = @(0)
 $processwhitelist = @("ssh-agent", "firefox", "tweetdeck", "thunderbird", "Idle")
+$localipwhitelist = @("127.0.0.1")
+$remoteipwhitelist = @("127.0.0.1")
 
 $PSStatus.Update("Setting a baseline.")
 $baseline = Get-SecOpenPorts
 do
 {
-  $PSStatus.Update("Pausing for 5 seconds")
-  Start-Sleep -s 5
+  $PSStatus.Update("Pausing for 2 seconds")
+  Start-Sleep -s 2
   
   $PSStatus.Update("Getting current ports.")
   $active = Get-SecOpenPorts
@@ -37,8 +39,10 @@ do
   {
     if(($rslt.InputObject.State="ESTABLISHED") -and
         ($rslt.SideIndicator -eq "=>") -and
-        ($remotewhitelist -notcontains $rslt.InputObject.RemotePort) -and
-        ($processwhitelist -notcontains $rslt.InputObject.ProcessName))
+        ($remoteportwhitelist -notcontains $rslt.InputObject.RemotePort) -and
+        ($processwhitelist -notcontains $rslt.InputObject.ProcessName) -and
+        ($localipwhitelist -notcontains $rslt.InputObject.LocalAddress) -and
+        ($remoteipwhitelist -notcontains $rslt.InputObject.RemoteAddress))
     {
       $protocol = $rslt.InputObject.Protocol
       $local = $rslt.InputObject.LocalAddress + ":" + $rslt.InputObject.LocalPort
@@ -49,8 +53,10 @@ do
       $baseline += $rslt.InputObject
     }
     if(($rslt.SideIndicator -eq "<=") -and
-        ($remotewhitelist -notcontains $rslt.InputObject.RemotePort) -and
-        ($processwhitelist -notcontains $rslt.InputObject.ProcessName))
+        ($remoteportwhitelist -notcontains $rslt.InputObject.RemotePort) -and
+        ($processwhitelist -notcontains $rslt.InputObject.ProcessName) -and
+        ($localipwhitelist -notcontains $rslt.InputObject.LocalAddress) -and
+        ($remoteipwhitelist -notcontains $rslt.InputObject.RemoteAddress))
     {
       $protocol = $rslt.InputObject.Protocol
       $local = $rslt.InputObject.LocalAddress + ":" + $rslt.InputObject.LocalPort
@@ -62,10 +68,13 @@ do
       # You can't remove items from an array. You have to rebuild it.
       [int]$blidx = 0
       $newbl = @()
+      $rsobj = $rslt.InputObject
+      $rsstr = $rsobj.Protocol + $rsobj.LocalAddress + $rsobj.LocalPort + $rsobj.RemoteAddress + $rsobj.RemotePort + $rsobj.ProcessName
       do
       {
-        $blobj = $baseline[$blidx]
-        if($blobj -ne $rslt.InputObject)
+        $blobj = $baseline[$blidx]        
+        $blstr = $blobj.Protocol + $blobj.LocalAddress + $blobj.LocalPort + $blobj.RemoteAddress + $blobj.RemotePort + $blobj.ProcessName
+        if($blstr -ne $rsstr)
         {
             $newbl += $blobj
         }
