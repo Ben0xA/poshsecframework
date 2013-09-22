@@ -433,7 +433,16 @@ namespace psframework
                         mincurpos = txtPShellOutput.Text.Length;
                         break;
                     case "RELOAD":
-                        Initialize();
+                        if (lvwActiveScripts.Items.Count == 0)
+                        {
+                            Initialize();
+                        }
+                        else 
+                        {
+                            txtPShellOutput.AppendText(Environment.NewLine + "Can not reload the framework because there are scripts running. Please stop all scripts before issuing the reload command again." + Environment.NewLine);
+                            txtPShellOutput.AppendText(Environment.NewLine + "psf > ");
+                            mincurpos = txtPShellOutput.Text.Length;
+                        }
                         break;
                     case "EXIT":
                         this.Close();
