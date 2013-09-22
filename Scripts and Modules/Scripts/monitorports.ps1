@@ -37,7 +37,7 @@ do
   
   foreach($rslt in $rslts)
   {
-    if(($rslt.InputObject.State="ESTABLISHED") -and
+    if(($rslt.InputObject.State -eq "ESTABLISHED") -and
         ($rslt.SideIndicator -eq "=>") -and
         ($remoteportwhitelist -notcontains $rslt.InputObject.RemotePort) -and
         ($processwhitelist -notcontains $rslt.InputObject.ProcessName) -and
@@ -52,7 +52,7 @@ do
       $PSAlert.Add("Port Opened: $protocol $($local)<=>$($remote) ($pname)", 2)
       $baseline += $rslt.InputObject
     }
-    if(($rslt.SideIndicator -eq "<=") -and
+    elseif(($rslt.SideIndicator -eq "<=") -and
         ($remoteportwhitelist -notcontains $rslt.InputObject.RemotePort) -and
         ($processwhitelist -notcontains $rslt.InputObject.ProcessName) -and
         ($localipwhitelist -notcontains $rslt.InputObject.LocalAddress) -and
