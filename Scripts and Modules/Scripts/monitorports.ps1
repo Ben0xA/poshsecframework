@@ -16,9 +16,6 @@ Ben0xA
 Import-Module $PSFramework
 
 [boolean]$scan = $True;
-[string]$basefile = ".\baseline.xml"
-[string]$actvfile = ".\active.xml"
-
 $baseline = @()
 $active = @()
 
@@ -33,7 +30,7 @@ do
   $PSStatus.Update("Getting current ports.")
   $active = Get-SecOpenPorts
   
-  $rslts = Compare-Object $baseline $active
+  $rslts = Compare-SecOpenPort $baseline $active
   $rslts = $rslts | Where-Object { $_.SideIndicator -eq '=>' }
   
   foreach($rslt in $rslts)
@@ -41,10 +38,12 @@ do
     if($rslt.InputObject.State="ESTABLISHED")
     {
       $protocol = $rslt.InputObject.Protocol
-      $rport = $rslt.InputObject.RemotePort
-      $pname = $rslt.InputObject.ProccessName
-      $ipaddr = $rslt.InputObject.RemoteAddress
-      $PSAlert.Add("New port detected. $protocol $($ipaddr):$($rport) ($pname)", 3)
+      $local = $rslt.InputObject.LocalAddress + ":" + $rslt.InputObject.LocalPort
+      $remote = $rslt.InputObject.RemoteAddress + ":" + $rslt.InputObject.RemotePort
+      $pname = $rslt.InputObject.ProcessName
+      
+      $PSAlert.Add("New port detected. $protocol $($local)<=>$($remote) ($pname)", 3)
+      $baseline += $rslt
     }  
   }
 } while ($scan)

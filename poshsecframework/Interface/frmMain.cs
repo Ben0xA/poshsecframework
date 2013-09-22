@@ -431,6 +431,9 @@ namespace psframework
                         txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
                         mincurpos = txtPShellOutput.Text.Length;
                         break;
+                    case "RELOAD":
+                        Initialize();
+                        break;
                     case "EXIT":
                         this.Close();
                         break;
