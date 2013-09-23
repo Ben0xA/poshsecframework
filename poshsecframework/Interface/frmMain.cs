@@ -366,8 +366,9 @@ namespace psframework
                     lvwitm.Text = alerttype.ToString();
                     lvwitm.ImageIndex = (int)alerttype;
                     lvwitm.SubItems.Add(message);
-                    lvwitm.SubItems.Add(scriptname);
-                    lvwAlerts.Items.Add(lvwitm);
+                    lvwitm.SubItems.Add(DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"));
+                    lvwitm.SubItems.Add(scriptname);                    
+                    lvwAlerts.Items.Add(lvwitm);                    
                     lvwAlerts_Update();
                     lvwitm.EnsureVisible();
                 }
