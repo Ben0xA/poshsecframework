@@ -95,7 +95,7 @@ namespace psframework.PShell
             Pipeline pline = rspace.CreatePipeline();
             if (System.IO.File.Exists(poshsecframework.Properties.Settings.Default.FrameworkPath))
             {                
-                scrpt = "Import-Module \"" + poshsecframework.Properties.Settings.Default.FrameworkPath + "\"" + Environment.NewLine;
+                scrpt = "Import-Module $(\"" + poshsecframework.Properties.Settings.Default.FrameworkPath + "\")" + Environment.NewLine;
             }
             else
             {
@@ -144,7 +144,7 @@ namespace psframework.PShell
                     pline = rspace.CreatePipeline();
                     if (iscommand)
                     {
-                        String cmdscript = "Import-Module $PSFramework" + Environment.NewLine + scriptcommand + cmdparams;
+                        String cmdscript = "Import-Module $(\"$PSFramework\")" + Environment.NewLine + scriptcommand + cmdparams;
                         if (clicked)
                         {
                             rslts.AppendLine(scriptcommand + cmdparams);
@@ -153,7 +153,7 @@ namespace psframework.PShell
                     }
                     else
                     {
-                        rslts.AppendLine("Running script: " + scriptcommand.Replace(poshsecframework.Properties.Settings.Default.ScriptPath, ""));
+                        rslts.AppendLine("Running script: " + scriptcommand.Replace(poshsecframework.Properties.Settings.Default.ScriptPath, ""));                        
                         pline.Commands.Add(pscmd);
                     }                    
                     Collection<PSObject> rslt = pline.Invoke();
@@ -220,10 +220,14 @@ namespace psframework.PShell
 
             Pipeline pline = rspace.CreatePipeline();
 
-            String scrpt = "Get-Help " + scriptcommand + " -full";
+            String scrpt = "Get-Help ";
             if (iscommand)
             {
-                scrpt = "Import-Module $PSFramework" + Environment.NewLine + scrpt;
+                scrpt = "Import-Module \"$PSFramework\"" + Environment.NewLine + scrpt + scriptcommand + " -full";
+            }
+            else
+            {
+                scrpt += "\"" + scriptcommand + "\" -full";
             }
             pline.Commands.AddScript(scrpt);
             pline.Commands.Add("Out-String");
