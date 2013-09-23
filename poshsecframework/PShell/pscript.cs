@@ -215,6 +215,7 @@ namespace psframework.PShell
         #region " Private Methods "
         private List<psparameter>CheckForParams(Runspace rspace, String scriptcommand)
         {
+            cancel = false;
             List<psparameter> parms = null;
             psparamtype parm = new psparamtype();
 
