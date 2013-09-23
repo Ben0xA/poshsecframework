@@ -427,7 +427,7 @@ namespace psframework
                 cmdhistidx = cmdhist.Count;
                 switch (cmd.ToUpper())
                 { 
-                    case "CLS":
+                    case "CLS": case "CLEAR":
                         txtPShellOutput.Text = "psf > ";
                         txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
                         mincurpos = txtPShellOutput.Text.Length;
