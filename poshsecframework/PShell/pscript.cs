@@ -264,7 +264,14 @@ namespace psframework.PShell
                                     String param = line.Trim().Substring(1, line.Trim().Length - 1);
                                     String[] paramparts = param.Split(' ');
                                     prm.Name = paramparts[0].Trim();
-                                    prm.Type = GetTypeFromString(paramparts[1]);
+                                    if (paramparts.Length == 2)
+                                    {
+                                        prm.Type = GetTypeFromString(paramparts[1]);
+                                    }
+                                    else
+                                    {
+                                        prm.Type = typeof(int);
+                                    }
                                     idx++;
                                     line = lines[idx];
                                     prm.Description = line.Trim();
