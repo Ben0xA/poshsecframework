@@ -95,7 +95,7 @@ namespace psframework.PShell
             Pipeline pline = rspace.CreatePipeline();
             if (System.IO.File.Exists(poshsecframework.Properties.Settings.Default.FrameworkPath))
             {                
-                scrpt = "Import-Module " + poshsecframework.Properties.Settings.Default.FrameworkPath + Environment.NewLine;
+                scrpt = "Import-Module \"" + poshsecframework.Properties.Settings.Default.FrameworkPath + "\"" + Environment.NewLine;
             }
             else
             {
