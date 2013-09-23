@@ -95,7 +95,7 @@ namespace psframework.PShell
             Pipeline pline = rspace.CreatePipeline();
             if (System.IO.File.Exists(poshsecframework.Properties.Settings.Default.FrameworkPath))
             {                
-                scrpt = "Import-Module $(\"" + poshsecframework.Properties.Settings.Default.FrameworkPath + "\")" + Environment.NewLine;
+                scrpt = "Import-Module \"$PSFramework\"" + Environment.NewLine;
             }
             else
             {
@@ -144,7 +144,7 @@ namespace psframework.PShell
                     pline = rspace.CreatePipeline();
                     if (iscommand)
                     {
-                        String cmdscript = "Import-Module $(\"$PSFramework\")" + Environment.NewLine + scriptcommand + cmdparams;
+                        String cmdscript = "Import-Module \"$PSFramework\"" + Environment.NewLine + scriptcommand + cmdparams;
                         if (clicked)
                         {
                             rslts.AppendLine(scriptcommand + cmdparams);
