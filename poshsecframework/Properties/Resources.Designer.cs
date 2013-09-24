@@ -93,6 +93,16 @@ namespace poshsecframework.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap dialog_cancel_5 {
+            get {
+                object obj = ResourceManager.GetObject("dialog-cancel-5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dialog_error_3 {
             get {
                 object obj = ResourceManager.GetObject("dialog-error-3", resourceCulture);

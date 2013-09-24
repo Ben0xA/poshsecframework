@@ -55,19 +55,21 @@ namespace psframework.Network
                 String[] ipparts = localIP.Split('.');
                 if (ipparts != null && ipparts.Length == 4)
                 {
-                    frm.SetProgress(0, 256);
-                    for (int ip = 1; ip < 256; ip++)
+                    frm.SetProgress(0, 255);
+                    int ip = 1;
+                    do
                     {
                         String host = ipparts[0] + "." + ipparts[1] + "." + ipparts[2] + "." + ip.ToString();
                         frm.SetStatus("Scanning " + host + ", please wait...");
-                        frm.SetProgress(ip, 256);
+                        frm.SetProgress(ip, 255);
                         
                         if (Ping(host, 1, 100))
                         {
                             systems.Add(host);
                             Application.DoEvents();
                         }
-                    }
+                        ip++;
+                    } while(ip < 255 && !frm.CancelIPScan);
                 }
             }
 
@@ -86,23 +88,30 @@ namespace psframework.Network
         public bool Ping(string host, int attempts, int timeout)
         {
             bool rsp = false;
-            System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping();
-            System.Net.NetworkInformation.PingReply pingReply;
-
-            for (int atmpt = 0; atmpt < attempts; atmpt++)
+            try
             {
-                try
+                System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping();
+                System.Net.NetworkInformation.PingReply pingReply;
+
+                for (int atmpt = 0; atmpt < attempts; atmpt++)
                 {
-                    pingReply = ping.Send(host, timeout);
-                    if (pingReply != null && pingReply.Status == System.Net.NetworkInformation.IPStatus.Success)
+                    try
                     {
-                        rsp = true;
+                        pingReply = ping.Send(host, timeout);
+                        if (pingReply != null && pingReply.Status == System.Net.NetworkInformation.IPStatus.Success)
+                        {
+                            rsp = true;
+                        }
+                    }
+                    catch
+                    {
+                        rsp = false;
                     }
                 }
-                catch
-                {
-                    rsp = false;
-                }                
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
             }
             return rsp;
         }

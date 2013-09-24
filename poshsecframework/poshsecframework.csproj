@@ -130,6 +130,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Images\psficon.ico" />
+    <None Include="Resources\dialog-cancel-5.png" />
     <None Include="Resources\system-settings.png" />
     <None Include="Resources\document-open-folder.png" />
     <None Include="Resources\run.png" />

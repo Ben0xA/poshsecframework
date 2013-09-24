@@ -25,6 +25,7 @@ namespace psframework
         private Collection<String> cmdhist = new Collection<string>();
         private int cmdhistidx = -1;
         private PShell.pshell psf;
+        private bool cancelscan = false;
 
         enum SystemType
         { 
@@ -149,6 +150,10 @@ namespace psframework
             {
                 MessageBox.Show(e.Message + Environment.NewLine + e.StackTrace);
             }
+            if (tvwNetworks.Nodes[0].Nodes.Count > 0)
+            {
+                tvwNetworks.SelectedNode = tvwNetworks.Nodes[0].Nodes[0];
+            }
         }
 
         private void Scan()
@@ -216,9 +221,12 @@ namespace psframework
 
         private void ScanbyIP()
         {
-            lvwSystems.Items.Clear();            
+            lvwSystems.Items.Clear();
+            btnCancelScan.Enabled = true;
+            scnr.ParentForm = this;
+            cancelscan = false;
             ArrayList rslts = scnr.ScanbyIP();
-            if (rslts.Count > 0)
+            if (rslts.Count > 0 && !cancelscan)
             {
                 SetProgress(0, rslts.Count);
                 foreach (String system in rslts)
@@ -246,7 +254,8 @@ namespace psframework
 
             rslts = null;
             HideProgress();
-            lblStatus.Text = "Ready";
+            btnCancelScan.Enabled = true;
+            lblStatus.Text = "Ready";            
         }
 
         private void RunScript()
@@ -918,6 +927,11 @@ namespace psframework
         {
             MessageBox.Show("Not implemented yet. Soon!");
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            cancelscan = true;
+        }
         #endregion
 
         #region ComboBox Events
@@ -936,5 +950,13 @@ namespace psframework
         }
 
         #endregion
+
+        #region Public Properties
+        public bool CancelIPScan
+        {
+            get { return cancelscan; }
+        }
+        #endregion
+
     }
 }
