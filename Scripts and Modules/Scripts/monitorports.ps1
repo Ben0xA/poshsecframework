@@ -18,7 +18,7 @@ Import-Module $PSFramework
 [boolean]$scan = $True;
 $baseline = @()
 $active = @()
-$remoteportwhitelist = @(0)
+$remoteportwhitelist = @(0,995,80,443)
 $processwhitelist = @("ssh-agent", "firefox", "tweetdeck", "thunderbird", "Idle")
 $localipwhitelist = @("127.0.0.1")
 $remoteipwhitelist = @("127.0.0.1")
