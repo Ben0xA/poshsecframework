@@ -106,7 +106,7 @@ namespace psframework
                 //Get Domain Name
                 Forest hostForest = Forest.GetCurrentForest();
                 DomainCollection domains = hostForest.Domains;
-                /*
+                
                 foreach (Domain domain in domains)
                 {
                     TreeNode node = new TreeNode();
@@ -116,7 +116,7 @@ namespace psframework
                     node.Tag = SystemType.Domain;
                     TreeNode rootnode = tvwNetworks.Nodes[0];
                     rootnode.Nodes.Add(node);
-                }*/
+                }
             }
             catch
             {
@@ -131,10 +131,8 @@ namespace psframework
 
                 ListViewItem lvwItm = new ListViewItem();
 
-                //lvwItm.Text = localHost;
-                //lvwItm.SubItems.Add(localIP);
-                lvwItm.Text = "localhost";
-                lvwItm.SubItems.Add("[hidden]");
+                lvwItm.Text = localHost;
+                lvwItm.SubItems.Add(localIP);
                 lvwItm.SubItems.Add("00-00-00-00-00-00");
                 lvwItm.SubItems.Add("Up");
                 lvwItm.SubItems.Add("Not Installed");
@@ -909,6 +907,16 @@ namespace psframework
         private void cmbtnViewScript_Click(object sender, EventArgs e)
         {
             ViewScript();
+        }
+
+        private void btnAddNetwork_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not implemented yet. Soon!");
+        }
+
+        private void btnAddSystem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not implemented yet. Soon!");
         }
         #endregion
 
