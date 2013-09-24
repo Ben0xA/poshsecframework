@@ -801,6 +801,7 @@ namespace psframework
                                 txtPShellOutput.ScrollToCaret();
                                 break;
                             default:
+                                txtPShellOutput.SelectionStart = txtPShellOutput.Text.Length;
                                 e.Handled = false;
                                 e.SuppressKeyPress = false;
                                 break;
