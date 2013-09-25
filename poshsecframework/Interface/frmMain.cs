@@ -320,13 +320,13 @@ namespace psframework
         #endregion
 
         #region "PowerShell"
-        public void DisplayOutput(String output, ListViewItem lvw, bool clicked, bool cancelled = false)
+        public void DisplayOutput(String output, ListViewItem lvw, bool clicked, bool cancelled = false, bool scroll = false)
         {
             if (this.InvokeRequired)
             {
                 MethodInvoker del = delegate
                 {
-                    DisplayOutput(output, lvw, clicked, cancelled);
+                    DisplayOutput(output, lvw, clicked, cancelled, scroll);
                 };
                 this.Invoke(del);
             }
@@ -340,12 +340,13 @@ namespace psframework
                 txtPShellOutput.AppendText(Environment.NewLine + "psf > ");
                 mincurpos = txtPShellOutput.Text.Length;
                 txtPShellOutput.SelectionStart = mincurpos;
-                if (clicked || cancelled)
+                if (clicked || cancelled || scroll)
                 {
                     //Not sure why this happens, but if you type the command the scroll to caret isn't needed.
                     //If you initiate a script or command by double clicking, or you abort the thread, you do.
                     txtPShellOutput.ScrollToCaret();
                 }
+                txtPShellOutput.Select();
                 txtPShellOutput.ReadOnly = false;
                 if (lvw != null)
                 {
@@ -932,6 +933,32 @@ namespace psframework
         {
             cancelscan = true;
         }
+
+        private void mnuCmdGetHelp_Click(object sender, EventArgs e)
+        {
+            if (lvwCommands.SelectedItems.Count > 0)
+            {
+                ListViewItem lvw = lvwCommands.SelectedItems[0];
+                String ghcmd = "Get-Help " + lvw.Text + " -full | Out-String";
+                txtPShellOutput.AppendText(ghcmd + Environment.NewLine);
+                txtPShellOutput.ReadOnly = true;
+                psf.Run(ghcmd, true, false, true);
+                tcMain.SelectedTab = tbpPowerShell;
+            }
+        }
+
+        private void mnuScriptGetHelp_Click(object sender, EventArgs e)
+        {
+            if (lvwScripts.SelectedItems.Count > 0)
+            {
+                ListViewItem lvw = lvwScripts.SelectedItems[0];
+                String ghcmd = "Get-Help \"" + Path.Combine(poshsecframework.Properties.Settings.Default.ScriptPath, lvw.Text) + "\" -full | Out-String";
+                txtPShellOutput.AppendText(ghcmd + Environment.NewLine);
+                txtPShellOutput.ReadOnly = true;
+                psf.Run(ghcmd, true, false, true);
+                tcMain.SelectedTab = tbpPowerShell;
+            }
+        }
         #endregion
 
         #region ComboBox Events
@@ -957,6 +984,7 @@ namespace psframework
             get { return cancelscan; }
         }
         #endregion
+
 
     }
 }
