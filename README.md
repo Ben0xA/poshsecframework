@@ -12,7 +12,7 @@ If you are using the source code:
 
 Open the poshsecframework.sln in Visual Studio 2012+ and build the project (F7). This will create the bin\Release folder at {your github repodirectory}\poshsecframework\poshsecframework\bin\Release.
 
-Copy the Modules and the Scripts folder from the "Scripts and Modules" folder to the bin\Release\ directory.
+Copy the "\Modules" and the "\Scripts" folder from the "\Scripts and Modules" folder to the bin\Release\ directory.
 
 For example: 
 C:\github\poshsecframework\poshsecframework\bin\Release\Modules\
