@@ -11,6 +11,6 @@
 #Leave this here for things to play nicely!
 Import-Module $PSFramework
 
-#Star your code here.
+#Start your code here.
 
 #End Script
