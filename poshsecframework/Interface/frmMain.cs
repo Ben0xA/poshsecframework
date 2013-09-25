@@ -827,6 +827,7 @@ namespace psframework
                     }
                     break;
             }
+            txtPShellOutput.DrawCaret();
         }
         #endregion
 
@@ -973,6 +974,7 @@ namespace psframework
             if (e.TabPage == tbpPowerShell)
             {
                 txtPShellOutput.Select();
+                txtPShellOutput.DrawCaret();
             }
         }
 
