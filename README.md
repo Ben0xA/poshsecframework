@@ -3,11 +3,8 @@
 
 PoshSec Framework
 ========
-
 For the Scripts and Modules to work, please refer to the below documentation.
-
 --
-
 If you are using the source code:
 ==
 Open the poshsecframework.sln in Visual Studio 2012+ and build the project (F7). This will create the bin\Release folder at {your github repodirectory}\poshsecframework\poshsecframework\bin\Release.

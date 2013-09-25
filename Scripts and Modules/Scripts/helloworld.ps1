@@ -10,5 +10,4 @@ Ben0xA
 Import-Module $PSFramework
 
 Write-Output "Hello World!"
-Get-Drives
 #End Script
