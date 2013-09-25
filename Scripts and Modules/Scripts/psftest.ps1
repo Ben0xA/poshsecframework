@@ -2,7 +2,7 @@
 .DESCRIPTION
 Tests the import function for the PoshSec Framework.
 
-.AUTHOR
+AUTHOR
 Ben0xA
 #>
 

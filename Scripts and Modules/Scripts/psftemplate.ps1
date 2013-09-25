@@ -2,7 +2,7 @@
 .DESCRIPTION
 <this is your decscription>
 
-.AUTHOR
+AUTHOR
 <this is you!>
 #>
 
