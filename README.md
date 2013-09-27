@@ -1,4 +1,4 @@
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/9359c11c30c5246a4d7ec0459171ed47 "githalytics.com")](http://githalytics.com/Ben0xA/poshsecframework)
+
 
 
 PoshSec Framework
@@ -25,3 +25,35 @@ Copy the Modules and the Scripts folder from the "Scripts and Modules" folder to
 C:\Program Files\PoshSecFramework\Modules\
 
 C:\Program Files\PoshSecFramework\Scripts\
+
+
+About PoshSec
+========
+This project started by Will Steele (@pen_test) and Matt Johnson (@mwjcomputing) has several goals:
+
+- Publish a PowerShell module to aid people in the use of PowerShell in regards to security.
+- Provide some guidance on how to use PowerShell in the information security space, on both the offensive and defensive side with blog posts and articles.
+- Be a location to obtain links to others using PowerShell in the information security space.
+
+The PoshSec Framework was 
+
+Current "Core" Developers are:
+* Matt Johnson - @mwjcomputing - our fearless leader!
+* Ben Ten - @ben0xa - Primary Developer of the PoshSec Framework
+
+In alphabetical order:
+* Bryan Smith - @tweetbsmith
+* J Wolfgang Goerlich - @jwgoerlich
+* Michael Ortega - @securitymoey
+* Nick Jacob - @MortiousPrime 
+* Rich Cassara - @rjcassara
+
+PoshSec is about community, Power Shell, and completely comfortable "man on man" sexual innuendos
+
+
+Contact
+==========
+* www.poshsec.com
+* You can offer your support by emailing team@poshsec.com
+* Twitter: @poshsec
+* #PoshSec on FREENODE
